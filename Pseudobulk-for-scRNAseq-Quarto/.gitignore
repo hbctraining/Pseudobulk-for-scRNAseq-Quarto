@@ -1,0 +1,7 @@
+/.quarto/
+data/
+results/
+.DS_Store
+.Rhistory
+lessons/*.html
+docs/*_files
