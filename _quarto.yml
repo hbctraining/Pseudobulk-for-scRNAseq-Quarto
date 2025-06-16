@@ -39,8 +39,11 @@ website:
       - section: "Day 1:"
         contents:
           - lessons/01_setup_intro_dataset.qmd
+          - lessons/02_DEanalysis_using_FindMarkers.qmd
       - section: "Day 1 Self-learning:"
         contents:
+          - lessons/03_pseudobulk_DESeq2.qmd
+          - lessons/04_pseudobulk_DE_analysis.qmd
           
 
 format:

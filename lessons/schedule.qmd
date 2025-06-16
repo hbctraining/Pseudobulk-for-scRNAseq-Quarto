@@ -19,7 +19,7 @@ toc: false
 | 09:45 - 10:15 | Pre-reading review and Q&A | All |
 | 10:15 - 10:25 | Break | |
 | 10:25 - 11:00 | [Project setup and data exploration ](01_setup_intro_dataset.qmd) | Will |
-| 11:00 - 11:50 | [Differential expression analysis using `FindMarkers()`](../lessons/02_DEanalysis_using_FindMarkers.md) | Noor |
+| 11:00 - 11:50 | [Differential expression analysis using `FindMarkers()`](02_DEanalysis_using_FindMarkers.qmd) | Noor |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
 
@@ -27,7 +27,7 @@ toc: false
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
  
-   1. [Aggregating counts by celltype using pseudobulk approach](../lessons/03_pseudobulk_DESeq2.md)
+   1. [Aggregating counts by celltype using pseudobulk approach](03_pseudobulk_DESeq2.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
        <br> Forming pseudobulk samples is important to perform accurate differential expression analysis. Treating each cell as an independent replicate leads to underestimation of the variance and misleadingly small p-values. Working on the level of pseudobulk ensures reliable statistical tests because the samples correspond to the actual units of replication.  <br><br>In this lesson you will:<br>
@@ -37,7 +37,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 <br>
         </details>
 
-  2. [DE analysis of pseudobulk data using DESeq2](../lessons/04_pseudobulk_DE_analysis.md)
+  2. [DE analysis of pseudobulk data using DESeq2](04_pseudobulk_DE_analysis.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
        <br> The next step is to take the DESeq2 object and run through the analysis workflow to identify differentially expressed genes. <br><br>In this lesson you will:<br>

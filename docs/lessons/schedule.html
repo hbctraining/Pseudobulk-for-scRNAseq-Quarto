@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td style="text-align: center;">11:00 - 11:50</td>
-<td style="text-align: center;"><a href="../lessons/02_DEanalysis_using_FindMarkers.md">Differential expression analysis using <code>FindMarkers()</code></a></td>
+<td style="text-align: center;"><a href="../lessons/02_DEanalysis_using_FindMarkers.html">Differential expression analysis using <code>FindMarkers()</code></a></td>
 <td style="text-align: center;">Noor</td>
 </tr>
 <tr class="even">
@@ -207,14 +207,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="before-the-next-class">Before the next class:</h3>
 <p>I. Please <strong>study the contents</strong> and <strong>work through all the code</strong> within the following lessons:</p>
 <ol type="1">
-<li><a href="../lessons/03_pseudobulk_DESeq2.md">Aggregating counts by celltype using pseudobulk approach</a>
+<li><a href="../lessons/03_pseudobulk_DESeq2.html">Aggregating counts by celltype using pseudobulk approach</a>
 <details>
 <summary>
 <i>Click here for a preview of this lesson</i>
 </summary>
 <br> Forming pseudobulk samples is important to perform accurate differential expression analysis. Treating each cell as an independent replicate leads to underestimation of the variance and misleadingly small p-values. Working on the level of pseudobulk ensures reliable statistical tests because the samples correspond to the actual units of replication. <br><br>In this lesson you will:<br> - Aggregate counts for a given celltype<br> - Demonstrate an efficent way to aggregate counts for multiple celltypes<br> - Use the aggregated counts to create a DESeq2 object for downstream analysis<br> <br>
 </details></li>
-<li><a href="../lessons/04_pseudobulk_DE_analysis.md">DE analysis of pseudobulk data using DESeq2</a>
+<li><a href="../lessons/04_pseudobulk_DE_analysis.html">DE analysis of pseudobulk data using DESeq2</a>
 <details>
 <summary>
 <i>Click here for a preview of this lesson</i>
@@ -659,7 +659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>| 09:45 - 10:15 | Pre-reading review and Q&amp;A | All |</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>| 10:15 - 10:25 | Break | |</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>| 10:25 - 11:00 | <span class="co">[</span><span class="ot">Project setup and data exploration </span><span class="co">](01_setup_intro_dataset.qmd)</span> | Will |</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>| 11:00 - 11:50 | <span class="co">[</span><span class="ot">Differential expression analysis using `FindMarkers()`</span><span class="co">](../lessons/02_DEanalysis_using_FindMarkers.md)</span> | Noor |</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>| 11:00 - 11:50 | <span class="co">[</span><span class="ot">Differential expression analysis using `FindMarkers()`</span><span class="co">](02_DEanalysis_using_FindMarkers.qmd)</span> | Noor |</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>| 11:50 - 12:00 | Overview of self-learning materials and homework submission | Will |</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
@@ -667,7 +667,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>I. Please **study the contents** and **work through all the code** within the following lessons:</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">   1. </span><span class="co">[</span><span class="ot">Aggregating counts by celltype using pseudobulk approach</span><span class="co">](../lessons/03_pseudobulk_DESeq2.md)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">   1. </span><span class="co">[</span><span class="ot">Aggregating counts by celltype using pseudobulk approach</span><span class="co">](03_pseudobulk_DESeq2.qmd)</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;details&gt;</span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>       <span class="kw">&lt;summary&gt;&lt;i&gt;</span>Click here for a preview of this lesson<span class="kw">&lt;/i&gt;&lt;/summary&gt;</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>       <span class="kw">&lt;br&gt;</span> Forming pseudobulk samples is important to perform accurate differential expression analysis. Treating each cell as an independent replicate leads to underestimation of the variance and misleadingly small p-values. Working on the level of pseudobulk ensures reliable statistical tests because the samples correspond to the actual units of replication.  <span class="kw">&lt;br&gt;&lt;br&gt;</span>In this lesson you will:<span class="kw">&lt;br&gt;</span></span>
@@ -677,7 +677,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/details&gt;</span></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">  2. </span><span class="co">[</span><span class="ot">DE analysis of pseudobulk data using DESeq2</span><span class="co">](../lessons/04_pseudobulk_DE_analysis.md)</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">  2. </span><span class="co">[</span><span class="ot">DE analysis of pseudobulk data using DESeq2</span><span class="co">](04_pseudobulk_DE_analysis.qmd)</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="kw">&lt;details&gt;</span></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>       <span class="kw">&lt;summary&gt;&lt;i&gt;</span>Click here for a preview of this lesson<span class="kw">&lt;/i&gt;&lt;/summary&gt;</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>       <span class="kw">&lt;br&gt;</span> The next step is to take the DESeq2 object and run through the analysis workflow to identify differentially expressed genes. <span class="kw">&lt;br&gt;&lt;br&gt;</span>In this lesson you will:<span class="kw">&lt;br&gt;</span></span>
