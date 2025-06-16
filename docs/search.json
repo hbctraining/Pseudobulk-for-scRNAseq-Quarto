@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "",
+    "section": "",
+    "text": "Code\n\n\n\n\nPseudobulk and related approaches for scRNA-seq analysis\n\n\n\nAudience\nComputational skills required\nDuration\n\n\n\n\nBiologists\nIntroduction to R\n3-session online workshop (~7.5 hours of trainer-led time)\n\n\n\n\nDescription\nThis repository has teaching materials for a hands-on workshop on Pseudobulk and related approaches for scRNA-seq analysis. After clustering cells as part of a single-cell RNA-seq experiment, investigators are often interested in carrying out a differential expression analysis between conditions within certain cell types. When the experimental design includes replicates with multiple conditions there is power in identifying differentially expressed genes using a pseudobulk approach. This workshop will:\n\nDiscuss various approaches for differential expression using single cell RNA-seq data\nPrepare single-cell RNA-seq raw count data for pseudobulk analysis\nPerform differential expression analysis on pseudobulk counts using DESeq2\nPresent approaches for evaluating differential proportions of cells between conditions\n\nWorking knowledge of R is required or completion of the Introduction to R workshop.\n\n\n\nNote for Trainers:\nPlease note that the schedule linked below assumes that learners will spend between 3-4 hours on reading through, and completing exercises from selected lessons between classes. The online component of the workshop focuses on more exercises and discussion/Q & A.\n\n\n\n\n\n\n\nNote\n\n\n\nThese materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.\n\n\n\nLearning Objectives\n\nUnderstanding considerations for when to use different DGE algorithms on scRNA-seq data\nUsing FindMarkers to evaluate significantly DE genes\nAggregating single cell expression data into a pseudobulk counts matrix to run a DESeq2 workflow\nEvaluating expression patterns of differentially expressed genes at the pseudobulk and single cell level\nApplication of methods for evaluating differential proportions of cells between conditions\n\n\n\nLessons\n\nWorkshop schedule (trainer-led learning)\nSelf-learning\n\n\n\nInstallation Requirements\n\nApplications\nDownload the most recent versions of R and RStudio for your laptop:\n\nR (version 4.0.0 or above)\nRStudio\n\n\n\nPackages for R\n\nNote 1: Install the packages in the order listed below.\n\n\nNote 2:  All the package names listed below are case sensitive!\n\n\nNote 3: If you have a Mac, download and install this tool before intalling your packages: https://mac.r-project.org/tools/gfortran-12.2-universal.pkg\n\n\nNote 4: At any point (especially if you’ve used R/Bioconductor in the past), in the console R may ask you if you want to update any old packages by asking Update all/some/none? [a/s/n]:. If you see this, type “a” at the prompt and hit Enter to update any old packages. Updating packages can sometimes take quite a bit of time to run, so please account for that before you start with these installations.\n\n\nNote 5: If you see a message in your console along the lines of “binary version available but the source version is later”, followed by a question, “Do you want to install from sources the package which needs compilation? y/n”, type n for no, and hit enter.\n\n(1) Install the 8 packages listed below from Bioconductor using the the BiocManager::install() function.\n\nBiocManager::install(\"DESeq2\")\nBiocManager::install(\"EnhancedVolcano\")\nBiocManager::install(\"SingleCellExperiment\")\nBiocManager::install(\"miloR\")\nBiocManager::install(\"clusterProfiler\")\nBiocManager::install(\"org.Mm.eg.db\")\nBiocManager::install(\"sccomp\")\nBiocManager::install(\"speckle\")\n\nPlease install them one-by-one as follows:\n\nBiocManager::install(\"DESeq2\")\nBiocManager::install(\"EnhancedVolcano\")\n& so on ...\n\n(2) Install the 9 packages listed below from CRAN using the install.packages() function.\n\ninstall.packages(\"Seurat\")\ninstall.packages(\"tidyverse\")\ninstall.packages(\"pheatmap\")\ninstall.packages(\"RColorBrewer\")\ninstall.packages(\"cowplot\")\ninstall.packages(\"dplyr\")\ninstall.packages(\"ggalluvial\")\ninstall.packages(\"msigdbr\")\ninstall.packages(\"ggvenn\")\n\nPlease install them one-by-one as follows:\n\ninstall.packages(\"Seurat\")\ninstall.packages(\"tidyverse\")\ninstall.packages(\"pheatmap\")\n& so on ...\n\n(3) Finally, please check that all the packages were installed successfully by loading them one at a time using the library() function.\n\nlibrary(Seurat)\nlibrary(tidyverse)\nlibrary(pheatmap)\nlibrary(RColorBrewer)\nlibrary(cowplot)\nlibrary(dplyr)\nlibrary(DESeq2)\nlibrary(EnhancedVolcano)\nlibrary(SingleCellExperiment)\nlibrary(miloR)\nlibrary(ggalluvial)\nlibrary(clusterProfiler)\nlibrary(org.Mm.eg.db)\nlibrary(msigdbr)\nlibrary(ggvenn)\nlibrary(sccomp)\nlibrary(speckle)\n\n(4) Once all packages have been loaded, run sessionInfo().\n\nsessionInfo()"
+  },
+  {
+    "objectID": "lessons/schedule.html",
+    "href": "lessons/schedule.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "lessons/schedule.html#pre-reading",
+    "href": "lessons/schedule.html#pre-reading",
+    "title": "",
+    "section": "Pre-reading",
+    "text": "Pre-reading\n\nIntroduction to scRNA-seq\nscRNA-seq: From sequence reads to count matrix\nscRNA-seq: From counts to clusters\nDownload this project"
+  },
+  {
+    "objectID": "lessons/schedule.html#day-1",
+    "href": "lessons/schedule.html#day-1",
+    "title": "",
+    "section": "Day 1",
+    "text": "Day 1\n\n\n\nTime\nTopic\nInstructor\n\n\n\n\n09:30 - 09:45\nWorkshop introduction\nWill\n\n\n09:45 - 10:15\nPre-reading review and Q&A\nAll\n\n\n10:15 - 10:25\nBreak\n\n\n\n10:25 - 11:00\nProject setup and data exploration\nWill\n\n\n11:00 - 11:50\nDifferential expression analysis using FindMarkers()\nNoor\n\n\n11:50 - 12:00\nOverview of self-learning materials and homework submission\nWill\n\n\n\n\nBefore the next class:\nI. Please study the contents and work through all the code within the following lessons:\n\nAggregating counts by celltype using pseudobulk approach\n\n\nClick here for a preview of this lesson\n\n Forming pseudobulk samples is important to perform accurate differential expression analysis. Treating each cell as an independent replicate leads to underestimation of the variance and misleadingly small p-values. Working on the level of pseudobulk ensures reliable statistical tests because the samples correspond to the actual units of replication. In this lesson you will: - Aggregate counts for a given celltype - Demonstrate an efficent way to aggregate counts for multiple celltypes - Use the aggregated counts to create a DESeq2 object for downstream analysis \n\nDE analysis of pseudobulk data using DESeq2\n\n\nClick here for a preview of this lesson\n\n The next step is to take the DESeq2 object and run through the analysis workflow to identify differentially expressed genes. In this lesson you will: - Perform sample level QC\n- Evaluate gene-wise dispersions to evalute model fit - Extract results and understand the statistics generated\n\n\n\nSubmit your work:\n\n\nEach lesson above contains exercises; please go through each of them.\nSubmit your answers to the exercises using this Google form on the day before the next class.\n\n\n\nQuestions?\n\nIf you get stuck due to an error while running code in the lesson, email us"
+  },
+  {
+    "objectID": "lessons/schedule.html#day-2",
+    "href": "lessons/schedule.html#day-2",
+    "title": "",
+    "section": "Day 2",
+    "text": "Day 2\n\n\n\nTime\nTopic\nInstructor\n\n\n\n\n09:30 - 10:00\nSelf-learning lessons discussion\nAll\n\n\n10:00 - 10:40\nVisualization of differentially expressed genes\nWill\n\n\n10:40 - 10:50\nBreak\n\n\n\n10:50 - 12:00\nComparison of results from different DE approaches\nNoor\n\n\n\n\nBefore the next class:\nI. Please study the contents and work through all the code within the following lessons: 1. Functional Analysis\n\n\nClick here for a preview of this lesson\n\nNow that we have significant genes, let’s gain some biological insight In this lesson, we will: - Discuss approaches for functional analysis - Use clusterProfiler to run over-representation analsyis and visualize results - Use clusterProfiler to run GSEA \n\n\nSubmit your work:\n\n\nEach lesson above contains exercises; please go through each of them.\nSubmit your answers to the exercises using this Google form on the day before the next class.\n\n\n\nQuestions?\n\nIf you get stuck due to an error while running code in the lesson, email us"
+  },
+  {
+    "objectID": "lessons/schedule.html#day-3",
+    "href": "lessons/schedule.html#day-3",
+    "title": "",
+    "section": "Day 3",
+    "text": "Day 3\n\n\n\nTime\nTopic\nInstructor\n\n\n\n\n09:30 - 10:15\nSelf-learning lessons discussion\nAll\n\n\n10:15 - 11:15\nMethods for Differental Abundance\nNoor\n\n\n11:15 - 11:20\nBreak\n\n\n\n11:25 - 11:45\nDiscussion and Q&A\nAll\n\n\n11:45 - 12:00\nWrap-up\nWill"
+  },
+  {
+    "objectID": "lessons/schedule.html#answer-keys",
+    "href": "lessons/schedule.html#answer-keys",
+    "title": "",
+    "section": "Answer Keys",
+    "text": "Answer Keys\n\nDay 1 exercises\nDay 2 exercises"
+  },
+  {
+    "objectID": "lessons/schedule.html#resources",
+    "href": "lessons/schedule.html#resources",
+    "title": "",
+    "section": "Resources",
+    "text": "Resources"
+  }
+]
