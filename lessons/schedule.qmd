@@ -6,9 +6,9 @@ toc: false
 # Workshop Schedule
 
 ## Pre-reading
-* [Introduction to scRNA-seq](https://hbctraining.github.io/Intro-to-scRNAseq/lessons/01_intro_to_scRNA-seq.html)
-* [scRNA-seq: From sequence reads to count matrix](https://hbctraining.github.io/Intro-to-scRNAseq/lessons/02_SC_generation_of_count_matrix.html)
-* [scRNA-seq: From counts to clusters](../lessons/00_counts_to_clusters_overview.md)
+* [Introduction to scRNA-seq](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/01_intro_to_scRNA-seq.html)
+* [scRNA-seq: From sequence reads to count matrix](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/02_SC_generation_of_count_matrix.html)
+* [scRNA-seq: From counts to clusters](00_counts_to_clusters_overview.qmd)
 * [Download this project](https://www.dropbox.com/scl/fi/c3ggrdttuk3cqovqocy1a/Pseudobulk_workshop.zip?rlkey=nehku3i8mrtkbibe4wvt04n40&st=t8noj7w8&dl=1)
 
 ## Day 1
@@ -18,7 +18,7 @@ toc: false
 | 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) |  Will |
 | 09:45 - 10:15 | Pre-reading review and Q&A | All |
 | 10:15 - 10:25 | Break | |
-| 10:25 - 11:00 | [Project setup and data exploration ](../lessons/01_setup_intro_dataset.md) | Will |
+| 10:25 - 11:00 | [Project setup and data exploration ](01_setup_intro_dataset.qmd) | Will |
 | 11:00 - 11:50 | [Differential expression analysis using `FindMarkers()`](../lessons/02_DEanalysis_using_FindMarkers.md) | Noor |
 | 11:50 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
