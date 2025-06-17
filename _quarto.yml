@@ -53,6 +53,10 @@ website:
         contents:
           - lessons/07_functional_analysis_pseudobulk.qmd
           
+      - section: "Day 3:"
+        contents:
+          - lessons/08_differential_abundance.qmd
+          
 
 format:
   html:
