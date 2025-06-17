@@ -4,4 +4,4 @@ results/
 .DS_Store
 .Rhistory
 lessons/*.html
-docs/*_files/
+*_files/

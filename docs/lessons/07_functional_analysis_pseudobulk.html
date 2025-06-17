@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mary Piper, Meeta Mistry, Radhika Khetani">
+<meta name="dcterms.date" content="2024-09-12">
+
+<title>Pseudobulk for single-cell RNA-seq - Functional analysis of pseudobulk DE</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Pseudobulk for single-cell RNA-seq</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons/schedule.html" rel="" target="">
+ <span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://bioinformatics.sph.harvard.edu/" rel="" target="">
+ <span class="menu-text">HBC</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/hbctraining/Intro-to-scRNAseq-Quarto" rel="" target="">
+ <span class="menu-text">GitHub</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:hbctraining@hsph.harvard.edu" rel="" target="">
+ <span class="menu-text">Contact us</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/07_functional_analysis_pseudobulk.html">Day 2 Self-learning:</a></li><li class="breadcrumb-item"><a href="../lessons/07_functional_analysis_pseudobulk.html">Functional analysis of pseudobulk DE</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Pre-reading:</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/00_counts_to_clusters_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Single-cell RNA-seq: From Counts to Clusters</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Day 1:</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/01_setup_intro_dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Project Setup and Data Exploration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/02_DEanalysis_using_FindMarkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DE analysis using FindMarkers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Day 1 Self-learning:</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/03_pseudobulk_DESeq2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Set-up DESeq2 analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/04_pseudobulk_DE_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pseudobulk DESeq2 analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Day 2:</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/05_pseudobulk_DE_visualizations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pseudobulk visualization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/06_DE_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparing results from different DE approaches</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Day 2 Self-learning:</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/07_functional_analysis_pseudobulk.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Functional analysis of pseudobulk DE</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives:</a></li>
+  <li><a href="#functional-analysis-of-pseudobulk-differentially-expressed-genes" id="toc-functional-analysis-of-pseudobulk-differentially-expressed-genes" class="nav-link" data-scroll-target="#functional-analysis-of-pseudobulk-differentially-expressed-genes">Functional analysis of pseudobulk differentially expressed genes</a></li>
+  <li><a href="#over-representation-analysis" id="toc-over-representation-analysis" class="nav-link" data-scroll-target="#over-representation-analysis">Over-representation analysis</a>
+  <ul class="collapse">
+  <li><a href="#hypergeometric-test" id="toc-hypergeometric-test" class="nav-link" data-scroll-target="#hypergeometric-test">Hypergeometric test</a></li>
+  <li><a href="#running-ora-with-clusterprofiler" id="toc-running-ora-with-clusterprofiler" class="nav-link" data-scroll-target="#running-ora-with-clusterprofiler">Running ORA with clusterProfiler</a></li>
+  <li><a href="#exploring-results-from-over-representation-analysis" id="toc-exploring-results-from-over-representation-analysis" class="nav-link" data-scroll-target="#exploring-results-from-over-representation-analysis">Exploring results from over-representation analysis</a></li>
+  <li><a href="#visualizing-over-representation-analysis-results" id="toc-visualizing-over-representation-analysis-results" class="nav-link" data-scroll-target="#visualizing-over-representation-analysis-results">Visualizing over-representation analysis results</a></li>
+  </ul></li>
+  <li><a href="#gene-set-enrichment-analysis-gsea" id="toc-gene-set-enrichment-analysis-gsea" class="nav-link" data-scroll-target="#gene-set-enrichment-analysis-gsea">Gene Set Enrichment Analysis (GSEA)</a>
+  <ul class="collapse">
+  <li><a href="#running-gsea-with-msigdb-gene-sets" id="toc-running-gsea-with-msigdb-gene-sets" class="nav-link" data-scroll-target="#running-gsea-with-msigdb-gene-sets">Running GSEA with MSigDB gene sets</a></li>
+  <li><a href="#gsea-visualization" id="toc-gsea-visualization" class="nav-link" data-scroll-target="#gsea-visualization">GSEA visualization</a></li>
+  </ul></li>
+  <li><a href="#resources-for-functional-analysis" id="toc-resources-for-functional-analysis" class="nav-link" data-scroll-target="#resources-for-functional-analysis">Resources for functional analysis</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Functional analysis of pseudobulk DE</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mary Piper, Meeta Mistry, Radhika Khetani </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 12, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Approximate time: 40 minutes</p>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives:</h2>
+<ul>
+<li>Describe the theory of how functional enrichment tools yield statistically enriched functions or interactions</li>
+<li>Discuss functional analysis using over-representation analysis and functional class scoring</li>
+<li>Run clusterProfiler on significant genes from pseudobulk DE analysis</li>
+</ul>
+</section>
+<section id="functional-analysis-of-pseudobulk-differentially-expressed-genes" class="level2">
+<h2 class="anchored" data-anchor-id="functional-analysis-of-pseudobulk-differentially-expressed-genes">Functional analysis of pseudobulk differentially expressed genes</h2>
+<p>When it comes to functional analysis there are <strong>various analyses</strong> that can be done:</p>
+<ul>
+<li>Determine whether there is enrichment of known biological functions, interactions, or pathways</li>
+<li>Identify genes’ involvement in novel pathways or networks by grouping genes together based on similar trends</li>
+<li>Use global changes in gene expression by visualizing all genes being significantly up- or down-regulated in the context of external interaction data</li>
+</ul>
+<p>Generally, for any differential expression analysis, it is useful to interpret the resulting gene lists using freely available web- and R-based tools. While tools for functional analysis span a wide variety of techniques, they can loosely be categorized into three main types: over-representation analysis, functional class scoring, and pathway topology [<a href="https://github.com/hbctraining/In-depth-NGS-Data-Analysis-Course/raw/master/resources/pathway_tools.pdf">1</a>].</p>
+<p align="center">
+<img src="../img/pathway_analysis.png" width="600">
+</p>
+<p>Image credit: <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002375">Khatri et al, PloS Computational Biology</a></p>
+<p>In this lesson, we will walk you through both an over-representation analysis and gene set enrichment analysis (GSEA) using an R Bioconductor package called <a href="https://bioconductor.org/packages/release/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html"><code>clusterProfiler</code></a>.</p>
+</section>
+<section id="over-representation-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="over-representation-analysis">Over-representation analysis</h2>
+<p>Over-representation analysis (ORA) is used to determine which <em>a priori</em> defined gene sets are more present (over-represented) in a subset of “interesting” genes than what would be expected by chance <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2615629/">(Huang et al, 2009)</a>. Most genes in the genome have some pre-existing annotation associated with it, which has been compiled through a combination of manual curation and computational algorithms. There are a number of existing databases which define genes using a controlled vocabulary and then categorize genes into groups (gene sets) based on shared function, involvement in a pathway or presence in a specific cellular location, etc. A very commonly used gene annotataion resource is the <a href="https://geneontology.org/">Gene Ontology (GO) database</a>, and is what we will use in our workflow.</p>
+<p>We then use those categorizations to assess whether or not the enrichment observed amongst our DE gene results when compared to the larger universe of genes is significant.</p>
+<p align="center">
+<img src="../img/go_proportions.png" width="500">
+</p>
+<section id="hypergeometric-test" class="level3">
+<h3 class="anchored" data-anchor-id="hypergeometric-test">Hypergeometric test</h3>
+<p>The statistical test that will determine whether something is actually over-represented is the <em>Hypergeometric test</em>.</p>
+<p>Hypergeometric distribution is a probability distribution that describes the probability of some number of genes (k) being associated with “Functional category 1”, for all genes in our gene list (n=1000), compared to the number of genes (K) associated with “Functional category 1” from a population of all of the genes in entire genome (N=13,000) [<a href="https://en.wikipedia.org/wiki/Hypergeometric_distribution">2</a>].</p>
+<p>The calculation of probability of k successes follows the formula:</p>
+<p align="center">
+<img src="https://latex.codecogs.com/svg.image?&amp;space;p=1-\sum_{i=0}^{k-1}\frac{\binom{N}{k}\binom{N-K}{n-k}}{\binom{N}{n}}">
+</p>
+<p>This test will result in a p-value that will be adjusted to consider multiple testing correction for each category tested.</p>
+</section>
+<section id="running-ora-with-clusterprofiler" class="level3">
+<h3 class="anchored" data-anchor-id="running-ora-with-clusterprofiler">Running ORA with clusterProfiler</h3>
+<p>Now that we know more about what ORA is doing, let’s take our significant genes and see if there are any GO terms over-represented that align with what we expect to be happening in VSM cells with a change of temperature.</p>
+<p>In the workshop so far, we have run differential expression analysis using two different approaches:</p>
+<ol type="1">
+<li>Using <code>FindMarkers()</code> to treat individual cells as replicates</li>
+<li>Aggregating counts from all cells in a sample to run pseudobulk DE</li>
+</ol>
+<p>We will take <strong>the results from the pseudobulk DE</strong> and run different <strong>functional analysis</strong> methods to obtain some biological insight.</p>
+<p>Open up a new R script called <code>functional-analysis.R</code> and create a header indicating what the script will contain.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># September 2024</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HBC single-cell RNA-seq DGE workshop</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-cell RNA-seq analysis - Functional analysis of pseudobulk results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first thing we’ll do is load the required libraries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Mm.eg.db)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we will filter genes to remove any genes that have NA values in the padj column. These are genes that were not tested and so we do not want to consider them in our background set of genes. Once filtered, we create vectors containing our gene symbols for the background and query set of genes. We will query the up- and down-regulated gene sets separately, but note that you can also use the entire significant list as a query input.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Untested genes have padj = NA, so let's keep genes with padj != NA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dge_deseq2_noNAs <span class="ot">&lt;-</span> <span class="fu">filter</span>(dge_deseq2, padj <span class="sc">!=</span> <span class="st">"NA"</span> )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create background dataset for hypergeometric testing using all tested genes for significance in the results</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>all_genes <span class="ot">&lt;-</span> <span class="fu">as.character</span>(dge_deseq2_noNAs<span class="sc">$</span>gene)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract significant results for up-regulated</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>sigUp <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dge_deseq2_noNAs, padj <span class="sc">&lt;</span> <span class="fl">0.05</span>, log2FoldChange <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>sigUp_genes <span class="ot">&lt;-</span> <span class="fu">as.character</span>(sigUp<span class="sc">$</span>gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can perform the GO enrichment analysis and save the results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GO enrichment analysis </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>egoUp <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene =</span> sigUp_genes, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">universe =</span> all_genes,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">keyType =</span> <span class="st">"SYMBOL"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">OrgDb =</span> org.Mm.eg.db, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">ont =</span> <span class="st">"BP"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>, </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">qvalueCutoff =</span> <span class="fl">0.05</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">readable =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Note 1:</strong> The different organisms with annotation databases available to use with for the <code>OrgDb</code> argument can be found <a href="../img/orgdb_annotation_databases.png">here</a>.</p>
+<p><strong>Note 2:</strong> The <code>keyType</code> argument may be coded as <code>keytype</code> in different versions of clusterProfiler.</p>
+<p><strong>Note 3:</strong> The <code>ont</code> argument can accept either “BP” (Biological Process), “MF” (Molecular Function), and “CC” (Cellular Component) subontologies, or “ALL” for all three.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Output results from GO analysis to a table</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cluster_summaryUp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(egoUp)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(cluster_summaryUp, <span class="st">"../results/clusterProfiler_VSM_TNvsCold7_upregulated.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Instead of saving just the results summary from the <code>egoUp</code> object, it might also be beneficial to save the object itself. The <code>save()</code> function enables you to save it as a <code>.rda</code> file, e.g.&nbsp;<code>save(egoUp, file="results/egoUp.rda")</code>. The statistics stored in the object can be used for downstream visualization.</p>
+</div>
+</div>
+</section>
+<section id="exploring-results-from-over-representation-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-results-from-over-representation-analysis">Exploring results from over-representation analysis</h3>
+<p>Let’s take a look at what terms are identified as over-represented in the genes up-regulated in cold conditions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cluster_summaryUp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the first few columns we see the GO identifier and the descriptive term name. In the next two columns that follow, we observe GeneRatio and BgRatio. These values allows us to compare the overlaps to the background.</p>
+<ul>
+<li><strong>BgRatio:</strong> K/N
+<ul>
+<li>The total number of genes in the GO term gene set (<em>K</em>), divided by the total number of genes in universe (<em>N</em>)</li>
+</ul></li>
+<li><strong>GeneRatio</strong>: k/n
+<ul>
+<li>The total number of genes in our sig DE gene set which overlap with the GO term gene set (<em>k</em>), divided by the total number of genes in our sig DE gene set that overlap with the universe gene set (<em>n</em>)</li>
+</ul></li>
+<li><strong>Fold Enrichment</strong>: (k/n)/(K/N)
+<ul>
+<li>This represents how many fold enriched is the <strong>GeneRatio</strong> compared to the <strong>BgRatio</strong></li>
+</ul></li>
+</ul>
+<p>Other columns of interest are the <strong>p.adjust</strong> column (by which results are ordered by default), and the <strong>geneID</strong> column, which lists the gene symbols of the overlapping genes.</p>
+<p align="center">
+<img src="../img/ego_up_clusterprofiler.png" width="600">
+</p>
+<p>When cold induces a response in vascular smooth muscle cells (VSMCs), the primary transcriptional change observed is an up-regulation of genes related to vasoconstriction. Vasoconstriction is when the muscles around your blood vessels tighten to make the space inside smaller. In our results table we see <strong>significant terms such as extracellular matrix organization</strong> and <strong>cell proliferation</strong>, which makes sense because the cold temperatures will lead to a shift towards a more <strong>contractile phenotype</strong>. We also observe up-regulation of genes involved in <strong>cell adhesion</strong> and <strong>tight junction formation</strong>, which are processes related to <strong>maintaining vascular integrity</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Using the code above as a template, run the over-representation analysis on the significantly down-regulated genes from the pseudobulk analysis.
+<ul>
+<li>How many significant terms do you find?</li>
+<li>What are some of the prominent biological processes that are observed?</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="visualizing-over-representation-analysis-results" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-over-representation-analysis-results">Visualizing over-representation analysis results</h3>
+<p><code>clusterProfiler</code> has a variety of options for viewing the over-represented GO terms. We will explore the dotplot and the enrichment plot in this lesson.</p>
+<p>The <strong>dotplot</strong> shows statistics associated with a user-selected top number of significant terms. The color of the dots represents the adjusted p-values for these terms and size of the dots corresponds to the total count of sig DE genes annotated with the GO term (count). This plot displays the top 20 GO terms ordered by gene ratio, not adjusted p-value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dotplot </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(egoUp, <span class="at">showCategory=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="07_functional_analysis_pseudobulk_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p><strong>To save the figure,</strong> click on the <code>Export</code> button in the RStudio <code>Plots</code> tab and <code>Save as PDF...</code>. In the pop-up window, change: - <code>Orientation:</code> To <code>Portrait</code> - <code>PDF size</code> to <code>11 x 8</code> to give a figure of appropriate size for the text labels</p>
+<p>The next plot is the <strong>enrichment GO plot</strong>, which shows the relationship between the top 50 most significantly enriched GO terms (padj) by grouping similar terms together. Before creating the plot, we will need to obtain the similarity between terms using the <code>pairwise_termsim()</code> function (<a href="https://rdrr.io/github/GuangchuangYu/enrichplot/man/emapplot.html">instructions for emapplot</a>). In the enrichment plot, the color represents the p-values relative to the other displayed terms (brighter red is more significant), and the size of the terms represents the number of genes that are significant from our list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add similarity matrix to the termsim slot of enrichment result</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>egoUp <span class="ot">&lt;-</span> enrichplot<span class="sc">::</span><span class="fu">pairwise_termsim</span>(egoUp)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enrichmap clusters the 50 most significant (by padj) GO terms to visualize relationships between terms</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">emapplot</span>(egoUp, <span class="at">showCategory =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="07_functional_analysis_pseudobulk_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p><strong>To save the figure,</strong> click on the <code>Export</code> button in the RStudio <code>Plots</code> tab and <code>Save as PDF...</code>. In the pop-up window, ensure that the <code>Orientation</code> is <code>Portrait</code> and change the <code>PDF size</code> to <code>11 x 8</code> to give the figure the appropriate size for the text labels.</p>
+</section>
+</section>
+<section id="gene-set-enrichment-analysis-gsea" class="level2">
+<h2 class="anchored" data-anchor-id="gene-set-enrichment-analysis-gsea">Gene Set Enrichment Analysis (GSEA)</h2>
+<p>While over-representation analysis is helpful and commonly used, it does require you to subset your gene list using an arbitrary threshold. There could very well be many genes that very narrowly miss this threshold and are therefore not considered in the functional analysis. To get around this there are there are <strong>functional class scoring (FCS) methods</strong> that can be helpful. For these methods the hypothesis is that <strong>although large changes in individual genes can have significant effects on pathways (and will be detected via ORA methods), weaker but coordinated changes in sets of functionally related genes (i.e., pathways) can also have significant effects</strong>. Thus, rather than setting a threshold to identify ‘significant genes’, all genes are considered in the analysis. The gene-level statistics from the dataset are aggregated to generate a single pathway-level statistic and statistical significance of each pathway is reported. This type of analysis can be particularly helpful if the differential expression analysis only outputs a small list of significant DE genes.</p>
+<p>A commonly used example of an FCS method is GSEA <a href="https://www.pnas.org/doi/10.1073/pnas.0506580102">(Subramanium A. et al, 2005)</a>. Gene set enrichment analysis utilizes the gene-level statistics or log2-fold changes for all genes to look to see whether gene sets for particular biological pathways (e.g., derived from KEGG pathways, Gene Ontology terms, MSigDB, etc) are enriched among the large positive or negative fold changes.</p>
+<p align="center">
+<img src="../img/gsea_overview.png" width="500">
+</p>
+<p><em>Image source: <a href="https://www.pnas.org/doi/10.1073/pnas.0506580102">(Subramanium A. et al, 2005)</a></em></p>
+<p>This image describes the theory of GSEA, with the ‘gene set S’ showing the metric used (in our case, ranked log2-fold changes) to determine enrichment of genes in the gene set. There are four main steps that are being performed:</p>
+<ol type="1">
+<li><strong>Rank genes</strong>:
+<ul>
+<li>Genes in a data set are ranked based on the given statistic, which in our case is the shrunken log2-fold changes.</li>
+</ul></li>
+<li><strong>Calculate enrichment scores for each gene set</strong>
+<ul>
+<li>This score reflects how often genes in the set appear at the top or bottom of the ranked list.</li>
+<li>The score is calculated by walking down the list of log2-fold changes and increasing the running-sum statistic every time a gene in the gene set is encountered and decreasing it when genes are not part of the gene set.</li>
+<li>Increase/decrease is determined by magnitude of fold change.</li>
+</ul></li>
+<li><strong>Estimate statistical significance</strong>
+<ul>
+<li>A permutation test is used to calculate a null distribution for the enrichment score. This produces a p-value that represents the probability of observing a given enrichment score.</li>
+</ul></li>
+<li>Adjust for <strong>multiple hypothesis testing</strong>
+<ul>
+<li>Enrichment scores are normalized for the size of each gene set and a false discovery rate is calculated to prevent false positives.</li>
+</ul></li>
+</ol>
+<section id="running-gsea-with-msigdb-gene-sets" class="level3">
+<h3 class="anchored" data-anchor-id="running-gsea-with-msigdb-gene-sets">Running GSEA with MSigDB gene sets</h3>
+<p>The <code>clusterProfiler</code> package offers several functions to perform GSEA using different genes sets, including but not limited to GO, KEGG, and MSigDb. We will use the MSigDb gene sets in our example below. The Molecular Signatures Database (also known as <a href="https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp">MSigDB</a>) is a collection of annotated gene sets. It contains 8 major collections for mouse, and for our analysis we will use C5, which contains the Gene Ontology gene sets. We can see how this aligns with our ORA result.</p>
+<p>To run GSEA with the MSigDb gene sets, we will use the <code>msigdbr</code> R package which provides the MSigDB gene sets in tidy data format that can be used directly with clusterProfiler. The msigdbr package <strong>supports several species</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_species</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   species_name                    species_common_name                          
+   &lt;chr&gt;                           &lt;chr&gt;                                        
+ 1 Anolis carolinensis             Carolina anole, green anole                  
+ 2 Bos taurus                      bovine, cattle, cow, dairy cow, domestic cat…
+ 3 Caenorhabditis elegans          &lt;NA&gt;                                         
+ 4 Canis lupus familiaris          dog, dogs                                    
+ 5 Danio rerio                     leopard danio, zebra danio, zebra fish, zebr…
+ 6 Drosophila melanogaster         fruit fly                                    
+ 7 Equus caballus                  domestic horse, equine, horse                
+ 8 Felis catus                     cat, cats, domestic cat                      
+ 9 Gallus gallus                   bantam, chicken, chickens, Gallus domesticus 
+10 Homo sapiens                    human                                        
+11 Macaca mulatta                  rhesus macaque, rhesus macaques, Rhesus monk…
+12 Monodelphis domestica           gray short-tailed opossum                    
+13 Mus musculus                    house mouse, mouse                           
+14 Ornithorhynchus anatinus        duck-billed platypus, duckbill platypus, pla…
+15 Pan troglodytes                 chimpanzee                                   
+16 Rattus norvegicus               brown rat, Norway rat, rat, rats             
+17 Saccharomyces cerevisiae        baker's yeast, brewer's yeast, S. cerevisiae 
+18 Schizosaccharomyces pombe 972h- &lt;NA&gt;                                         
+19 Sus scrofa                      pig, pigs, swine, wild boar                  
+20 Xenopus tropicalis              tropical clawed frog, western clawed frog    </code></pre>
+</div>
+</div>
+<p>And you can see <strong>what gene sets are available</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_collections</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 23 × 3
+   gs_cat gs_subcat         num_genesets
+   &lt;chr&gt;  &lt;chr&gt;                    &lt;int&gt;
+ 1 C1     ""                         299
+ 2 C2     "CGP"                     3384
+ 3 C2     "CP"                        29
+ 4 C2     "CP:BIOCARTA"              292
+ 5 C2     "CP:KEGG"                  186
+ 6 C2     "CP:PID"                   196
+ 7 C2     "CP:REACTOME"             1615
+ 8 C2     "CP:WIKIPATHWAYS"          664
+ 9 C3     "MIR:MIRDB"               2377
+10 C3     "MIR:MIR_Legacy"           221
+# ℹ 13 more rows</code></pre>
+</div>
+</div>
+<p>For our analysis, we will select the mouse C5 collection, which corresponds to GO gene sets. From the table, we only need two columns, Gene set name and the Gene symbol:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a specific collection; C5 GO signatures</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>m_t2g <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"Mus musculus"</span>, <span class="at">category =</span> <span class="st">"C5"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(gs_name, gene_symbol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have our gene sets, we need to prepare the fold changes. GSEA will use the log2-fold changes obtained from the differential expression analysis for every gene to perform the analysis. We need to create an ordered and named vector for input to clusterProfiler:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the foldchanges</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>foldchanges <span class="ot">&lt;-</span> dge_deseq2_noNAs<span class="sc">$</span>log2FoldChange</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Name each fold change with the corresponding gene symbol</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(foldchanges) <span class="ot">&lt;-</span> dge_deseq2_noNAs<span class="sc">$</span>gene</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort fold changes in decreasing order</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>foldchanges <span class="ot">&lt;-</span> <span class="fu">sort</span>(foldchanges, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(foldchanges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>D630033O11Rik        Elmod1         Apela         Wisp2          Gipr 
+     7.588727      6.849549      5.983377      5.871715      5.155337 
+       Igfbp2 
+     5.035339 </code></pre>
+</div>
+</div>
+<p>Now we are ready to run GSEA!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GSEA</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>msig_GSEA <span class="ot">&lt;-</span> <span class="fu">GSEA</span>(foldchanges, <span class="at">TERM2GENE =</span> m_t2g, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the GSEA results</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>msigGSEA_results <span class="ot">&lt;-</span> msig_GSEA<span class="sc">@</span>result</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Write results to file</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(msigGSEA_results, <span class="st">"../results/gsea_msigdb_GO_genesets.csv"</span>, <span class="at">quote=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The permutations are performed using random reordering, so every time we run the function we will get slightly different results. If we would like to use the same permutations every time we run a function, then we use the <code>set.seed()</code> function prior to running. The input to set.seed() can be any number.</p>
+</div>
+</div>
+<p>Take a look at the results table and reorder by NES (normalized enrichment score). <strong>What terms do you see positively enriched? Does this overlap with what we observed from ORA analysis?</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at results ordered by NES</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>msigGSEA_results <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>NES) <span class="sc">%&gt;%</span> <span class="fu">View</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p align="center">
+<img src="../img/msigdb_results.png" width="800">
+</p>
+<ul>
+<li>The first few columns of the results table identify the gene set information.</li>
+<li>The following columns include the associated statistics.</li>
+<li>The last column will report which genes are part of the ‘core enrichment’. These are the genes associated with the pathway which contributed to the observed enrichment score (i.e., in the extremes of the ranking).</li>
+</ul>
+</section>
+<section id="gsea-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="gsea-visualization">GSEA visualization</h3>
+<p>Let’s explore the GSEA plot of enrichment of one of the pathways in the ranked list using a built-in function from clusterProfiler. We can pick the top term <code>GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the GSEA plot for a single enriched GO term</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gseaplot</span>(msig_GSEA, <span class="at">geneSetID =</span> <span class="st">'GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="07_functional_analysis_pseudobulk_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In this plot, the lines in plot represent the genes in the gene set <code>GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT</code> and where they occur among the log2-fold changes. The largest positive log2-fold changes are on the left-hand side of the plot, while the largest negative log2-fold changes are on the right. The top plot shows the magnitude of the log2-fold changes for each gene, while the bottom plot shows the running sum, with the enrichment score peaking at the red dotted line (which is among the positive log2-fold changes). This suggests the up-regulation of this function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Now that we have run through functional analysis with the results from Pseudobulk DE, let’s see what results we derive from the DGE lists from our <a href="02_DEanalysis_using_FindMarkers.md">FindMarkers DE analysis</a>.</p>
+<ol type="1">
+<li>Create a significant DE genes data frame from the FindMarkers results with an added fold change criteria to reduce the gene list size. You can do this by running the code below:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sig_fc_dge <span class="ot">&lt;-</span> dge_vsm <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(p_val_adj <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="fu">abs</span>(avg_log2FC) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Use this gene list to run an over-representation analysis. Be sure to separate genes into up- and down-regulated first. Also keep in mind that the background gene dataset is different than for the DESeq2 analysis. What are the top terms enriched among up-regulated genes? What are the top terms enriched among down-regulated genes?</p></li>
+<li><p>How do these results compare with what we observed from the Pseudobulk DE functional analysis?</p></li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="resources-for-functional-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="resources-for-functional-analysis">Resources for functional analysis</h2>
+<p>In this lesson we reviewed two different approaches for functional analysis and demonstrated the with the use of the clusterProfiler package. Note that there are numerous other options out there, including the use of web-based tools. Below we list a few tools that we are familiar with:</p>
+<ul>
+<li>g:Profiler - http://biit.cs.ut.ee/gprofiler/index.cgi</li>
+<li>DAVID - https://david.ncifcrf.gov</li>
+<li>clusterProfiler - http://bioconductor.org/packages/release/bioc/html/clusterProfiler.html</li>
+<li>ReviGO (visualizing GO analysis, input is GO terms) - http://revigo.irb.hr/</li>
+<li>WGCNA - <a href="https://web.archive.org/web/20230323144343/horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/">https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/</a> (no longer maintained)</li>
+<li>GSEA - http://software.broadinstitute.org/gsea/index.jsp</li>
+<li>SPIA - https://www.bioconductor.org/packages/release/bioc/html/SPIA.html</li>
+<li>GAGE/Pathview - http://www.bioconductor.org/packages/release/bioc/html/gage.html</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Functional analysis of pseudobulk DE"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Mary Piper, Meeta Mistry, Radhika Khetani"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> Monday, September 12 2024</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Approximate time: 40 minutes</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>dge_deseq2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../results/deseq2_VSM_cold7_vs_TN.csv"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives:</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="ss">*  </span>Describe the theory of how functional enrichment tools yield statistically enriched functions or interactions</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="ss">*  </span>Discuss functional analysis using over-representation analysis and functional class scoring</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="ss">*  </span>Run clusterProfiler on significant genes from pseudobulk DE analysis</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functional analysis of pseudobulk differentially expressed genes</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>When it comes to functional analysis there are **various analyses** that can be done:</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Determine whether there is enrichment of known biological functions, interactions, or pathways</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify genes' involvement in novel pathways or networks by grouping genes together based on similar trends</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use global changes in gene expression by visualizing all genes being significantly up- or down-regulated in the context of external interaction data</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>Generally, for any differential expression analysis, it is useful to interpret the resulting gene lists using freely available web- and R-based tools.  While tools for functional analysis span a wide variety of techniques, they can loosely be categorized into three main types: over-representation analysis, functional class scoring, and pathway topology [<span class="co">[</span><span class="ot">1</span><span class="co">](https://github.com/hbctraining/In-depth-NGS-Data-Analysis-Course/raw/master/resources/pathway_tools.pdf)</span>]. </span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../img/pathway_analysis.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"600"</span><span class="kw">&gt;</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>Image credit: <span class="co">[</span><span class="ot">Khatri et al, PloS Computational Biology</span><span class="co">](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002375)</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>In this lesson, we will walk you through both an over-representation analysis and gene set enrichment analysis (GSEA) using an R Bioconductor package called <span class="co">[</span><span class="ot">`clusterProfiler`</span><span class="co">](https://bioconductor.org/packages/release/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html)</span>.</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Over-representation analysis</span></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>Over-representation analysis (ORA) is used to determine which _a priori_ defined gene sets are more present (over-represented) in a subset of “interesting” genes than what would be expected by chance <span class="co">[</span><span class="ot">(Huang et al, 2009)</span><span class="co">](https://pmc.ncbi.nlm.nih.gov/articles/PMC2615629/)</span>. Most genes in the genome have some pre-existing annotation associated with it, which has been compiled through a combination of manual curation and computational algorithms. There are a number of existing databases which define genes using a controlled vocabulary and then categorize genes into groups (gene sets) based on shared function, involvement in a pathway or presence in a specific cellular location, etc. A very commonly used gene annotataion resource is the <span class="co">[</span><span class="ot">Gene Ontology (GO) database</span><span class="co">](https://geneontology.org/)</span>, and is what we will use in our workflow.</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>We then use those categorizations to assess whether or not the enrichment observed amongst our DE gene results when compared to the larger universe of genes is significant. </span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../img/go_proportions.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"500"</span><span class="kw">&gt;</span></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hypergeometric test</span></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>The statistical test that will determine whether something is actually over-represented is the *Hypergeometric test*.</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>Hypergeometric distribution is a probability distribution that describes the probability of some number of genes (k) being associated with "Functional category 1", for all genes in our gene list (n=1000), compared to the number of genes (K) associated with "Functional category 1" from a population of all of the genes in entire genome (N=13,000) [<span class="co">[</span><span class="ot">2</span><span class="co">](https://en.wikipedia.org/wiki/Hypergeometric_distribution)</span>].</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>The calculation of probability of k successes follows the formula:</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span>  </span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?</span><span class="dv">&amp;space;</span><span class="st">p=1-\sum_{i=0}^{k-1}\frac{\binom{N}{k}\binom{N-K}{n-k}}{\binom{N}{n}}"</span> <span class="kw">/&gt;</span></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>This test will result in a p-value that will be adjusted to consider  multiple testing correction for each category tested.</span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### Running ORA with clusterProfiler</span></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>Now that we know more about what ORA is doing, let's take our significant genes and see if there are any GO terms over-represented that align with what we expect to be happening in VSM cells with a change of temperature.</span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>In the workshop so far, we have run differential expression analysis using two different approaches: </span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using <span class="in">`FindMarkers()`</span> to treat individual cells as replicates</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Aggregating counts from all cells in a sample to run pseudobulk DE</span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>We will take **the results from the pseudobulk DE** and run different **functional analysis** methods to obtain some biological insight.</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a>Open up a new R script called <span class="in">`functional-analysis.R`</span> and create a header indicating what the script will contain.</span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a><span class="co"># September 2024</span></span>
+<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="co"># HBC single-cell RNA-seq DGE workshop</span></span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Single-cell RNA-seq analysis - Functional analysis of pseudobulk results</span></span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>The first thing we'll do is load the required libraries:</span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler)</span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(org.Mm.eg.db)</span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(msigdbr)</span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a>Next, we will filter genes to remove any genes that have NA values in the padj column. These are genes that were not tested and so we do not want to consider them in our background set of genes. Once filtered, we create vectors containing our gene symbols for the background and query set of genes. We will query the up- and down-regulated gene sets separately, but note that you can also use the entire significant list as a query input.</span>
+<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Untested genes have padj = NA, so let's keep genes with padj != NA</span></span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a>dge_deseq2_noNAs <span class="ot">&lt;-</span> <span class="fu">filter</span>(dge_deseq2, padj <span class="sc">!=</span> <span class="st">"NA"</span> )</span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a><span class="co"># Create background dataset for hypergeometric testing using all tested genes for significance in the results</span></span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a>all_genes <span class="ot">&lt;-</span> <span class="fu">as.character</span>(dge_deseq2_noNAs<span class="sc">$</span>gene)</span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract significant results for up-regulated</span></span>
+<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a>sigUp <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dge_deseq2_noNAs, padj <span class="sc">&lt;</span> <span class="fl">0.05</span>, log2FoldChange <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a>sigUp_genes <span class="ot">&lt;-</span> <span class="fu">as.character</span>(sigUp<span class="sc">$</span>gene)</span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a>Finally, we can perform the GO enrichment analysis and save the results:</span>
+<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GO enrichment analysis </span></span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a>egoUp <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene =</span> sigUp_genes, </span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>                <span class="at">universe =</span> all_genes,</span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a>                <span class="at">keyType =</span> <span class="st">"SYMBOL"</span>,</span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a>                <span class="at">OrgDb =</span> org.Mm.eg.db, </span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a>                <span class="at">ont =</span> <span class="st">"BP"</span>, </span>
+<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>                <span class="at">pAdjustMethod =</span> <span class="st">"BH"</span>, </span>
+<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a>                <span class="at">qvalueCutoff =</span> <span class="fl">0.05</span>, </span>
+<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a>                <span class="at">readable =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a>**Note 1:** The different organisms with annotation databases available to use with for the <span class="in">`OrgDb`</span> argument can be found <span class="co">[</span><span class="ot">here</span><span class="co">](../img/orgdb_annotation_databases.png)</span>.</span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a>**Note 2:** The <span class="in">`keyType`</span> argument may be coded as <span class="in">`keytype`</span> in different versions of clusterProfiler.</span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a>**Note 3:**  The <span class="in">`ont`</span> argument can accept either "BP" (Biological Process), "MF" (Molecular Function), and "CC" (Cellular Component) subontologies, or "ALL" for all three.</span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Output results from GO analysis to a table</span></span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>cluster_summaryUp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(egoUp)</span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(cluster_summaryUp, <span class="st">"../results/clusterProfiler_VSM_TNvsCold7_upregulated.csv"</span>)</span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span>          </span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>Instead of saving just the results summary from the <span class="in">`egoUp`</span> object, it might also be beneficial to save the object itself. The <span class="in">`save()`</span> function enables you to save it as a <span class="in">`.rda`</span> file, e.g. <span class="in">`save(egoUp, file="results/egoUp.rda")`</span>. The statistics stored in the object can be used for downstream visualization.</span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exploring results from over-representation analysis</span></span>
+<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>Let's take a look at what terms are identified as over-represented in the genes up-regulated in cold conditions.</span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cluster_summaryUp)</span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a>In the first few columns we see the GO identifier and the descriptive term name. In the next two columns that follow, we observe GeneRatio and BgRatio. These values allows us to compare the overlaps to the background.</span>
+<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**BgRatio:** K/N</span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>The total number of genes in the GO term gene set (_K_), divided by the total number of genes in universe (_N_)</span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**GeneRatio**: k/n</span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>The total number of genes in our sig DE gene set which overlap with the GO term gene set (_k_), divided by the total number of genes in our sig DE gene set that overlap with the universe gene set (_n_)</span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Fold Enrichment**: (k/n)/(K/N)</span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>This represents how many fold enriched is the **GeneRatio** compared to the **BgRatio**</span>
+<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a>Other columns of interest are the **p.adjust** column (by which results are ordered by default), and the **geneID** column, which lists the gene symbols of the overlapping genes.</span>
+<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span>  </span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../img/ego_up_clusterprofiler.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"600"</span><span class="kw">&gt;</span></span>
+<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a>When cold induces a response in vascular smooth muscle cells (VSMCs), the primary transcriptional change observed is an up-regulation of genes related to vasoconstriction. Vasoconstriction is when the muscles around your blood vessels tighten to make the space inside smaller. In our results table we see **significant terms such as extracellular matrix organization** and **cell proliferation**, which makes sense because the cold temperatures will lead to a shift towards a more **contractile phenotype**. We also observe up-regulation of genes involved in **cell adhesion** and **tight junction formation**, which are processes related to **maintaining vascular integrity**.</span>
+<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercises</span></span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Using the code above as a template, run the over-representation analysis on the significantly down-regulated genes from the pseudobulk analysis.</span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>How many significant terms do you find?</span>
+<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>What are some of the prominent biological processes that are observed?</span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualizing over-representation analysis results</span></span>
+<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a><span class="in">`clusterProfiler`</span> has a variety of options for viewing the over-represented GO terms. We will explore the dotplot and the enrichment plot in this lesson.</span>
+<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a>The **dotplot** shows statistics associated with a user-selected top number of significant terms. The color of the dots represents the adjusted p-values for these terms and size of the dots corresponds to the total count of sig DE genes annotated with the GO term (count). This plot displays the top 20 GO terms ordered by gene ratio, not adjusted p-value.</span>
+<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=15}</span></span>
+<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a><span class="co"># Dotplot </span></span>
+<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(egoUp, <span class="at">showCategory=</span><span class="dv">20</span>)</span>
+<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a>**To save the figure,** click on the <span class="in">`Export`</span> button in the RStudio <span class="in">`Plots`</span> tab and <span class="in">`Save as PDF...`</span>. In the pop-up window, change:</span>
+<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Orientation:`</span> To <span class="in">`Portrait`</span></span>
+<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`PDF size`</span> to <span class="in">`11 x 8`</span> to give a figure of appropriate size for the text labels</span>
+<span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a>The next plot is the **enrichment GO plot**, which shows the relationship between the top 50 most significantly enriched GO terms (padj) by grouping similar terms together. Before creating the plot, we will need to obtain the similarity between terms using the <span class="in">`pairwise_termsim()`</span> function (<span class="co">[</span><span class="ot">instructions for emapplot</span><span class="co">](https://rdrr.io/github/GuangchuangYu/enrichplot/man/emapplot.html)</span>). In the enrichment plot, the color represents the p-values relative to the other displayed terms (brighter red is more significant), and the size of the terms represents the number of genes that are significant from our list.</span>
+<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.height=10, fig.width=10}</span></span>
+<span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a><span class="co"># Add similarity matrix to the termsim slot of enrichment result</span></span>
+<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a>egoUp <span class="ot">&lt;-</span> enrichplot<span class="sc">::</span><span class="fu">pairwise_termsim</span>(egoUp)</span>
+<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Enrichmap clusters the 50 most significant (by padj) GO terms to visualize relationships between terms</span></span>
+<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a><span class="fu">emapplot</span>(egoUp, <span class="at">showCategory =</span> <span class="dv">50</span>)</span>
+<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a>**To save the figure,** click on the <span class="in">`Export`</span> button in the RStudio <span class="in">`Plots`</span> tab and <span class="in">`Save as PDF...`</span>. In the pop-up window, ensure that the <span class="in">`Orientation`</span> is <span class="in">`Portrait`</span> and change the <span class="in">`PDF size`</span> to <span class="in">`11 x 8`</span> to give the figure the appropriate size for the text labels.</span>
+<span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## Gene Set Enrichment Analysis (GSEA)</span></span>
+<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a>While over-representation analysis is helpful and commonly used, it does require you to subset your gene list using an arbitrary threshold. There could very well be many genes that very narrowly miss this threshold and are therefore not considered in the functional analysis. To get around this there are there are **functional class scoring (FCS) methods** that can be helpful. For these methods the hypothesis is that **although large changes in individual genes can have significant effects on pathways (and will be detected via ORA methods), weaker but coordinated changes in sets of functionally related genes (i.e., pathways) can also have significant effects**. Thus, rather than setting a threshold to identify 'significant genes', all genes are considered in the analysis. The gene-level statistics from the dataset are aggregated to generate a single pathway-level statistic and statistical significance of each pathway is reported. This type of analysis can be particularly helpful if the differential expression analysis only outputs a small list of significant DE genes.</span>
+<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a>A commonly used example of an FCS method is GSEA <span class="co">[</span><span class="ot">(Subramanium A. et al, 2005)</span><span class="co">](https://www.pnas.org/doi/10.1073/pnas.0506580102)</span>. Gene set enrichment analysis utilizes the gene-level statistics or log2-fold changes for all genes to look to see whether gene sets for particular biological pathways (e.g., derived from KEGG pathways, Gene Ontology terms, MSigDB, etc) are enriched among the large positive or negative fold changes.</span>
+<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span> </span>
+<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../img/gsea_overview.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"500"</span><span class="kw">&gt;</span></span>
+<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a>_Image source: [(Subramanium A. et al, 2005)](https://www.pnas.org/doi/10.1073/pnas.0506580102)_</span>
+<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a>This image describes the theory of GSEA, with the 'gene set S' showing the metric used (in our case, ranked log2-fold changes) to determine enrichment of genes in the gene set. There are four main steps that are being performed:</span>
+<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Rank genes**:</span>
+<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>Genes in a data set are ranked based on the given statistic, which in our case is the shrunken log2-fold changes. </span>
+<span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Calculate enrichment scores for each gene set**</span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>This score reflects how often genes in the set appear at the top or bottom of the ranked list.</span>
+<span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>The score is calculated by walking down the list of log2-fold changes and increasing the running-sum statistic every time a gene in the gene set is encountered and decreasing it when genes are not part of the gene set.</span>
+<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Increase/decrease is determined by magnitude of fold change.</span>
+<span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Estimate statistical significance**</span>
+<span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="ss">   *  </span>A permutation test is used to calculate a null distribution for the enrichment score. This produces a p-value that represents the probability of observing a given enrichment score. </span>
+<span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Adjust for **multiple hypothesis testing**</span>
+<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a><span class="ss">   * </span>Enrichment scores are normalized for the size of each gene set and a false discovery rate is calculated to prevent false positives.</span>
+<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-237"><a href="#cb20-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### Running GSEA with MSigDB gene sets</span></span>
+<span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a>The <span class="in">`clusterProfiler`</span> package offers several functions to perform GSEA using different genes sets, including but not limited to GO, KEGG, and MSigDb. We will use the MSigDb gene sets in our example below. The Molecular Signatures Database (also known as <span class="co">[</span><span class="ot">MSigDB</span><span class="co">](https://www.gsea-msigdb.org/gsea/msigdb/mouse/collections.jsp)</span>) is a collection of annotated gene sets. It contains 8 major collections for mouse, and for our analysis we will use C5, which contains the Gene Ontology gene sets. We can see how this aligns with our ORA result.</span>
+<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a>To run GSEA with the MSigDb gene sets, we will use the <span class="in">`msigdbr`</span> R package which provides the MSigDB gene sets in tidy data format that can be used directly with clusterProfiler. The msigdbr package **supports several species**:</span>
+<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_species</span>()</span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a>And you can see **what gene sets are available**:</span>
+<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a><span class="fu">msigdbr_collections</span>()</span>
+<span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-257"><a href="#cb20-257" aria-hidden="true" tabindex="-1"></a>For our analysis, we will select the mouse C5 collection, which corresponds to GO gene sets. From the table, we only need two columns, Gene set name and the Gene symbol:</span>
+<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-261"><a href="#cb20-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a specific collection; C5 GO signatures</span></span>
+<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a>m_t2g <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"Mus musculus"</span>, <span class="at">category =</span> <span class="st">"C5"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-264"><a href="#cb20-264" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(gs_name, gene_symbol)</span>
+<span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a>Now that we have our gene sets, we need to prepare the fold changes. GSEA will use the log2-fold changes obtained from the differential expression analysis for every gene to perform the analysis. We need to create an ordered and named vector for input to clusterProfiler:</span>
+<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the foldchanges</span></span>
+<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a>foldchanges <span class="ot">&lt;-</span> dge_deseq2_noNAs<span class="sc">$</span>log2FoldChange</span>
+<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a><span class="co"># Name each fold change with the corresponding gene symbol</span></span>
+<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(foldchanges) <span class="ot">&lt;-</span> dge_deseq2_noNAs<span class="sc">$</span>gene</span>
+<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort fold changes in decreasing order</span></span>
+<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a>foldchanges <span class="ot">&lt;-</span> <span class="fu">sort</span>(foldchanges, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(foldchanges)</span>
+<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a>Now we are ready to run GSEA!</span>
+<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-289"><a href="#cb20-289" aria-hidden="true" tabindex="-1"></a><span class="co"># Run GSEA</span></span>
+<span id="cb20-290"><a href="#cb20-290" aria-hidden="true" tabindex="-1"></a>msig_GSEA <span class="ot">&lt;-</span> <span class="fu">GSEA</span>(foldchanges, <span class="at">TERM2GENE =</span> m_t2g, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-291"><a href="#cb20-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the GSEA results</span></span>
+<span id="cb20-293"><a href="#cb20-293" aria-hidden="true" tabindex="-1"></a>msigGSEA_results <span class="ot">&lt;-</span> msig_GSEA<span class="sc">@</span>result</span>
+<span id="cb20-294"><a href="#cb20-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-295"><a href="#cb20-295" aria-hidden="true" tabindex="-1"></a><span class="co"># Write results to file</span></span>
+<span id="cb20-296"><a href="#cb20-296" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(msigGSEA_results, <span class="st">"../results/gsea_msigdb_GO_genesets.csv"</span>, <span class="at">quote=</span>F)</span>
+<span id="cb20-297"><a href="#cb20-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-298"><a href="#cb20-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-299"><a href="#cb20-299" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb20-300"><a href="#cb20-300" aria-hidden="true" tabindex="-1"></a>The permutations are performed using random reordering, so every time we run the function we will get slightly different results. If we would like to use the same permutations every time we run a function, then we use the <span class="in">`set.seed()`</span> function prior to running. The input to set.seed() can be any number.</span>
+<span id="cb20-301"><a href="#cb20-301" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-302"><a href="#cb20-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-303"><a href="#cb20-303" aria-hidden="true" tabindex="-1"></a>Take a look at the results table and reorder by NES (normalized enrichment score). **What terms do you see positively enriched? Does this overlap with what we observed from ORA analysis?**</span>
+<span id="cb20-304"><a href="#cb20-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-307"><a href="#cb20-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-308"><a href="#cb20-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb20-309"><a href="#cb20-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at results ordered by NES</span></span>
+<span id="cb20-310"><a href="#cb20-310" aria-hidden="true" tabindex="-1"></a>msigGSEA_results <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>NES) <span class="sc">%&gt;%</span> <span class="fu">View</span>()</span>
+<span id="cb20-311"><a href="#cb20-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">align</span><span class="ot">=</span><span class="st">"center"</span><span class="kw">&gt;</span> </span>
+<span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"../img/msigdb_results.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"800"</span><span class="kw">&gt;</span></span>
+<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/p&gt;</span></span>
+<span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The first few columns of the results table identify the gene set information.</span>
+<span id="cb20-319"><a href="#cb20-319" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The following columns include the associated statistics.</span>
+<span id="cb20-320"><a href="#cb20-320" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The last column will report which genes are part of the 'core enrichment'. These are the genes associated with the pathway which contributed to the observed enrichment score (i.e., in the extremes of the ranking).</span>
+<span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-322"><a href="#cb20-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### GSEA visualization</span></span>
+<span id="cb20-323"><a href="#cb20-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-324"><a href="#cb20-324" aria-hidden="true" tabindex="-1"></a>Let's explore the GSEA plot of enrichment of one of the pathways in the ranked list using a built-in function from clusterProfiler. We can pick the top term <span class="in">`GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT`</span>:</span>
+<span id="cb20-325"><a href="#cb20-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-328"><a href="#cb20-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-329"><a href="#cb20-329" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the GSEA plot for a single enriched GO term</span></span>
+<span id="cb20-330"><a href="#cb20-330" aria-hidden="true" tabindex="-1"></a><span class="fu">gseaplot</span>(msig_GSEA, <span class="at">geneSetID =</span> <span class="st">'GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT'</span>)</span>
+<span id="cb20-331"><a href="#cb20-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-332"><a href="#cb20-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-333"><a href="#cb20-333" aria-hidden="true" tabindex="-1"></a>In this plot, the lines in plot represent the genes in the gene set <span class="in">`GOMF_EXTRACELLULAR_MATRIX_STRUCTURAL_CONSTITUENT`</span> and where they occur among the log2-fold changes. The largest positive log2-fold changes are on the left-hand side of the plot, while the largest negative log2-fold changes are on the right. The top plot shows the magnitude of the log2-fold changes for each gene, while the bottom plot shows the running sum, with the enrichment score peaking at the red dotted line (which is among the positive log2-fold changes). This suggests the up-regulation of this function.</span>
+<span id="cb20-334"><a href="#cb20-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-335"><a href="#cb20-335" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb20-336"><a href="#cb20-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-337"><a href="#cb20-337" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercises</span></span>
+<span id="cb20-338"><a href="#cb20-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-339"><a href="#cb20-339" aria-hidden="true" tabindex="-1"></a>Now that we have run through functional analysis with the results from Pseudobulk DE, let's see what results we derive from the DGE lists from our <span class="co">[</span><span class="ot">FindMarkers DE analysis</span><span class="co">](02_DEanalysis_using_FindMarkers.md)</span>.</span>
+<span id="cb20-340"><a href="#cb20-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-341"><a href="#cb20-341" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Create a significant DE genes data frame from the FindMarkers results with an added fold change criteria to reduce the gene list size. You can do this by running the code below:</span>
+<span id="cb20-342"><a href="#cb20-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-345"><a href="#cb20-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-346"><a href="#cb20-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb20-347"><a href="#cb20-347" aria-hidden="true" tabindex="-1"></a>sig_fc_dge <span class="ot">&lt;-</span> dge_vsm <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(p_val_adj <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="fu">abs</span>(avg_log2FC) <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb20-348"><a href="#cb20-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-349"><a href="#cb20-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-350"><a href="#cb20-350" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use this gene list to run an over-representation analysis. Be sure to separate genes into up- and down-regulated first. Also keep in mind that the background gene dataset is different than for the DESeq2 analysis. What are the top terms enriched among up-regulated genes? What are the top terms enriched among down-regulated genes?</span>
+<span id="cb20-351"><a href="#cb20-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-352"><a href="#cb20-352" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>How do these results compare with what we observed from the Pseudobulk DE functional analysis?</span>
+<span id="cb20-353"><a href="#cb20-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-354"><a href="#cb20-354" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-355"><a href="#cb20-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-356"><a href="#cb20-356" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources for functional analysis</span></span>
+<span id="cb20-357"><a href="#cb20-357" aria-hidden="true" tabindex="-1"></a>In this lesson we reviewed two different approaches for functional analysis and demonstrated the with the use of the clusterProfiler package. Note that there are numerous other options out there, including the use of web-based tools. Below we list a few tools that we are familiar with:</span>
+<span id="cb20-358"><a href="#cb20-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-359"><a href="#cb20-359" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>g:Profiler - http://biit.cs.ut.ee/gprofiler/index.cgi </span>
+<span id="cb20-360"><a href="#cb20-360" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>DAVID - https://david.ncifcrf.gov</span>
+<span id="cb20-361"><a href="#cb20-361" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>clusterProfiler - http://bioconductor.org/packages/release/bioc/html/clusterProfiler.html</span>
+<span id="cb20-362"><a href="#cb20-362" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>ReviGO (visualizing GO analysis, input is GO terms) - http://revigo.irb.hr/ </span>
+<span id="cb20-363"><a href="#cb20-363" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>WGCNA - <span class="co">[</span><span class="ot">https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/</span><span class="co">](https://web.archive.org/web/20230323144343/horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/)</span> (no longer maintained)</span>
+<span id="cb20-364"><a href="#cb20-364" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>GSEA - http://software.broadinstitute.org/gsea/index.jsp</span>
+<span id="cb20-365"><a href="#cb20-365" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>SPIA - https://www.bioconductor.org/packages/release/bioc/html/SPIA.html</span>
+<span id="cb20-366"><a href="#cb20-366" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>GAGE/Pathview - http://www.bioconductor.org/packages/release/bioc/html/gage.html</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">This lesson has been developed by members of the teaching team at the <a href="http://bioinformatics.sph.harvard.edu/">Harvard Chan Bioinformatics Core (HBC)</a>. <br> These are open access materials distributed under the terms of the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited. <br></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

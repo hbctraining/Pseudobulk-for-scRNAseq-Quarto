@@ -45,6 +45,14 @@ website:
           - lessons/03_pseudobulk_DESeq2.qmd
           - lessons/04_pseudobulk_DE_analysis.qmd
           
+      - section: "Day 2:"
+        contents:
+          - lessons/05_pseudobulk_DE_visualizations.qmd
+          - lessons/06_DE_comparisons.qmd
+      - section: "Day 2 Self-learning:"
+        contents:
+          - lessons/07_functional_analysis_pseudobulk.qmd
+          
 
 format:
   html:

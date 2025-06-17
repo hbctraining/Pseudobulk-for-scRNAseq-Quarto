@@ -63,14 +63,14 @@ II. **Submit your work**:
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:00 | Self-learning lessons discussion | All |
-| 10:00 - 10:40 | [Visualization of differentially expressed genes](../lessons/05_pseudobulk_DE_visualizations.md) | Will |
+| 10:00 - 10:40 | [Visualization of differentially expressed genes](05_pseudobulk_DE_visualizations.qmd) | Will |
 | 10:40 - 10:50|  Break |  |
-| 10:50 - 12:00 | [Comparison of results from different DE approaches](../lessons/06_DE_comparisons.md) | Noor|
+| 10:50 - 12:00 | [Comparison of results from different DE approaches](06_DE_comparisons.qmd) | Noor|
 
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Functional Analysis](../lessons/07_functional_analysis_pseudobulk.md)
+   1. [Functional Analysis](07_functional_analysis_pseudobulk.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Now that we have significant genes, let's gain some biological insight <br><br>In this lesson, we will:<br>
