@@ -1,0 +1,43 @@
+---
+sidebar: false
+toc: false
+---
+
+#  Pseudobulk and related approaches for scRNA-seq analysis
+
+## Learning Objectives
+
+- Understanding considerations for when to use different DGE algorithms on scRNA-seq data
+- Using FindMarkers to evaluate significantly DE genes
+- Aggregating single cell expression data into a pseudobulk counts matrix to run a DESeq2 workflow
+- Evaluating expression patterns of differentially expressed genes at the pseudobulk and single cell level
+- Application of methods for evaluating differential proportions of cells between conditions
+
+## Installations
+
+### On your desktop
+
+1. [R](https://www.r-project.org/)
+2. [RStudio](https://posit.co/download/rstudio-desktop/)
+4. [The listed R packages](../index.qmd#installation-requirements)
+
+## Lessons
+
+1. [Introduction to scRNA-seq](https://hbctraining.github.io/Intro-to-scRNAseq/lessons/01_intro_to_scRNA-seq.html)
+2. [scRNA-seq: From sequence reads to count matrix](https://hbctraining.github.io/Intro-to-scRNAseq/lessons/02_SC_generation_of_count_matrix.html)
+3. [scRNA-seq: From counts to clusters](01_counts_to_clusters_overview.qmd)
+4. [Project setup and data exploration](02_setup_intro_dataset.qmd)
+5. [Differential expression analysis using `FindMarkers()`](03_DEanalysis_using_FindMarkers.qmd)
+6. [Differential expression analysis visualization from `FindMarkers()`](04_DEanalysis_FindMarkers_visualization.qmd)
+7. [Theory of PCA](05_theory_of_PCA.qmd)
+8. [Aggregating counts by celltype using pseudobulk approach](06_pseudobulk_DESeq2.qmd)
+9. [DE analysis of pseudobulk data using DESeq2](07_pseudobulk_DE_analysis.qmd)
+10. [Visualization of differentially expressed genes](08_pseudobulk_DE_visualizations.qmd) 
+11. [Comparison of results from different DE approaches](09_DE_comparisons.qmd)
+12. [Functional Analysis](10_functional_analysis_pseudobulk.qmd)
+13. [Methods for Differental Abundance](11_differential_abundance.qmd)
+
+
+***
+
+*These materials have been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

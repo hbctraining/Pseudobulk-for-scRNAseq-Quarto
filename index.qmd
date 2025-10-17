@@ -40,8 +40,8 @@ These materials were developed for a trainer-led workshop, but are also amenable
 
 
 ### Lessons
-* [Workshop schedule (trainer-led learning)](schedule/)
-* [Self-learning](schedule/self-learning.md)
+* [Workshop schedule (trainer-led learning)](lessons/schedule.qmd)
+* [Self-learning](lessons/self-learning.qmd)
 
 ### Installation Requirements
 
