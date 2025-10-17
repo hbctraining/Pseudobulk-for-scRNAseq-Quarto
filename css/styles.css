@@ -109,3 +109,9 @@ img {
   height: auto;
   display: block;
 }
+
+/* Hide breadcrumbs for both possible classnames */
+.quarto-breadcrumbs,
+.quarto-page-breadcrumbs {
+  display: none !important;
+}
