@@ -8,42 +8,40 @@ toc: false
 ## Pre-reading
 * [Introduction to scRNA-seq](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/01_intro_to_scRNA-seq.html)
 * [scRNA-seq: From sequence reads to count matrix](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/02_SC_generation_of_count_matrix.html)
-* [scRNA-seq: From counts to clusters](00_counts_to_clusters_overview.qmd)
+* [scRNA-seq: From counts to clusters](01_counts_to_clusters_overview.qmd)
 * [Download this project](https://www.dropbox.com/scl/fi/c3ggrdttuk3cqovqocy1a/Pseudobulk_workshop.zip?rlkey=nehku3i8mrtkbibe4wvt04n40&st=t8noj7w8&dl=1)
 
 ## Day 1
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) |  Will |
-| 09:45 - 10:15 | Pre-reading review and Q&A | All |
-| 10:15 - 10:25 | Break | |
-| 10:25 - 11:00 | [Project setup and data exploration ](01_setup_intro_dataset.qmd) | Will |
-| 11:00 - 11:50 | [Differential expression analysis using `FindMarkers()`](02_DEanalysis_using_FindMarkers.qmd) | Noor |
-| 11:50 - 12:00 | Overview of self-learning materials and homework submission | Will |
-
+| 10:00 - 10:15 | [Workshop introduction](../slides/workshop_intro_slides.pdf) |  Will |
+| 10:15 - 10:45 | Pre-reading review and Q&A | All |
+| 10:45 - 10:50 | Break | |
+| 10:50 - 11:25 | [Project setup and data exploration](02_setup_intro_dataset.qmd) | Will |
+| 11:25 - 11:55 | [Differential expression analysis using `FindMarkers()`](03_DEanalysis_using_FindMarkers.qmd) | Noor |
+| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
  
-   1. [Aggregating counts by celltype using pseudobulk approach](03_pseudobulk_DESeq2.qmd)
+   1. [Differential expression analysis visualization from `FindMarkers()`](04_DEanalysis_FindMarkers_visualization.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-       <br> Forming pseudobulk samples is important to perform accurate differential expression analysis. Treating each cell as an independent replicate leads to underestimation of the variance and misleadingly small p-values. Working on the level of pseudobulk ensures reliable statistical tests because the samples correspond to the actual units of replication.  <br><br>In this lesson you will:<br>
-             - Aggregate counts for a given celltype<br>
-             - Demonstrate an efficent way to aggregate counts for multiple celltypes<br>
-             - Use the aggregated counts to create a DESeq2 object for downstream analysis<br>
+       <br> Visualization of the differential expression data from <code>FindMarkers()</code> can give important insights into our biological question of interest.<br><br>In this lesson you will:<br>
+             - Create visualizations for differentially expressed genes<br>
+             - Discuss other statistical tests for differential expression analysis<br>
 <br>
         </details>
 
-  2. [DE analysis of pseudobulk data using DESeq2](04_pseudobulk_DE_analysis.qmd)
+  2. [Theory of PCA](05_theory_of_PCA.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-       <br> The next step is to take the DESeq2 object and run through the analysis workflow to identify differentially expressed genes. <br><br>In this lesson you will:<br>
-           - Perform sample level QC<br>   
-           - Evaluate gene-wise dispersions to evalute model fit<br>
-           - Extract results and understand the statistics generated<br><br>
+       <br> Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This method will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results. <br><br>In this lesson you will:<br>
+           - Derive the covariance matrix used for Principal Components Analysis<br>   
+           - Explain the roles of eigenvectors and eigenvalues within a Principal Components Analysis<br>
+           - Compare and contrast our Principal Components Analysis to the output of <code>prcomp()</code><br><br>
         </details>       
          
 
@@ -62,15 +60,32 @@ II. **Submit your work**:
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:00 | Self-learning lessons discussion | All |
-| 10:00 - 10:40 | [Visualization of differentially expressed genes](05_pseudobulk_DE_visualizations.qmd) | Will |
-| 10:40 - 10:50|  Break |  |
-| 10:50 - 12:00 | [Comparison of results from different DE approaches](06_DE_comparisons.qmd) | Noor|
+| 10:00 - 10:30 | Self-learning lessons discussion | All |
+| 10:30 - 11:15 | [Aggregating counts by celltype using pseudobulk approach](06_pseudobulk_DESeq2.qmd) |  Will |
+| 11:15 - 11:20 | Break | |
+| 11:20 - 12:00 | [DE analysis of pseudobulk data using DESeq2](07_pseudobulk_DE_analysis.qmd) | Noor |
+
+### Before the next class:
+
+There is no self-learning for Day 2.
+
+### Questions?
+* ***If you have any questions from today***, [email us](mailto:hbctraining@hsph.harvard.edu) 
+
+## Day 3
+
+| Time |  Topic  | Instructor |
+|:-----------:|:----------:|:--------:|
+| 10:00 - 10:15 | Self-learning lessons discussion | All |
+| 10:15 - 10:55 | [Visualization of differentially expressed genes](08_pseudobulk_DE_visualizations.qmd) | Will |
+| 10:55 - 11:00|  Break |  |
+| 11:00 - 11:55 | [Comparison of results from different DE approaches](09_DE_comparisons.qmd) | Noor |
+| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Functional Analysis](07_functional_analysis_pseudobulk.qmd)
+   1. [Functional Analysis](10_functional_analysis_pseudobulk.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Now that we have significant genes, let's gain some biological insight <br><br>In this lesson, we will:<br>
@@ -90,24 +105,16 @@ II. **Submit your work**:
 ***
 
 
-## Day 3
+## Day 4
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:15 | Self-learning lessons discussion | All |
-| 10:15 - 11:15| [Methods for Differental Abundance](08_differential_abundance.qmd)  | Noor  |
-| 11:15 - 11:20 | Break |
-| 11:25 - 11:45| Discussion and Q&A | All |
+| 10:00 - 10:30 | Self-learning lessons discussion | All |
+| 10:30 - 11:30| [Methods for Differental Abundance](11_differential_abundance.qmd)  | Noor  |
+| 11:30 - 11:35 | Break |
+| 11:35 - 11:45| Discussion and Q&A | All |
 | 11:45 - 12:00| [Wrap-up](../lectures/Workshop_wrapup.pdf) | Will |
 
 ***
-
-## Answer Keys
-* [Day 1 exercises](../homework/Day_1_answer_key.md) 
-* [Day 2 exercises](../homework/Day_2_answer_key.md) 
-
-
-
-
 
 ## Resources

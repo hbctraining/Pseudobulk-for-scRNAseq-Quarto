@@ -34,28 +34,38 @@ website:
     contents:
       - section: "Pre-reading:"
         contents:
-        - lessons/00_counts_to_clusters_overview.qmd
+        - text: "Introduction to scRNA-seq"
+          href: "https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/01_intro_to_scRNA-seq.html"
+        - text: "scRNA-seq: From sequence reads to count matrix"
+          href: "https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/02_SC_generation_of_count_matrix.html"
+        - lessons/01_counts_to_clusters_overview.qmd
 
       - section: "Day 1:"
         contents:
-          - lessons/01_setup_intro_dataset.qmd
-          - lessons/02_DEanalysis_using_FindMarkers.qmd
+          - lessons/02_setup_intro_dataset.qmd
+          - lessons/03_DEanalysis_using_FindMarkers.qmd
       - section: "Day 1 Self-learning:"
         contents:
-          - lessons/03_pseudobulk_DESeq2.qmd
-          - lessons/04_pseudobulk_DE_analysis.qmd
+          - lessons/04_DEanalysis_FindMarkers_visualization.qmd
+          - lessons/05_theory_of_PCA.qmd
           
       - section: "Day 2:"
         contents:
-          - lessons/05_pseudobulk_DE_visualizations.qmd
-          - lessons/06_DE_comparisons.qmd
-      - section: "Day 2 Self-learning:"
-        contents:
-          - lessons/07_functional_analysis_pseudobulk.qmd
+          - lessons/06_pseudobulk_DESeq2.qmd
+          - lessons/07_pseudobulk_DE_analysis.qmd
           
       - section: "Day 3:"
         contents:
-          - lessons/08_differential_abundance.qmd
+          - lessons/08_pseudobulk_DE_visualizations.qmd
+          - lessons/09_DE_comparisons.qmd
+          
+      - section: "Day 3 Self-learning:"
+        contents:
+          - lessons/10_functional_analysis_pseudobulk.qmd
+
+      - section: "Day 4:"
+        contents:
+          - lessons/11_differential_abundance.qmd
           
 
 format:
