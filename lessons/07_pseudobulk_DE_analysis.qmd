@@ -46,14 +46,14 @@ dds <- DESeqDataSetFromMatrix(t(cluster_counts),
                                 design = ~ condition)
 ```
 
-## Learning Objectives:
+# Learning Objectives:
 
 * Apply methods for sample-level QC
 * Explain the different steps involved in running `DESeq()`
 * Generating a table of differentially expressed genes
 
 
-## Sample-level QC
+# Sample-level QC
 
 A useful initial step in an RNA-seq analysis is to assess overall similarity between samples:
 
@@ -72,7 +72,7 @@ Sample-level QC allows us to see **how well our replicates cluster together**, a
 
 In this lesson, we will introduce to you two different unsupervised clustering methods for exploratory data analysis. When **using unsupervised methods** it is helpful to apply a normalization or transformation to the data to improve the distances/clustering for visualization, rather than using raw counts. DESeq2 uses median of ratios method for count normalization, which is typically used for plotting expression data downstream after DE analysis. DESeq2 also has the option to **transform counts** using a regularized log transform (rlog) or varaince stabilizing transform (vst) **as these can moderate the variance across the mean**, and improve the clustering. The transformation of raw count data is recommended for sample-level QC. 
 
-### PCA
+## PCA
 
 Principal Component Analysis (PCA) is a dimensionality reduction technique used to emphasize variation and bring out strong patterns in a dataset. Details regarding PCA are given in our [prepared lesson linked here](https://hbctraining.github.io/Intro-to-DGE/lessons/principal_component_analysis.html).
 
@@ -120,7 +120,7 @@ ggplot(pca_data_n_cells, aes(x = PC1, y = PC2, color = n_cells, label = name_par
 ```
 
 
-### Sample correlation
+## Sample correlation
 
 Similar to PCA, hierarchical clustering is another, complementary method for identifying strong patterns in a dataset and potential outliers. The heatmap displays the correlation of gene expression for all pairwise combinations of samples in the dataset. Since the majority of genes are not differentially expressed, samples generally have high correlations with each other (values higher than 0.80). Samples below 0.80 may indicate an outlier in your data and/or sample contamination.
 
@@ -150,10 +150,12 @@ pheatmap(rld_cor, annotation_col=anno, annotation_row=anno)
 Since we detected no outliers by PCA or hierarchical clustering, nor do we have any additional sources of variation to regress, we can proceed with running the differential expression analysis.
 
 ::: callout-tip
-# Exercises
+# [**Exercise 1**](07_pseudobulk_DE_analysis_Answer-key.qmd#exercise-1)
 
 1. Use the `dds_APC` object to compute the rlog transformed counts for the Pdgfr α+ APCs.
+
 2. Create a PCA plot for the Pdgfr α+ APCs, coloring points by condition. Do samples segregate by condition? Is there more or less variability within group than observed with the VSM cells?
+
 3. Evaluate the sample similarity using a correlation heatmap. How does this compare with the trends observed in the PCA plot?
 :::
 
@@ -211,9 +213,9 @@ plotDispEsts(dds)
 Based on the trends observed in this curve, we can say that there is a good fit of the model to the data.
 
 ::: callout-tip
-# Exercises
+# [**Exercise 2**](07_pseudobulk_DE_analysis_Answer-key.qmd#exercise-2)
 
-4. Using the code below, **run DESeq2** for the **Pdgfr α+ APCs** data. Following that draw the dispersion plot. Based on this plot do you think there is a reasonable fit to the model?
+Using the code below, **run DESeq2** for the **Pdgfr α+ APCs** data. Following that draw the dispersion plot. Based on this plot do you think there is a reasonable fit to the model?
 
 ```{r}
 #| label: run_apc_DESeq2
@@ -339,7 +341,22 @@ res %>%
 ```
 
 ::: callout-tip
-# Exercises
+# [**Exercise 3**](07_pseudobulk_DE_analysis_Answer-key.qmd#exercise-3)
 
-5. **Generate results** for the **Pdgfr α+ APCs** and save it to a variable called `res_APC`. There is nothing to submit for this exercise, but please run the code as you will need `res_APC` for future exercises.
+**Generate results** for the **Pdgfr α+ APCs** and save it to a variable called `res_APC`. There is nothing to submit for this exercise, but please run the code as you will need `res_APC` for future exercises.
 :::
+
+```{r}
+#| label: results_APC
+#| eval: false
+# Results of Wald test
+res_APC <- results(dds_APC, 
+                   contrast = contrast,
+                   alpha = 0.05)
+
+# Shrink the log2 fold changes to be more appropriate using the apeglm method
+res_APC <- lfcShrink(dds_APC,
+                     coef = "condition_cold7_vs_TN",
+                     res  = res_APC,
+                     type = "apeglm")
+```

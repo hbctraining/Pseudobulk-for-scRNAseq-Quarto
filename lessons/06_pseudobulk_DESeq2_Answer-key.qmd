@@ -1,0 +1,150 @@
+---
+title: "Set-up DESeq2 analysis - Answer Key"
+authors: "Will Gammerdinger, Noor Sohail"
+date: "Friday, September 5, 2025"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r}
+#| label: load_data
+#| echo: false
+# Load libraries
+library(Seurat)
+library(tidyverse)
+library(DESeq2)
+library(pheatmap)
+library(EnhancedVolcano)
+library(RColorBrewer)
+library(cowplot)
+library(dplyr)
+library(ggrepel)
+
+seurat <- readRDS("data/BAT_GSE160585_final.rds")
+
+meta_columns <- c("sample", "condition")
+meta <- seurat@meta.data %>%
+            select(meta_columns) %>%
+            unique() %>%
+            remove_rownames()
+
+bulk <- AggregateExpression(
+            seurat,
+            return.seurat = TRUE,
+            assays = "RNA",
+            group.by = c("celltype", "sample", "condition")
+)
+
+n_cells <- seurat@meta.data %>% 
+              dplyr::count(sample, celltype) %>% 
+              rename("n"="n_cells")
+n_cells$sample <- str_replace(n_cells$sample, "_", "-")
+
+meta_bulk <- left_join(bulk@meta.data, n_cells)
+rownames(meta_bulk) <- meta_bulk$orig.ident
+bulk@meta.data <- meta_bulk
+
+# Turn condition into a factor
+bulk$condition <- factor(bulk$condition, levels=c("TN", "RT", "cold2", "cold7"))
+
+bulk_vsm <- subset(bulk, subset= (celltype == "VSM") & 
+                     (condition %in% c("TN", "cold7")))
+```
+
+# Exercise 1
+
+Another cell type in this dataset that was particularly interesting to the authors were the **Pdgfr α+ adipose progentior cells (APCs)**.
+
+1. Subset the `bulk` object to isolate only adipose progenitor cells for the TN and cold7 conditions. Assign it to variable called `bulk_APC`.
+
+ _**Hint**: You may need to review `celltypes` to determine what this cell type is called in our data._ You can find unique celltypes with the code:
+   
+```{r}
+#| label: unique_celltypes
+# Find unique celltypes
+celltypes <- sort(unique(seurat@meta.data[["celltype"]]))
+```
+
+::: callout-note
+The abbreviations for the cell types can be found in the [project set-up lesson](02_setup_intro_dataset.qmd#celltype-annotation).
+:::
+
+```{r}
+#| label: APC_subset
+celltypes
+# Compare TN vs cold7 in APC cells
+bulk_APC <- subset(bulk, subset = (celltype == "AP")  & (condition %in% c("TN", "cold7")))
+```
+
+2. Plot the cell number distribution across samples. How do the numbers compare to VSM cells?
+
+```{r}
+#| label: APC_ncells_plot
+# Visualize number of cells per condition
+ggplot(bulk_APC@meta.data, aes(x = sample, y = n_cells, fill = condition)) +
+  geom_bar(stat = "identity", color = "black") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(x = "Sample name", y = "Number of cells") +
+  geom_text(aes(label = n_cells), vjust = -0.5)
+```
+
+::: callout-note
+---
+title: "Click here for code to plot the two bar plots side-by-side"
+collapse: true
+collapse-type: closed
+---
+
+Note that this R code below uses the **ggpubr library**. In order to run this you will need to first install the package and then run:
+
+```{r}
+library(ggpubr)
+
+# Plot VSM and APC side by side
+plot_cell_number_vsm <- ggplot(bulk_vsm@meta.data, aes(x = sample, y = n_cells, fill = condition)) +
+  geom_bar(stat = "identity", color = "black") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(x = "Sample name", y = "Number of cells") +
+  geom_text(aes(label = n_cells), vjust = -0.5) +
+  ggtitle("VSM") +
+  theme(title = element_text(hjust = 0.5))
+
+plot_cell_number_APC <- ggplot(bulk_APC@meta.data, aes(x = sample, y = n_cells, fill = condition)) +
+  geom_bar(stat = "identity", color = "black") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(x = "Sample name", y = "Number of cells") +
+  geom_text(aes(label = n_cells), vjust = -0.5) +
+  ggtitle("APC") +
+  theme(title = element_text(hjust = 0.5))
+
+ggpubr::ggarrange(plot_cell_number_vsm, plot_cell_number_APC, nrow = 1,
+                  common.legend = TRUE, legend = "right")
+```
+
+:::
+
+Overall we see far fewer cells, by an order of magnitude (scale goes to 2,000 for VSM but only 600 for APC). There is also a different distribution: the counts for Sample-10 and Sample-9 go down relative to other samples, while Sample-8 goes up.
+
+
+# Exercise 2
+
+Create a DESeq2 object for the **Pdgfr α+ APCs** data as `dds_APC`.
+
+```{r}
+#| label: create_apc_dds_object
+# Get count matrix
+APC_counts <- FetchData(bulk_APC, layer="counts", vars=rownames(bulk_APC))
+
+# Create DESeq2 object
+# transpose it to get genes as rows
+dds_APC <- DESeqDataSetFromMatrix(t(APC_counts),
+                                colData = bulk_APC@meta.data,
+                                design = ~ condition)
+
+dds_APC
+```

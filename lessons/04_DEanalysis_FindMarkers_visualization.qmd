@@ -30,13 +30,13 @@ dge_vsm <- FindMarkers(seurat_vsm,
                        )
 ```
 
-## Learning Objectives:
+# Learning Objectives:
 
 * Create visualizations for differentially expressed genes
 * Discuss other statistical tests for differential expression analysis
 
 
-## Significant genes
+# Significant genes
 
 We want to subset our results to show just our significant genes so we can begin visualizing and analyzing the results. To do this, we filter out rows based upon the `p_val_adj` column and subsetting only genes that meet our multiple testing-corrected significance threshold of 0.05.
 
@@ -47,7 +47,7 @@ dge_vsm_sig <- dge_vsm %>% subset(p_val_adj < 0.05)
 dge_vsm_sig %>% head()
 ```
 
-### Volcano plot
+# Volcano plot
 
 To get a first look at the genes that are retained, we can generated a volcano plot using the `EnhancedVolcano()` function. This is a visualization that allows us to quickly see trends in the significant genes. The x-axis here represents the average log2-fold change value, showing the degree of difference between the two conditions. On the y-axis, we see our `p_val_adj` column represented after a negative log10 transformation is applied to better see the spread of the adjusted p-values.  
 
@@ -67,7 +67,7 @@ p_fm
 ```
 
 
-### Violin plots
+# Violin plots
 
 While looking at the overall trends in the data is a great starting point, we can also start looking at genes that have large differences between `TN` and `cold7`. To do this, we can take a look at the top 6 genes with the smallest p-values. We additionally disregard the ribsomal genes in this visualization step.
 
@@ -93,7 +93,7 @@ Idents(seurat_vsm) <- "condition"
 VlnPlot(seurat_vsm, genes, ncol=3, idents=c("TN", "cold7"))
 ```
 
-### UMAP plots
+# UMAP plots
 
 When comparing two different conditions, we recommend creating a UMAP that clearly shows where the cells exist for each condition. To do so, we first need to get the UMAP coordinates for every cell of interest. When creating the scatterplot, the first thing we do is put a layer of light gray points that show the entire dataset to understand where all the cells fall. Then, we take the UMAP coordinates of the condition (`TN` or `cold7` in our example) and plot those on top with a color to clearly indicate where those cells are located. 
 
@@ -136,19 +136,19 @@ FeaturePlot(seurat_vsm, genes, ncol=3)
 ```
 
 
-## Other statistical tests
+# Other statistical tests
 
 When we looked at the extra explanations for the `FindMarkers()` function, there was a parameter called `test.use`. By default, the method for calculating differentially expressed genes will be a Wilcoxon Rank Sum Test. This is a fairly simple statistical approach, and there a multitude of different algorithms that can be specified. These other options are documented on the `FindMarkers()` [documentation page](https://www.rdocumentation.org/packages/Seurat/versions/5.0.3/topics/FindMarkers). For this workshop we want to highlight a few of these methods:
 
 
-### Wilcoxon Rank Sum Test
+# Wilcoxon Rank Sum Test
 
 * Often described as the non-parametric version of the two-sample t-test. 
 * Beneficial because it can reduce the impact of outliers, which can skew the results of parametric testing.
 * It ranks the data and compares the sum of ranks within each group, to identify significant differences.
  
 
-### DESeq2
+# DESeq2
 
 * Identifies differentially expressed genes between two groups of cells based on a model using DESeq2 which uses a negative binomial distribution ([Love et al., 2014](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8)). More information on DESeq2 will be provided in an upcoming lesson in this workshop.
 * This test option does not support pre-filtering of genes based on average difference (or percent detection rate) between cell groups. However, genes may be pre-filtered based on their minimum detection rate (min.pct) across both cell groups.
@@ -157,61 +157,64 @@ When we looked at the extra explanations for the `FindMarkers()` function, there
 The creators of the Seurat package [no longer recommend](https://github.com/satijalab/seurat/issues/2938) using the `FindMarkers()` implementation of DESeq2.
 ::: 
  
-### MAST
+# MAST
 
 * Implements an approach that accounts for the stochastic dropout and characteristic bimodal expression distributions in which expression is either strongly non-zero or non-detectable.
     *  A two-part, generalized linear model for such bimodal data that parameterizes both of these features    
 * Also allows for estimation and control of the “cellular detection rate” (CDR) while simultaneously estimating treatment effects. This addresses the fact that cells scale transcript copy number with cell volume. 
 * Permits the analysis of complex experiments, such as repeated single-cell measurements under various treatments or longitudinal sampling of single cells from multiple subjects with a variety of background characteristics (e.g., sex, age), because it can easily be extended to accommodate random effects.
 
+::: callout-note
+Instead of using the `FindMarkers()` implementation, we recommend directly using the [MAST](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0844-5) algorithm from the package itself for the best results.
 
-> **NOTE:** Instead of using the `FindMarkers()` implementation, we recommend directly using the [MAST](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0844-5) algorithm from the package itself for the best results.
->
-> If you are interested in exploring code to run MAST on this dataset directly using the package, please see the script at the link below. We recommend including the sample in the model to improve results by taking into account biological variability. Please note that this is a **computationally intensive** calculation and may take **a long time to run**.
-> <details>
->	<summary><b><i>Click here for code to run MAST on this dataset side-by-side</i></b></summary>
->	<br>Note that this R code below uses the <b>MAST library</b>. In order to run this you will need to first install the required packagea and then > load the libraries.
-> <pre>
-> library(Seurat)
-> library(dplyr)
-> library(SingleCellExperiment)
-> library(MAST)
->
-> &#35; Seurat to SingleCellExperiment
-> DefaultAssay(seurat_vsm) &lt;- "RNA"
-> sce <- as.SingleCellExperiment(seurat_vsm)
-> &#35; Apply log transformation
-> assay(sce, "logcounts") &lt;- log2(counts(sce) + 1)
->
-> &#35; Create new sce object (with only 'logcounts' matrix)
-> sce_1 &lt;- SingleCellExperiment(assays = list(logcounts = assay(sce, "logcounts")))
-> colData(sce_1) &lt;- colData(sce)
-> 
-> &#35; Change to SingleCellAssay
-> sca <- SceToSingleCellAssay(sce_1)
-> 
-> &#35; Calculate number of genes expressed per cell and scale the value
-> cdr2 &lt;- colSums(SummarizedExperiment::assay(sca) &gt; 0)
-> colData(sca)$cngeneson &lt;- scale(cdr2)
-> 
-> &#35; Takes a long time to calculate!
-> &#35; Here our model includes:
-> &#9;&#35; The number of genes expressed (ngeneson)
-> &#9;&#35; Experimental condition (condition)
-> &#9;&#35; Sample as a random variable ((1 | sample))
->
-> zlmCond <- zlm(~condition + cngeneson + (1 | sample), 
->                sca, method="glmer", ebayes=FALSE)
-> 
-> &#35; Only test the condition coefficient.
-> summaryCond &lt;- summary(zlmCond, doLRT='conditionTN') 
-> 
-> &#35; Some data wranging of the results
-> summaryDt &lt;- summaryCond$datatable
-> fcHurdle &lt;- merge(summaryDt[contrast=='conditionTN' & component=='H',.(primerid, `Pr(>Chisq)`)], #hurdle P values
->                  summaryDt[contrast=='conditionTN' & component=='logFC', 
->                            .(primerid, coef, ci.hi, ci.lo)], by='primerid') #logFC coefficients
->
-> fcHurdle[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
-> </pre>
-> </details>
+If you are interested in exploring code to run MAST on this dataset directly using the package, please see the script at the link below. We recommend including the sample in the model to improve results by taking into account biological variability. Please note that this is a **computationally intensive** calculation and may take **a long time to run**.
+<details>
+<summary><b><i>Click here for code to run MAST on this dataset side-by-side</i></b></summary>
+Note that this R code below uses the <b>MAST library</b>. In order to run this you will need to first install the required packages and then:.
+```{r}
+#| label: MAST_example
+#| eval: false
+library(Seurat)
+library(dplyr)
+library(SingleCellExperiment)
+library(MAST)
+
+# Seurat to SingleCellExperiment
+DefaultAssay(seurat_vsm) <- "RNA"
+sce <- as.SingleCellExperiment(seurat_vsm)
+# Apply log transformation
+assay(sce, "logcounts") <- log2(counts(sce) + 1)
+
+# Create new sce object (with only 'logcounts' matrix)
+sce_1 <- SingleCellExperiment(assays = list(logcounts = assay(sce, "logcounts")))
+colData(sce_1) <- colData(sce)
+ 
+# Change to SingleCellAssay
+sca <- SceToSingleCellAssay(sce_1)
+
+# Calculate number of genes expressed per cell and scale the value
+cdr2 <- colSums(SummarizedExperiment::assay(sca) > 0)
+colData(sca)$cngeneson <- scale(cdr2)
+
+# Takes a long time to calculate!
+# Here our model includes:
+## The number of genes expressed (ngeneson)
+## Experimental condition (condition)
+## Sample as a random variable ((1 | sample))
+
+zlmCond <- zlm(~condition + cngeneson + (1 | sample), 
+               sca, method="glmer", ebayes=FALSE)
+
+# Only test the condition coefficient.
+summaryCond <- summary(zlmCond, doLRT='conditionTN') 
+
+# Some data wranging of the results
+summaryDt <- summaryCond$datatable
+fcHurdle <- merge(summaryDt[contrast=='conditionTN' & component=='H',.(primerid, `Pr(>Chisq)`)], # Hurdle P values
+                  summaryDt[contrast=='conditionTN' & component=='logFC', 
+                            .(primerid, coef, ci.hi, ci.lo)], by='primerid') #logFC coefficients
+
+fcHurdle[,fdr:=p.adjust(`Pr(>Chisq)`, 'fdr')]
+```
+</details>
+:::

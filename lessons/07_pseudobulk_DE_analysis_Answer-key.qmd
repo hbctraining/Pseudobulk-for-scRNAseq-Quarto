@@ -1,0 +1,145 @@
+---
+title: "Set-up DESeq2 analysis - Answer Key"
+authors: "Will Gammerdinger, Noor Sohail"
+date: "Friday, September 5, 2025"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r}
+#| label: load_data
+#| echo: false
+# Load libraries
+library(Seurat)
+library(tidyverse)
+library(DESeq2)
+library(pheatmap)
+library(EnhancedVolcano)
+library(RColorBrewer)
+library(cowplot)
+library(dplyr)
+library(ggrepel)
+
+seurat <- readRDS("data/BAT_GSE160585_final.rds")
+
+meta_columns <- c("sample", "condition")
+meta <- seurat@meta.data %>%
+            select(meta_columns) %>%
+            unique() %>%
+            remove_rownames()
+
+bulk <- AggregateExpression(
+            seurat,
+            return.seurat = TRUE,
+            assays = "RNA",
+            group.by = c("celltype", "sample", "condition")
+)
+
+n_cells <- seurat@meta.data %>% 
+              dplyr::count(sample, celltype) %>% 
+              rename("n"="n_cells")
+n_cells$sample <- str_replace(n_cells$sample, "_", "-")
+
+meta_bulk <- left_join(bulk@meta.data, n_cells)
+rownames(meta_bulk) <- meta_bulk$orig.ident
+bulk@meta.data <- meta_bulk
+
+# Turn condition into a factor
+bulk$condition <- factor(bulk$condition, levels=c("TN", "RT", "cold2", "cold7"))
+
+bulk_APC <- subset(bulk, subset = (celltype == "AP")  & (condition %in% c("TN", "cold7")))
+
+APC_counts <- FetchData(bulk_APC, layer="counts", vars=rownames(bulk_APC))
+
+# Create DESeq2 object
+# transpose it to get genes as rows
+dds_APC <- DESeqDataSetFromMatrix(t(APC_counts),
+                                colData = bulk_APC@meta.data,
+                                design = ~ condition)
+
+# Set contrast
+contrast <- c("condition", "cold7", "TN")
+```
+
+# Exercise 1
+
+1. Use the `dds_APC` object to compute the rlog transformed counts for the Pdgfr α+ APCs.
+
+```{r}
+#| label: transform_APC
+# Transform counts for data visualization
+rld_APC <- rlog(dds_APC, blind = TRUE)
+```
+
+2. Create a PCA plot for the Pdgfr α+ APCs, coloring points by condition. Do samples segregate by condition? Is there more or less variability within group than observed with the VSM cells?
+
+```{r}
+#| label: PCA_APC
+# Plot PCA
+plotPCA(rld_APC, intgroup = c("condition")) + theme_classic()
+```
+
+3. Evaluate the sample similarity using a correlation heatmap. How does this compare with the trends observed in the PCA plot?
+
+```{r}
+#| label: heatmap_APC
+# Calculate sample correlation
+rld_APC_mat <- assay(rld_APC)
+rld_APC_cor <- cor(rld_APC_mat)
+
+# Change sample names to original values
+# For nicer plots
+rename_samples <- bulk_APC$sample
+colnames(rld_APC_cor) <- str_replace_all(colnames(rld_APC_cor), rename_samples)
+rownames(rld_APC_cor) <- str_replace_all(rownames(rld_APC_cor), rename_samples)
+
+# Plot heatmap
+anno <- bulk_APC@meta.data %>%
+  select(sample, condition) %>% 
+  remove_rownames() %>% 
+  column_to_rownames("sample")
+
+pheatmap(rld_APC_cor, annotation_col = anno, annotation_row = anno)
+```
+
+Unfortunately, the samples do not neatly separate by condition in this celltype. As shown in the PCA plot, three cold7 samples (7,8,15) are closely related on PC1, while the last cold7 sample (16) is more distant and groups with two TN samples (9,10) on PC2.
+
+# Exercise 2
+
+Using the code below, **run DESeq2** for the **Pdgfr α+ APCs** data. Following that draw the dispersion plot. Based on this plot do you think there is a reasonable fit to the model?
+
+```{r}
+#| label: run_apc_DESeq2
+#| eval: false
+# Run DESeq2 differential expression analysis for APC
+dds_APC <- DESeq(dds_APC)
+```
+
+```{r}
+#| label: dispersion_APC
+# Run DESeq2 differential expression analysis
+dds_APC <- DESeq(dds_APC)
+
+# Plot gene-wise dispersion estimates to check model fit
+plotDispEsts(dds_APC)
+```
+
+# Exercise 3
+
+**Generate results** for the **Pdgfr α+ APCs** and save it to a variable called `res_APC`. There is nothing to submit for this exercise, but please run the code as you will need `res_APC` for future exercises.
+
+```{r}
+#| label: results_APC
+# Results of Wald test
+res_APC <- results(dds_APC, 
+                   contrast = contrast,
+                   alpha = 0.05)
+
+# Shrink the log2 fold changes to be more appropriate using the apeglm method
+res_APC <- lfcShrink(dds_APC,
+                     coef = "condition_cold7_vs_TN",
+                     res  = res_APC,
+                     type = "apeglm")
+```
