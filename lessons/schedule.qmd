@@ -61,9 +61,9 @@ II. **Submit your work**:
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 10:00 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 11:15 | [Aggregating counts by celltype using pseudobulk approach](06_pseudobulk_DESeq2.qmd) |  Will |
+| 10:30 - 11:15 | [Aggregating counts by celltype using pseudobulk approach](06_pseudobulk_DESeq2.qmd) |  Noor |
 | 11:15 - 11:20 | Break | |
-| 11:20 - 12:00 | [DE analysis of pseudobulk data using DESeq2](07_pseudobulk_DE_analysis.qmd) | Noor |
+| 11:20 - 12:00 | [DE analysis of pseudobulk data using DESeq2](07_pseudobulk_DE_analysis.qmd) | Will |
 
 ### Before the next class:
 
