@@ -97,6 +97,45 @@ BiocManager::install("sccomp")
 BiocManager::install("speckle")
 ```
 
+::: callout-note
+There are two ways to install `sccomp`, but both ways will require that you install `cmdstanr`. The instructions for installing `sccomp` using Bioconductor are below:
+
+```{r}
+#| label: install_sccomp_bioc
+#| eval: false
+
+# Step 1
+BiocManager::install("sccomp")
+
+# Step 2
+install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev/", getOption("repos")))
+
+# Step 3
+cmdstanr::check_cmdstan_toolchain(fix = TRUE) # Just checking system setting
+cmdstanr::install_cmdstan()
+```
+
+If you run into issues installing `sccomp` via Bioconductor, you can try installing it from GitHub by using `devtools`:
+
+```{r}
+#| label: install_sccomp_github
+#| eval: false
+
+install.packages("devtools")
+library(devtools)
+
+# Step 1
+devtools::install_github("MangiolaLaboratory/sccomp")
+
+# Step 2
+install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev/", getOption("repos")))
+
+# Step 3
+cmdstanr::check_cmdstan_toolchain(fix = TRUE) # Just checking system setting
+cmdstanr::install_cmdstan()
+```
+
+:::
 
 **(3)** Finally, please check that all the packages were installed successfully by **loading them one at a time** using the `library()` function.  
 
