@@ -100,7 +100,7 @@ There are many approaches for identifying differentially expressed genes in sing
 4. Are there biological replicates that can be used to control for variability in the data?
 
 ::: callout-tip
-# Exercises
+# [**Exercise 1**](09_DE_comparisons_Answer-key.qmd#exercise-1)
 
 1. Take a moment and answer the above questions for our VSM cells dataset.
 :::

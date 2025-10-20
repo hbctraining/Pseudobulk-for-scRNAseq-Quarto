@@ -176,9 +176,9 @@ Other columns of interest are the **p.adjust** column (by which results are orde
 When cold induces a response in vascular smooth muscle cells (VSMCs), the primary transcriptional change observed is an up-regulation of genes related to vasoconstriction. Vasoconstriction is when the muscles around your blood vessels tighten to make the space inside smaller. In our results table we see **significant terms such as extracellular matrix organization** and **cell proliferation**, which makes sense because the cold temperatures will lead to a shift towards a more **contractile phenotype**. We also observe up-regulation of genes involved in **cell adhesion** and **tight junction formation**, which are processes related to **maintaining vascular integrity**.
 
 ::: callout-tip
-# Exercises
+# [**Exercise 1**](10_functional_analysis_pseudobulk_Answer-key.qmd#exercise-1)
 
-1. Using the code above as a template, run the over-representation analysis on the significantly down-regulated genes from the pseudobulk analysis.
+Using the code above as a template, run the over-representation analysis on the significantly down-regulated genes from the pseudobulk analysis.
    * How many significant terms do you find?
    * What are some of the prominent biological processes that are observed?
 
@@ -333,21 +333,22 @@ In this plot, the lines in plot represent the genes in the gene set `GOMF_EXTRAC
 
 ::: callout-tip
 
-# Exercises
+# [**Exercise 2**](10_functional_analysis_pseudobulk_Answer-key.qmd#exercise-2)
 
 Now that we have run through functional analysis with the results from Pseudobulk DE, let's see what results we derive from the DGE lists from our [FindMarkers DE analysis](03_DEanalysis_using_FindMarkers.qmd).
 
-1. Create a significant DE genes data frame from the FindMarkers results with an added fold change criteria to reduce the gene list size. You can do this by running the code below:
+Create a significant DE genes data frame from the FindMarkers results with an added fold change criteria to reduce the gene list size. You can do this by running the code below:
 
 ```{r}
 #| label: create_sig_DE_findmarkers
 #| eval: false
+# Create significant DE genes from FindMarkers()
 sig_fc_dge <- dge_vsm %>% dplyr::filter(p_val_adj < 0.05, abs(avg_log2FC) > 1)
 ```
 
-2. Use this gene list to run an over-representation analysis. Be sure to separate genes into up- and down-regulated first. Also keep in mind that the background gene dataset is different than for the DESeq2 analysis. What are the top terms enriched among up-regulated genes? What are the top terms enriched among down-regulated genes?
+1. Use this gene list to run an over-representation analysis. Be sure to separate genes into up- and down-regulated first. Also keep in mind that the background gene dataset is different than for the DESeq2 analysis. What are the top terms enriched among up-regulated genes? What are the top terms enriched among down-regulated genes?
 
-3. How do these results compare with what we observed from the Pseudobulk DE functional analysis?
+2. How do these results compare with what we observed from the Pseudobulk DE functional analysis?
 
 :::
 
