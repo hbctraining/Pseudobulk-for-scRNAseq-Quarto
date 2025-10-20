@@ -9,7 +9,8 @@ toc: false
 * [Introduction to scRNA-seq](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/01_intro_to_scRNA-seq.html)
 * [scRNA-seq: From sequence reads to count matrix](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/lessons/02_SC_generation_of_count_matrix.html)
 * [scRNA-seq: From counts to clusters](01_counts_to_clusters_overview.qmd)
-* [Download this project](https://www.dropbox.com/scl/fi/c3ggrdttuk3cqovqocy1a/Pseudobulk_workshop.zip?rlkey=nehku3i8mrtkbibe4wvt04n40&st=t8noj7w8&dl=1)
+* [Download this project](https://www.dropbox.com/scl/fi/c3ggrdttuk3cqovqocy1a/Pseudobulk_workshop.zip?rlkey=nehku3i8mrtkbibe4wvt04n40&st=t8noj7w8&dl=1) by left-clicking the link
+
 
 ## Day 1
 

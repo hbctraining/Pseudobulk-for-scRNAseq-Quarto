@@ -11,7 +11,7 @@
     "href": "lessons/schedule.html#pre-reading",
     "title": "",
     "section": "Pre-reading",
-    "text": "Pre-reading\n\nIntroduction to scRNA-seq\nscRNA-seq: From sequence reads to count matrix\nscRNA-seq: From counts to clusters\nDownload this project"
+    "text": "Pre-reading\n\nIntroduction to scRNA-seq\nscRNA-seq: From sequence reads to count matrix\nscRNA-seq: From counts to clusters\nDownload this project by left-clicking the link"
   },
   {
     "objectID": "lessons/schedule.html#day-1",
@@ -251,7 +251,7 @@
     "href": "lessons/02_setup_intro_dataset.html#set-up",
     "title": "Project Setup and Data Exploration",
     "section": "Set up",
-    "text": "Set up\nFor this workshop, we will be working within an RStudio project. In order to follow along you should have downloaded the R project.\n\n\n\n\n\n\nTip\n\n\n\nIf you haven’t done this already, the project can be accessed using this link.\n\n\nOnce downloaded, you should see a file called Pseudobulk_workshop.zip on your computer (likely, in your Downloads folder).\n\nUnzip this file. It will result in a folder of the same name.\nMove the folder to the location on your computer where you would like to perform the analysis.\nOpen up the folder. The contents will look like the screenshot below.\nLocate the .Rproj file and double-click on it. This will open up RStudio with the “Pseudobulk_workshop” project loaded.",
+    "text": "Set up\nFor this workshop, we will be working within an RStudio project. In order to follow along you should have downloaded the R project.\n\n\n\n\n\n\nTip\n\n\n\nIf you haven’t done this already, the project can be accessed left-clicking this link.\n\n\nOnce downloaded, you should see a file called Pseudobulk_workshop.zip on your computer (likely, in your Downloads folder).\n\nUnzip this file. It will result in a folder of the same name.\nMove the folder to the location on your computer where you would like to perform the analysis.\nOpen up the folder. The contents will look like the screenshot below.\nLocate the .Rproj file and double-click on it. This will open up RStudio with the “Pseudobulk_workshop” project loaded.",
     "crumbs": [
       "Day 1:",
       "Project Setup and Data Exploration"
