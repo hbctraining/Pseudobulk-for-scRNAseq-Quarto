@@ -26,6 +26,7 @@ We have an entire workshop of [materials](https://hbctraining.github.io/scRNA-se
 1. **Download and unzip** the dataset from GEO using bash:
 
 ```{bash}
+#| label: get_data_geo
 #| eval: false
 #!/bin/bash
 
@@ -33,7 +34,7 @@ We have an entire workshop of [materials](https://hbctraining.github.io/scRNA-se
 mkdir -p data/filtered_counts
 
 # Metadata csv file
-wget wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE160nnn/GSE160585/suppl/GSE160585%5Fmetadata%5Ffor%5Fpseudotime%5Fand%5Fpseudobulk%5FDGE.csv.gz -O data/meta.csv.gz
+wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE160nnn/GSE160585/suppl/GSE160585%5Fmetadata%5Ffor%5Fpseudotime%5Fand%5Fpseudobulk%5FDGE.csv.gz -O data/meta.csv.gz
 
 # Features, barcodes, and counts matrix
 wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE160nnn/GSE160585/suppl/GSE160585%5Ffiltered%5Fraw%5Fcounts%5Ffor%5Fpseudotime%5Fand%5Fpseudobulk%5FDGE.tar.gz -O data/filtered_counts.tar.gz
@@ -47,6 +48,7 @@ gunzip data/meta.csv.gz
 2. **Data wrangling of the metadata**
 
 ```{r}
+#| label: clean_metadata
 #| eval: false
 library(tidyverse)
 meta <- read.csv("data/meta.csv", row.names=1)
@@ -92,6 +94,7 @@ meta$seurat_clusters <- factor(meta$seurat_clusters, levels=sorted_cluster)
 3. **Generate Seurat object** using downloaded files as input
 
 ```{r}
+#| label: create_seurat_object
 #| eval: false
 library(Seurat)
 library(Matrix)
@@ -121,6 +124,7 @@ In the next few steps we have provided the code to process the Seurat object. Th
 4. **Log-normalization and highly variable genes**
 
 ```{r}
+#| label: log_normalization
 #| eval: false
 # Log normalization
 seurat <- NormalizeData(seurat)
@@ -136,6 +140,7 @@ seurat <- FindVariableFeatures(seurat,
 5. **SCTransform and regress out cell cycle scores**
 
 ```{r}
+#| label: sct_regress_cc_score
 #| eval: false
 # Split seurat object by sample
 split_seurat <- SplitObject(seurat, split.by = "condition")
@@ -157,6 +162,7 @@ for (i in 1:length(split_seurat)) {
 6. **CCA integration**
 
 ```{r}
+#| label: cca_integration
 #| eval: false
 # Select the most variable features to use for integration
 integ_features <- SelectIntegrationFeatures(object.list = split_seurat, 
@@ -180,6 +186,7 @@ seurat_integrated[["RNA"]] <- JoinLayers(seurat_integrated[["RNA"]])
 7. **PCA, nearest neighbors, UMAP**
 
 ```{r}
+#| label: pca_umap
 #| eval: false
 seurat_integrated <- RunPCA(seurat_integrated, verbose = FALSE)
 seurat_integrated <- RunUMAP(seurat_integrated, dims = 1:50)
@@ -190,6 +197,7 @@ seurat_integrated <- FindNeighbors(seurat_integrated, dims = 1:50)
 8. Save seurat object
 
 ```{r}
+#| label: save_seurat
 #| eval: false
 Idents(seurat_integrated) <- "condition"
 DefaultAssay(seurat_integrated) <- "RNA"
