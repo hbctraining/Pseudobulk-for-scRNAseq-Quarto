@@ -12,12 +12,12 @@ Approximate time: 40 minutes
 seurat <- readRDS("data/BAT_GSE160585_final.rds")
 ```
 
-## Learning Objectives:
+# Learning Objectives:
 
 * Prepare single-cell RNA-seq raw count data for pseudobulk differential expression analysis
 * Create a DESeq2 object for differential expression analysis on a specific cell type cluster
 
-## Pseudobulk differential expression analysis
+# Pseudobulk differential expression analysis
 
 In the previous lesson we demonstrated how to perform a differential expression analysis using the `FindMarkers()` function in Seurat. The major limitation of this approach is that it treats each individual cell as a replicate, which inflates the p-value, resulting in many false positives. In this lesson we introduce you to the pseudobulk approach, in which **cells belonging to a cluster are aggregated within each sample** to create a gene by sample count matrix. This count matrix resembles the input we use for bulk RNA-seq, and we use a similar workflow to identify differentially expressed genes.
 
@@ -47,7 +47,7 @@ Let's begin by opening a new Rscript file, and include a commentheader line:
 Save the Rscript as `DE_analysis_scrnaseq.R`.
 
 
-### Load libraries
+## Load libraries
 
 Next, let's load the libraries that we will be using for the analysis:
 
@@ -65,7 +65,7 @@ library(dplyr)
 library(ggrepel)
 ```
 
-### Create metadata
+## Create metadata
 
 We will want to create a dataframe with all of the sample-level metadata, this will be used during the aggregation step but also later with differential expression analysis.
 
@@ -140,21 +140,28 @@ bulk[["RNA"]]$counts[1:5, 1:5]
 ```
 
 
-<details>
-	<summary><b><i>Click here for alternative code for aggregating counts for multiple celltypes</i></b></summary>
-	<br>Note that this code <b>uses a for loop</b>. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them. <br>
+:::callout-note
+---
+collapse: true
+title: Click here for alternative code for aggregating counts for multiple celltypes
+---
 
-<pre>
+Note that this code **uses a for loop**. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them.
+
+```{r}
+#| label: obtain_celltypes
+# Assign unique celltypes to the celltypes object
 celltypes <- sort(unique(seurat@meta.data[["celltype"]]))
-celltypes
 
-[1] "Adipo"    "AP"       "EC"       "ECAP"     "Lymph"    "Pericyte" "Schwann" 
-[8] "VSM"      "VSM-AP"  
-</pre> <br>
+# Print celltypes
+celltypes
+```
 
 Next, we want to store the aggregated, pseudobulked expression for each celltype as a list of Seurat objects. Therefore we are going to use the same steps we ran above with the `AggregateExpression()` function and adding the number of cells in each group as a metadata column. <br>
 
-<pre>
+```{r}
+#| label: aggregating_by_celltype
+#| eval: false
 pb_list <- list()
 for (ct in celltypes) {
   
@@ -181,10 +188,10 @@ for (ct in celltypes) {
   pb_list[[ct]] <- bulk_ct
   
 }
-</pre><br>
- </details>
+```
+:::
  
-## Differential gene expression with DESeq2
+# Differential gene expression with DESeq2
 
 **We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the pseudobulk DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials](https://hbctraining.github.io/Intro-to-DGE/schedule/links-to-lessons.html) detailing the workflow for bulk RNA-seq analysis, as well as in the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
@@ -205,7 +212,7 @@ bulk_vsm <- subset(bulk, subset= (celltype == "VSM") &
 bulk_vsm
 ```
 
-### Number of cells
+## Number of cells
 
 Before moving on to a pseudobulk DGE analysis, it is important to identify **how many cells we aggregated for each sample**. We need to make sure that we have enough cells per sample after subsetting to one celltype. We can see that with the exception of one sample, the TN group has many cells and the cold7 samples have much fewer cells.
 
@@ -223,7 +230,7 @@ ggplot(bulk_vsm@meta.data, aes(x=sample, y=n_cells, fill=condition)) +
 ***
 
 ::: callout-tip
-# Exercise
+# [**Exercise 1**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)
 
 Another cell type in this dataset that was particularly interesting to the authors were the **Pdgfr α+ adipose progentior cells (APCs)**.
 
@@ -240,7 +247,6 @@ celltypes <- sort(unique(seurat@meta.data[["celltype"]]))
 > Reminder: The abbreviations for the cell types can be found in the [project set-up lesson](02_setup_intro_dataset.qmd#celltype-annotation).
 
 2. Plot the cell number distribution across samples. How do the numbers compare to VSM cells?
-
 :::
 
 Now we can create our DESeq2 object to prepare to run the DE analysis. We need to **include the counts, metadata, and design formula for our comparison of interest**. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (batch, sex, age, etc.). For this dataset, we only have our comparison of interest, which is stored as the `condition` in our metadata data frame.
@@ -265,9 +271,9 @@ dds
 Now that the DESeq2 object is created, we are ready to continue with our analysis!
 
 ::: callout-tip
-# Exercises
+# [**Exercise 2**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)
 
-3. Using the code below, create a DESeq2 object for the **Pdgfr α+ APCs** data. There is nothing to submit for this exercise, but please run the code as you will need `dds_APC` for future exercises.
+Create a DESeq2 object for the **Pdgfr α+ APCs** data as `dds_APC`.
 
 ```{r}
 #| label: create_apc_dds_object
@@ -283,5 +289,4 @@ dds_APC <- DESeqDataSetFromMatrix(t(APC_counts),
 
 dds_APC
 ```
-
 :::
