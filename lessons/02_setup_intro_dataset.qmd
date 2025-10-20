@@ -99,7 +99,7 @@ Save the Rscript as `metadata.R`. Your working directory should look something l
 A GIF demonstrating this step is shown below:
 
 <p align="center">
-<img src="../img/R_script_creation.gif" width="1000">
+<img src="../img/R_script_creation_2.gif" width="1000">
 </p>
 
 ### Loading libraries 
