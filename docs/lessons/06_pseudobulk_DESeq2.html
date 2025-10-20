@@ -9,7 +9,7 @@
 <meta name="author" content="Noor Sohail, Mary Piper, Lorena Pantano, Amélie Julé, Meeta Mistry, Radhika Khetani">
 <meta name="dcterms.date" content="2024-09-12">
 
-<title>Click here for alternative code for aggregating counts for multiple celltypes – Pseudobulk for single-cell RNA-seq</title>
+<title>Set-up DESeq2 analysis – Pseudobulk for single-cell RNA-seq</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Day 2:</a></li><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Click here for alternative code for aggregating counts for multiple celltypes</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Day 2:</a></li><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Set-up DESeq2 analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -254,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../lessons/06_pseudobulk_DESeq2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Click here for alternative code for aggregating counts for multiple celltypes</span></a>
+ <span class="menu-text">Set-up DESeq2 analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -351,9 +351,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Day 2:</a></li><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Click here for alternative code for aggregating counts for multiple celltypes</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Day 2:</a></li><li class="breadcrumb-item"><a href="../lessons/06_pseudobulk_DESeq2.html">Set-up DESeq2 analysis</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Click here for alternative code for aggregating counts for multiple celltypes</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Set-up DESeq2 analysis</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -555,14 +555,16 @@ Mrpl15                   135                  2037</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Click here for alternative code for aggregating counts for multiple celltypes
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Note that this code <strong>uses a for loop</strong>. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them.</p>
 <div class="cell">
@@ -604,6 +606,7 @@ Note
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  pb_list[[ct]] <span class="ot">&lt;-</span> bulk_ct</span>
 <span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1329,156 +1332,154 @@ colData names(5): orig.ident celltype sample condition n_cells</code></pre>
 <span id="cb23-156"><a href="#cb23-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb23-157"><a href="#cb23-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-158"><a href="#cb23-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a>:::callout-note</span>
-<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb23-161"><a href="#cb23-161" aria-hidden="true" tabindex="-1"></a>collapse: true</span>
-<span id="cb23-162"><a href="#cb23-162" aria-hidden="true" tabindex="-1"></a>title: Click here for alternative code for aggregating counts for multiple celltypes</span>
-<span id="cb23-163"><a href="#cb23-163" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a><span class="fu"># Click here for alternative code for aggregating counts for multiple celltypes</span></span>
+<span id="cb23-161"><a href="#cb23-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-162"><a href="#cb23-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-163"><a href="#cb23-163" aria-hidden="true" tabindex="-1"></a>Note that this code **uses a for loop**. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them.</span>
 <span id="cb23-164"><a href="#cb23-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-165"><a href="#cb23-165" aria-hidden="true" tabindex="-1"></a>Note that this code **uses a for loop**. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them.</span>
-<span id="cb23-166"><a href="#cb23-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-169"><a href="#cb23-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: obtain_celltypes</span></span>
-<span id="cb23-171"><a href="#cb23-171" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign unique celltypes to the celltypes object</span></span>
-<span id="cb23-172"><a href="#cb23-172" aria-hidden="true" tabindex="-1"></a>celltypes <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seurat<span class="sc">@</span>meta.data[[<span class="st">"celltype"</span>]]))</span>
-<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Print celltypes</span></span>
-<span id="cb23-175"><a href="#cb23-175" aria-hidden="true" tabindex="-1"></a>celltypes</span>
-<span id="cb23-176"><a href="#cb23-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-167"><a href="#cb23-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-168"><a href="#cb23-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: obtain_celltypes</span></span>
+<span id="cb23-169"><a href="#cb23-169" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign unique celltypes to the celltypes object</span></span>
+<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a>celltypes <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seurat<span class="sc">@</span>meta.data[[<span class="st">"celltype"</span>]]))</span>
+<span id="cb23-171"><a href="#cb23-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-172"><a href="#cb23-172" aria-hidden="true" tabindex="-1"></a><span class="co"># Print celltypes</span></span>
+<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a>celltypes</span>
+<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-175"><a href="#cb23-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-176"><a href="#cb23-176" aria-hidden="true" tabindex="-1"></a>Next, we want to store the aggregated, pseudobulked expression for each celltype as a list of Seurat objects. Therefore we are going to use the same steps we ran above with the <span class="in">`AggregateExpression()`</span> function and adding the number of cells in each group as a metadata column. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
 <span id="cb23-177"><a href="#cb23-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-178"><a href="#cb23-178" aria-hidden="true" tabindex="-1"></a>Next, we want to store the aggregated, pseudobulked expression for each celltype as a list of Seurat objects. Therefore we are going to use the same steps we ran above with the <span class="in">`AggregateExpression()`</span> function and adding the number of cells in each group as a metadata column. <span class="dt">&lt;</span><span class="kw">br</span><span class="dt">&gt;</span></span>
-<span id="cb23-179"><a href="#cb23-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-182"><a href="#cb23-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-183"><a href="#cb23-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: aggregating_by_celltype</span></span>
-<span id="cb23-184"><a href="#cb23-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb23-185"><a href="#cb23-185" aria-hidden="true" tabindex="-1"></a>pb_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb23-186"><a href="#cb23-186" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (ct <span class="cf">in</span> celltypes) {</span>
-<span id="cb23-187"><a href="#cb23-187" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-188"><a href="#cb23-188" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Subset cells to one celltype</span></span>
-<span id="cb23-189"><a href="#cb23-189" aria-hidden="true" tabindex="-1"></a>  seurat_ct <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat, <span class="at">subset=</span>(celltype <span class="sc">==</span> ct))</span>
-<span id="cb23-190"><a href="#cb23-190" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-191"><a href="#cb23-191" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aggregate to get pseudobulk</span></span>
-<span id="cb23-192"><a href="#cb23-192" aria-hidden="true" tabindex="-1"></a>  bulk_ct <span class="ot">&lt;-</span> <span class="fu">AggregateExpression</span>(</span>
-<span id="cb23-193"><a href="#cb23-193" aria-hidden="true" tabindex="-1"></a>              seurat_ct,</span>
-<span id="cb23-194"><a href="#cb23-194" aria-hidden="true" tabindex="-1"></a>              <span class="at">return.seurat =</span> T,</span>
-<span id="cb23-195"><a href="#cb23-195" aria-hidden="true" tabindex="-1"></a>              <span class="at">assays =</span> <span class="st">"RNA"</span>,</span>
-<span id="cb23-196"><a href="#cb23-196" aria-hidden="true" tabindex="-1"></a>              <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">"celltype"</span>, <span class="st">"sample"</span>, <span class="st">"condition"</span>)</span>
-<span id="cb23-197"><a href="#cb23-197" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb23-198"><a href="#cb23-198" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-199"><a href="#cb23-199" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add number of cells per sample</span></span>
-<span id="cb23-200"><a href="#cb23-200" aria-hidden="true" tabindex="-1"></a>  n_cells <span class="ot">&lt;-</span> seurat_ct<span class="sc">@</span>meta.data <span class="sc">%&gt;%</span> </span>
-<span id="cb23-201"><a href="#cb23-201" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">count</span>(sample, celltype) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-202"><a href="#cb23-202" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rename</span>(<span class="st">"n"</span><span class="ot">=</span><span class="st">"n_cells"</span>)</span>
-<span id="cb23-203"><a href="#cb23-203" aria-hidden="true" tabindex="-1"></a>  n_cells<span class="sc">$</span>sample <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(n_cells<span class="sc">$</span>sample, <span class="st">"_"</span>, <span class="st">"-"</span>)</span>
-<span id="cb23-204"><a href="#cb23-204" aria-hidden="true" tabindex="-1"></a>  meta_bulk_ct <span class="ot">&lt;-</span> <span class="fu">left_join</span>(bulk_ct<span class="sc">@</span>meta.data, n_cells)</span>
-<span id="cb23-205"><a href="#cb23-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(meta_bulk_ct) <span class="ot">&lt;-</span> meta_bulk_ct<span class="sc">$</span>orig.ident</span>
-<span id="cb23-206"><a href="#cb23-206" aria-hidden="true" tabindex="-1"></a>  bulk_ct<span class="sc">@</span>meta.data <span class="ot">&lt;-</span> meta_bulk_ct</span>
+<span id="cb23-180"><a href="#cb23-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-181"><a href="#cb23-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: aggregating_by_celltype</span></span>
+<span id="cb23-182"><a href="#cb23-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb23-183"><a href="#cb23-183" aria-hidden="true" tabindex="-1"></a>pb_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb23-184"><a href="#cb23-184" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (ct <span class="cf">in</span> celltypes) {</span>
+<span id="cb23-185"><a href="#cb23-185" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-186"><a href="#cb23-186" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Subset cells to one celltype</span></span>
+<span id="cb23-187"><a href="#cb23-187" aria-hidden="true" tabindex="-1"></a>  seurat_ct <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat, <span class="at">subset=</span>(celltype <span class="sc">==</span> ct))</span>
+<span id="cb23-188"><a href="#cb23-188" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-189"><a href="#cb23-189" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aggregate to get pseudobulk</span></span>
+<span id="cb23-190"><a href="#cb23-190" aria-hidden="true" tabindex="-1"></a>  bulk_ct <span class="ot">&lt;-</span> <span class="fu">AggregateExpression</span>(</span>
+<span id="cb23-191"><a href="#cb23-191" aria-hidden="true" tabindex="-1"></a>              seurat_ct,</span>
+<span id="cb23-192"><a href="#cb23-192" aria-hidden="true" tabindex="-1"></a>              <span class="at">return.seurat =</span> T,</span>
+<span id="cb23-193"><a href="#cb23-193" aria-hidden="true" tabindex="-1"></a>              <span class="at">assays =</span> <span class="st">"RNA"</span>,</span>
+<span id="cb23-194"><a href="#cb23-194" aria-hidden="true" tabindex="-1"></a>              <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">"celltype"</span>, <span class="st">"sample"</span>, <span class="st">"condition"</span>)</span>
+<span id="cb23-195"><a href="#cb23-195" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb23-196"><a href="#cb23-196" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-197"><a href="#cb23-197" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add number of cells per sample</span></span>
+<span id="cb23-198"><a href="#cb23-198" aria-hidden="true" tabindex="-1"></a>  n_cells <span class="ot">&lt;-</span> seurat_ct<span class="sc">@</span>meta.data <span class="sc">%&gt;%</span> </span>
+<span id="cb23-199"><a href="#cb23-199" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">count</span>(sample, celltype) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-200"><a href="#cb23-200" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rename</span>(<span class="st">"n"</span><span class="ot">=</span><span class="st">"n_cells"</span>)</span>
+<span id="cb23-201"><a href="#cb23-201" aria-hidden="true" tabindex="-1"></a>  n_cells<span class="sc">$</span>sample <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(n_cells<span class="sc">$</span>sample, <span class="st">"_"</span>, <span class="st">"-"</span>)</span>
+<span id="cb23-202"><a href="#cb23-202" aria-hidden="true" tabindex="-1"></a>  meta_bulk_ct <span class="ot">&lt;-</span> <span class="fu">left_join</span>(bulk_ct<span class="sc">@</span>meta.data, n_cells)</span>
+<span id="cb23-203"><a href="#cb23-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(meta_bulk_ct) <span class="ot">&lt;-</span> meta_bulk_ct<span class="sc">$</span>orig.ident</span>
+<span id="cb23-204"><a href="#cb23-204" aria-hidden="true" tabindex="-1"></a>  bulk_ct<span class="sc">@</span>meta.data <span class="ot">&lt;-</span> meta_bulk_ct</span>
+<span id="cb23-205"><a href="#cb23-205" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-206"><a href="#cb23-206" aria-hidden="true" tabindex="-1"></a>  pb_list[[ct]] <span class="ot">&lt;-</span> bulk_ct</span>
 <span id="cb23-207"><a href="#cb23-207" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-208"><a href="#cb23-208" aria-hidden="true" tabindex="-1"></a>  pb_list[[ct]] <span class="ot">&lt;-</span> bulk_ct</span>
-<span id="cb23-209"><a href="#cb23-209" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb23-210"><a href="#cb23-210" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-211"><a href="#cb23-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-212"><a href="#cb23-212" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb23-213"><a href="#cb23-213" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb23-214"><a href="#cb23-214" aria-hidden="true" tabindex="-1"></a><span class="fu"># Differential gene expression with DESeq2</span></span>
+<span id="cb23-208"><a href="#cb23-208" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-209"><a href="#cb23-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-210"><a href="#cb23-210" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-211"><a href="#cb23-211" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb23-212"><a href="#cb23-212" aria-hidden="true" tabindex="-1"></a><span class="fu"># Differential gene expression with DESeq2</span></span>
+<span id="cb23-213"><a href="#cb23-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-214"><a href="#cb23-214" aria-hidden="true" tabindex="-1"></a>**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the pseudobulk DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in <span class="co">[</span><span class="ot">our materials</span><span class="co">](https://hbctraining.github.io/Intro-to-DGE/schedule/links-to-lessons.html)</span> detailing the workflow for bulk RNA-seq analysis, as well as in the <span class="co">[</span><span class="ot">DESeq2 vignette</span><span class="co">](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)</span>.</span>
 <span id="cb23-215"><a href="#cb23-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-216"><a href="#cb23-216" aria-hidden="true" tabindex="-1"></a>**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the pseudobulk DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in <span class="co">[</span><span class="ot">our materials</span><span class="co">](https://hbctraining.github.io/Intro-to-DGE/schedule/links-to-lessons.html)</span> detailing the workflow for bulk RNA-seq analysis, as well as in the <span class="co">[</span><span class="ot">DESeq2 vignette</span><span class="co">](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)</span>.</span>
-<span id="cb23-217"><a href="#cb23-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-218"><a href="#cb23-218" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
-<span id="cb23-219"><a href="#cb23-219" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/pseudobulk_de_workflow.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"400"</span><span class="dt">&gt;</span></span>
-<span id="cb23-220"><a href="#cb23-220" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb23-216"><a href="#cb23-216" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
+<span id="cb23-217"><a href="#cb23-217" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/pseudobulk_de_workflow.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"400"</span><span class="dt">&gt;</span></span>
+<span id="cb23-218"><a href="#cb23-218" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb23-219"><a href="#cb23-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-220"><a href="#cb23-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating a DESeq2 object</span></span>
 <span id="cb23-221"><a href="#cb23-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-222"><a href="#cb23-222" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating a DESeq2 object</span></span>
+<span id="cb23-222"><a href="#cb23-222" aria-hidden="true" tabindex="-1"></a>From the pseudobulk Seurat object, we can extract the information required as the input to DESeq2. First, we need to decide which cell type we wish to focus on, and then retrieve the corresponding data from the object. We are going to look for differntially expressed genes between the <span class="in">`TN`</span> and <span class="in">`cold7`</span> condition for the **vascular smooth muscle (`VSM`) cells**. </span>
 <span id="cb23-223"><a href="#cb23-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-224"><a href="#cb23-224" aria-hidden="true" tabindex="-1"></a>From the pseudobulk Seurat object, we can extract the information required as the input to DESeq2. First, we need to decide which cell type we wish to focus on, and then retrieve the corresponding data from the object. We are going to look for differntially expressed genes between the <span class="in">`TN`</span> and <span class="in">`cold7`</span> condition for the **vascular smooth muscle (`VSM`) cells**. </span>
+<span id="cb23-224"><a href="#cb23-224" aria-hidden="true" tabindex="-1"></a>We use the <span class="in">`subset()`</span> function to get the data we need:</span>
 <span id="cb23-225"><a href="#cb23-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-226"><a href="#cb23-226" aria-hidden="true" tabindex="-1"></a>We use the <span class="in">`subset()`</span> function to get the data we need:</span>
-<span id="cb23-227"><a href="#cb23-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-230"><a href="#cb23-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-231"><a href="#cb23-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: subset_seurat_object</span></span>
-<span id="cb23-232"><a href="#cb23-232" aria-hidden="true" tabindex="-1"></a>bulk_vsm <span class="ot">&lt;-</span> <span class="fu">subset</span>(bulk, <span class="at">subset=</span> (celltype <span class="sc">==</span> <span class="st">"VSM"</span>) <span class="sc">&amp;</span> </span>
-<span id="cb23-233"><a href="#cb23-233" aria-hidden="true" tabindex="-1"></a>                     (condition <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"cold7"</span>)))</span>
-<span id="cb23-234"><a href="#cb23-234" aria-hidden="true" tabindex="-1"></a>bulk_vsm</span>
-<span id="cb23-235"><a href="#cb23-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-228"><a href="#cb23-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-229"><a href="#cb23-229" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: subset_seurat_object</span></span>
+<span id="cb23-230"><a href="#cb23-230" aria-hidden="true" tabindex="-1"></a>bulk_vsm <span class="ot">&lt;-</span> <span class="fu">subset</span>(bulk, <span class="at">subset=</span> (celltype <span class="sc">==</span> <span class="st">"VSM"</span>) <span class="sc">&amp;</span> </span>
+<span id="cb23-231"><a href="#cb23-231" aria-hidden="true" tabindex="-1"></a>                     (condition <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"cold7"</span>)))</span>
+<span id="cb23-232"><a href="#cb23-232" aria-hidden="true" tabindex="-1"></a>bulk_vsm</span>
+<span id="cb23-233"><a href="#cb23-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-234"><a href="#cb23-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-235"><a href="#cb23-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of cells</span></span>
 <span id="cb23-236"><a href="#cb23-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-237"><a href="#cb23-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Number of cells</span></span>
+<span id="cb23-237"><a href="#cb23-237" aria-hidden="true" tabindex="-1"></a>Before moving on to a pseudobulk DGE analysis, it is important to identify **how many cells we aggregated for each sample**. We need to make sure that we have enough cells per sample after subsetting to one celltype. We can see that with the exception of one sample, the TN group has many cells and the cold7 samples have much fewer cells.</span>
 <span id="cb23-238"><a href="#cb23-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-239"><a href="#cb23-239" aria-hidden="true" tabindex="-1"></a>Before moving on to a pseudobulk DGE analysis, it is important to identify **how many cells we aggregated for each sample**. We need to make sure that we have enough cells per sample after subsetting to one celltype. We can see that with the exception of one sample, the TN group has many cells and the cold7 samples have much fewer cells.</span>
-<span id="cb23-240"><a href="#cb23-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-243"><a href="#cb23-243" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-244"><a href="#cb23-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cell_counts_plot</span></span>
-<span id="cb23-245"><a href="#cb23-245" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot number of cells by sample</span></span>
-<span id="cb23-246"><a href="#cb23-246" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bulk_vsm<span class="sc">@</span>meta.data, <span class="fu">aes</span>(<span class="at">x=</span>sample, <span class="at">y=</span>n_cells, <span class="at">fill=</span>condition)) <span class="sc">+</span></span>
-<span id="cb23-247"><a href="#cb23-247" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb23-248"><a href="#cb23-248" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb23-249"><a href="#cb23-249" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb23-250"><a href="#cb23-250" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Sample name"</span>, <span class="at">y=</span><span class="st">"Number of cells"</span>) <span class="sc">+</span></span>
-<span id="cb23-251"><a href="#cb23-251" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n_cells), <span class="at">vjust=</span><span class="sc">-</span><span class="fl">0.5</span>)</span>
-<span id="cb23-252"><a href="#cb23-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-241"><a href="#cb23-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-242"><a href="#cb23-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cell_counts_plot</span></span>
+<span id="cb23-243"><a href="#cb23-243" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot number of cells by sample</span></span>
+<span id="cb23-244"><a href="#cb23-244" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bulk_vsm<span class="sc">@</span>meta.data, <span class="fu">aes</span>(<span class="at">x=</span>sample, <span class="at">y=</span>n_cells, <span class="at">fill=</span>condition)) <span class="sc">+</span></span>
+<span id="cb23-245"><a href="#cb23-245" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">color=</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb23-246"><a href="#cb23-246" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb23-247"><a href="#cb23-247" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="dv">1</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb23-248"><a href="#cb23-248" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Sample name"</span>, <span class="at">y=</span><span class="st">"Number of cells"</span>) <span class="sc">+</span></span>
+<span id="cb23-249"><a href="#cb23-249" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n_cells), <span class="at">vjust=</span><span class="sc">-</span><span class="fl">0.5</span>)</span>
+<span id="cb23-250"><a href="#cb23-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-251"><a href="#cb23-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-252"><a href="#cb23-252" aria-hidden="true" tabindex="-1"></a>***</span>
 <span id="cb23-253"><a href="#cb23-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-254"><a href="#cb23-254" aria-hidden="true" tabindex="-1"></a>***</span>
-<span id="cb23-255"><a href="#cb23-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-256"><a href="#cb23-256" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb23-257"><a href="#cb23-257" aria-hidden="true" tabindex="-1"></a><span class="fu"># [**Exercise 1**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)</span></span>
+<span id="cb23-254"><a href="#cb23-254" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb23-255"><a href="#cb23-255" aria-hidden="true" tabindex="-1"></a><span class="fu"># [**Exercise 1**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)</span></span>
+<span id="cb23-256"><a href="#cb23-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-257"><a href="#cb23-257" aria-hidden="true" tabindex="-1"></a>Another cell type in this dataset that was particularly interesting to the authors were the **Pdgfr&nbsp;α+ adipose progentior cells (APCs)**.</span>
 <span id="cb23-258"><a href="#cb23-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-259"><a href="#cb23-259" aria-hidden="true" tabindex="-1"></a>Another cell type in this dataset that was particularly interesting to the authors were the **Pdgfr&nbsp;α+ adipose progentior cells (APCs)**.</span>
+<span id="cb23-259"><a href="#cb23-259" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Subset the <span class="in">`bulk`</span> object to isolate only adipose progenitor cells for the TN and cold7 conditions. Assign it to variable called <span class="in">`bulk_APC`</span>.</span>
 <span id="cb23-260"><a href="#cb23-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-261"><a href="#cb23-261" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Subset the <span class="in">`bulk`</span> object to isolate only adipose progenitor cells for the TN and cold7 conditions. Assign it to variable called <span class="in">`bulk_APC`</span>.</span>
-<span id="cb23-262"><a href="#cb23-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-263"><a href="#cb23-263" aria-hidden="true" tabindex="-1"></a> _**Hint**: You may need to review `celltypes` to determine what this cell type is called in our data._ You can find unique celltypes with the code:</span>
-<span id="cb23-264"><a href="#cb23-264" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb23-267"><a href="#cb23-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-268"><a href="#cb23-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: unique_celltypes</span></span>
-<span id="cb23-269"><a href="#cb23-269" aria-hidden="true" tabindex="-1"></a><span class="co"># Find unique celltypes</span></span>
-<span id="cb23-270"><a href="#cb23-270" aria-hidden="true" tabindex="-1"></a>celltypes <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seurat<span class="sc">@</span>meta.data[[<span class="st">"celltype"</span>]]))</span>
-<span id="cb23-271"><a href="#cb23-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-261"><a href="#cb23-261" aria-hidden="true" tabindex="-1"></a> _**Hint**: You may need to review `celltypes` to determine what this cell type is called in our data._ You can find unique celltypes with the code:</span>
+<span id="cb23-262"><a href="#cb23-262" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb23-265"><a href="#cb23-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-266"><a href="#cb23-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: unique_celltypes</span></span>
+<span id="cb23-267"><a href="#cb23-267" aria-hidden="true" tabindex="-1"></a><span class="co"># Find unique celltypes</span></span>
+<span id="cb23-268"><a href="#cb23-268" aria-hidden="true" tabindex="-1"></a>celltypes <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(seurat<span class="sc">@</span>meta.data[[<span class="st">"celltype"</span>]]))</span>
+<span id="cb23-269"><a href="#cb23-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-270"><a href="#cb23-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-271"><a href="#cb23-271" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Reminder: The abbreviations for the cell types can be found in the </span><span class="co">[</span><span class="ot">project set-up lesson</span><span class="co">](02_setup_intro_dataset.qmd#celltype-annotation)</span><span class="at">.</span></span>
 <span id="cb23-272"><a href="#cb23-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-273"><a href="#cb23-273" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Reminder: The abbreviations for the cell types can be found in the </span><span class="co">[</span><span class="ot">project set-up lesson</span><span class="co">](02_setup_intro_dataset.qmd#celltype-annotation)</span><span class="at">.</span></span>
-<span id="cb23-274"><a href="#cb23-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-275"><a href="#cb23-275" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Plot the cell number distribution across samples. How do the numbers compare to VSM cells?</span>
-<span id="cb23-276"><a href="#cb23-276" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-273"><a href="#cb23-273" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Plot the cell number distribution across samples. How do the numbers compare to VSM cells?</span>
+<span id="cb23-274"><a href="#cb23-274" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-275"><a href="#cb23-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-276"><a href="#cb23-276" aria-hidden="true" tabindex="-1"></a>Now we can create our DESeq2 object to prepare to run the DE analysis. We need to **include the counts, metadata, and design formula for our comparison of interest**. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (batch, sex, age, etc.). For this dataset, we only have our comparison of interest, which is stored as the <span class="in">`condition`</span> in our metadata data frame.</span>
 <span id="cb23-277"><a href="#cb23-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-278"><a href="#cb23-278" aria-hidden="true" tabindex="-1"></a>Now we can create our DESeq2 object to prepare to run the DE analysis. We need to **include the counts, metadata, and design formula for our comparison of interest**. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (batch, sex, age, etc.). For this dataset, we only have our comparison of interest, which is stored as the <span class="in">`condition`</span> in our metadata data frame.</span>
+<span id="cb23-278"><a href="#cb23-278" aria-hidden="true" tabindex="-1"></a>More information about the DESeq2 workflow and design formulas can be found in our <span class="co">[</span><span class="ot">DESeq2 materials</span><span class="co">](https://hbctraining.github.io/Intro-to-DGE/lessons/04a_design_formulas.html)</span>.</span>
 <span id="cb23-279"><a href="#cb23-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-280"><a href="#cb23-280" aria-hidden="true" tabindex="-1"></a>More information about the DESeq2 workflow and design formulas can be found in our <span class="co">[</span><span class="ot">DESeq2 materials</span><span class="co">](https://hbctraining.github.io/Intro-to-DGE/lessons/04a_design_formulas.html)</span>.</span>
-<span id="cb23-281"><a href="#cb23-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-284"><a href="#cb23-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-285"><a href="#cb23-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: create_dds_object</span></span>
-<span id="cb23-286"><a href="#cb23-286" aria-hidden="true" tabindex="-1"></a><span class="co"># Get count matrix</span></span>
-<span id="cb23-287"><a href="#cb23-287" aria-hidden="true" tabindex="-1"></a>cluster_counts <span class="ot">&lt;-</span> <span class="fu">FetchData</span>(bulk_vsm, <span class="at">layer=</span><span class="st">"counts"</span>, <span class="at">vars=</span><span class="fu">rownames</span>(bulk_vsm))</span>
-<span id="cb23-288"><a href="#cb23-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-289"><a href="#cb23-289" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DESeq2 object</span></span>
-<span id="cb23-290"><a href="#cb23-290" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose it to get genes as rows</span></span>
-<span id="cb23-291"><a href="#cb23-291" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="fu">t</span>(cluster_counts),</span>
-<span id="cb23-292"><a href="#cb23-292" aria-hidden="true" tabindex="-1"></a>                                <span class="at">colData =</span> bulk_vsm<span class="sc">@</span>meta.data,</span>
-<span id="cb23-293"><a href="#cb23-293" aria-hidden="true" tabindex="-1"></a>                                <span class="at">design =</span> <span class="sc">~</span> condition)</span>
-<span id="cb23-294"><a href="#cb23-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-295"><a href="#cb23-295" aria-hidden="true" tabindex="-1"></a>dds</span>
-<span id="cb23-296"><a href="#cb23-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-297"><a href="#cb23-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-282"><a href="#cb23-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-283"><a href="#cb23-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: create_dds_object</span></span>
+<span id="cb23-284"><a href="#cb23-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Get count matrix</span></span>
+<span id="cb23-285"><a href="#cb23-285" aria-hidden="true" tabindex="-1"></a>cluster_counts <span class="ot">&lt;-</span> <span class="fu">FetchData</span>(bulk_vsm, <span class="at">layer=</span><span class="st">"counts"</span>, <span class="at">vars=</span><span class="fu">rownames</span>(bulk_vsm))</span>
+<span id="cb23-286"><a href="#cb23-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-287"><a href="#cb23-287" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DESeq2 object</span></span>
+<span id="cb23-288"><a href="#cb23-288" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose it to get genes as rows</span></span>
+<span id="cb23-289"><a href="#cb23-289" aria-hidden="true" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="fu">t</span>(cluster_counts),</span>
+<span id="cb23-290"><a href="#cb23-290" aria-hidden="true" tabindex="-1"></a>                                <span class="at">colData =</span> bulk_vsm<span class="sc">@</span>meta.data,</span>
+<span id="cb23-291"><a href="#cb23-291" aria-hidden="true" tabindex="-1"></a>                                <span class="at">design =</span> <span class="sc">~</span> condition)</span>
+<span id="cb23-292"><a href="#cb23-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-293"><a href="#cb23-293" aria-hidden="true" tabindex="-1"></a>dds</span>
+<span id="cb23-294"><a href="#cb23-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-295"><a href="#cb23-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-296"><a href="#cb23-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-297"><a href="#cb23-297" aria-hidden="true" tabindex="-1"></a>Now that the DESeq2 object is created, we are ready to continue with our analysis!</span>
 <span id="cb23-298"><a href="#cb23-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-299"><a href="#cb23-299" aria-hidden="true" tabindex="-1"></a>Now that the DESeq2 object is created, we are ready to continue with our analysis!</span>
-<span id="cb23-300"><a href="#cb23-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-301"><a href="#cb23-301" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb23-302"><a href="#cb23-302" aria-hidden="true" tabindex="-1"></a><span class="fu"># [**Exercise 2**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)</span></span>
+<span id="cb23-299"><a href="#cb23-299" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb23-300"><a href="#cb23-300" aria-hidden="true" tabindex="-1"></a><span class="fu"># [**Exercise 2**](06_pseudobulk_DESeq2_Answer-key.qmd#exercise-1)</span></span>
+<span id="cb23-301"><a href="#cb23-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-302"><a href="#cb23-302" aria-hidden="true" tabindex="-1"></a>Create a DESeq2 object for the **Pdgfr&nbsp;α+ APCs** data as <span class="in">`dds_APC`</span>.</span>
 <span id="cb23-303"><a href="#cb23-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-304"><a href="#cb23-304" aria-hidden="true" tabindex="-1"></a>Create a DESeq2 object for the **Pdgfr&nbsp;α+ APCs** data as <span class="in">`dds_APC`</span>.</span>
-<span id="cb23-305"><a href="#cb23-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-308"><a href="#cb23-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb23-309"><a href="#cb23-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: create_apc_dds_object</span></span>
-<span id="cb23-310"><a href="#cb23-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb23-311"><a href="#cb23-311" aria-hidden="true" tabindex="-1"></a><span class="co"># Get count matrix</span></span>
-<span id="cb23-312"><a href="#cb23-312" aria-hidden="true" tabindex="-1"></a>APC_counts <span class="ot">&lt;-</span> <span class="fu">FetchData</span>(bulk_APC, <span class="at">layer=</span><span class="st">"counts"</span>, <span class="at">vars=</span><span class="fu">rownames</span>(bulk_APC))</span>
-<span id="cb23-313"><a href="#cb23-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-314"><a href="#cb23-314" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DESeq2 object</span></span>
-<span id="cb23-315"><a href="#cb23-315" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose it to get genes as rows</span></span>
-<span id="cb23-316"><a href="#cb23-316" aria-hidden="true" tabindex="-1"></a>dds_APC <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="fu">t</span>(APC_counts),</span>
-<span id="cb23-317"><a href="#cb23-317" aria-hidden="true" tabindex="-1"></a>                                <span class="at">colData =</span> bulk_APC<span class="sc">@</span>meta.data,</span>
-<span id="cb23-318"><a href="#cb23-318" aria-hidden="true" tabindex="-1"></a>                                <span class="at">design =</span> <span class="sc">~</span> condition)</span>
-<span id="cb23-319"><a href="#cb23-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-320"><a href="#cb23-320" aria-hidden="true" tabindex="-1"></a>dds_APC</span>
-<span id="cb23-321"><a href="#cb23-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-322"><a href="#cb23-322" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-306"><a href="#cb23-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb23-307"><a href="#cb23-307" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: create_apc_dds_object</span></span>
+<span id="cb23-308"><a href="#cb23-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb23-309"><a href="#cb23-309" aria-hidden="true" tabindex="-1"></a><span class="co"># Get count matrix</span></span>
+<span id="cb23-310"><a href="#cb23-310" aria-hidden="true" tabindex="-1"></a>APC_counts <span class="ot">&lt;-</span> <span class="fu">FetchData</span>(bulk_APC, <span class="at">layer=</span><span class="st">"counts"</span>, <span class="at">vars=</span><span class="fu">rownames</span>(bulk_APC))</span>
+<span id="cb23-311"><a href="#cb23-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-312"><a href="#cb23-312" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DESeq2 object</span></span>
+<span id="cb23-313"><a href="#cb23-313" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose it to get genes as rows</span></span>
+<span id="cb23-314"><a href="#cb23-314" aria-hidden="true" tabindex="-1"></a>dds_APC <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="fu">t</span>(APC_counts),</span>
+<span id="cb23-315"><a href="#cb23-315" aria-hidden="true" tabindex="-1"></a>                                <span class="at">colData =</span> bulk_APC<span class="sc">@</span>meta.data,</span>
+<span id="cb23-316"><a href="#cb23-316" aria-hidden="true" tabindex="-1"></a>                                <span class="at">design =</span> <span class="sc">~</span> condition)</span>
+<span id="cb23-317"><a href="#cb23-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-318"><a href="#cb23-318" aria-hidden="true" tabindex="-1"></a>dds_APC</span>
+<span id="cb23-319"><a href="#cb23-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb23-320"><a href="#cb23-320" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

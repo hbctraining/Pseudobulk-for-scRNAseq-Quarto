@@ -48,4 +48,16 @@ props_df_summary <- props_df %>%
 
 1. Take a look at the results table `propres`. Which celltypes show a significant change in composition between TN and cold7?
 
+
 2. Does this line up with what we observed in the counts table?
+
+```{r}
+propres
+```
+
+```{r}
+## Check count numbers of cells
+meta_sub$condition_sample <- paste0(meta_sub$condition, "_", meta_sub$sample)
+table(meta_sub$condition_sample, meta_sub$celltype)
+```
+

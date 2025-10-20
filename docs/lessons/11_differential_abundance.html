@@ -540,13 +540,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 1
+<a href="../lessons/11_differential_abundance_Answer-key.html#exercise-1"><strong>Exercise 1</strong></a>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Take a look at the results table <code>propres</code>. Which celltypes show a significant change in composition between TN and cold7?</li>
-<li>Does this line up with what we observed in the counts table?</li>
+<li><p>Take a look at the results table <code>propres</code>. Which celltypes show a significant change in composition between TN and cold7?</p></li>
+<li><p>Does this line up with what we observed in the counts table?</p></li>
 </ol>
 </div>
 </div>
@@ -1351,151 +1351,153 @@ Note
 <span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
 <span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercise 1</span></span>
-<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a look at the results table <span class="in">`propres`</span>. Which celltypes show a significant change in composition between TN and cold7?</span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Does this line up with what we observed in the counts table?</span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="fu"># [**Exercise 1**](11_differential_abundance_Answer-key.qmd#exercise-1)</span></span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a look at the results table <span class="in">`propres`</span>. Which celltypes show a significant change in composition between TN and cold7?</span>
 <span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Does this line up with what we observed in the counts table?</span>
 <span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>Keep these answers in mind as we compare these <span class="in">`propeller`</span> results against another differential composition method called <span class="in">`sccomp`</span>.</span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="fu">### Differential compostion analysis using `sccomp`</span></span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a>Keep these answers in mind as we compare these <span class="in">`propeller`</span> results against another differential composition method called <span class="in">`sccomp`</span>.</span>
 <span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>While propellor and other approaches based on linear regression (i.e., scDC, diffcyt) transform the data to model data compositionality, they do not model the actual data count distribution.  Modeling single-cell compositional data as counts is important as small datasets and rare cell types are characterized by a high noise-to-signal ratio, and **modeling counts enables the down-weighting of small cell-group proportions compared to larger ones** ([Mangiola s. et al, 2023](https://www.pnas.org/doi/10.1073/pnas.2203828120)). The **[sccomp](https://github.com/MangiolaLaboratory/sccomp)** core algorithm is outlined in the **grey-boxed panels** of the figure below. Additional panels of the figure highlight other features of sccomp, some of which are described in this lesson; and others (i.e simulation, benchmarking) are described more deeply in the <span class="co">[</span><span class="ot">paper</span><span class="co">](https://www.pnas.org/doi/10.1073/pnas.2203828120)</span>. </span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Differential compostion analysis using `sccomp`</span></span>
 <span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/sccomp.jpg"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"630"</span><span class="dt">&gt;</span></span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>**How does it work?**</span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>While propellor and other approaches based on linear regression (i.e., scDC, diffcyt) transform the data to model data compositionality, they do not model the actual data count distribution.  Modeling single-cell compositional data as counts is important as small datasets and rare cell types are characterized by a high noise-to-signal ratio, and **modeling counts enables the down-weighting of small cell-group proportions compared to larger ones** ([Mangiola s. et al, 2023](https://www.pnas.org/doi/10.1073/pnas.2203828120)). The **[sccomp](https://github.com/MangiolaLaboratory/sccomp)** core algorithm is outlined in the **grey-boxed panels** of the figure below. Additional panels of the figure highlight other features of sccomp, some of which are described in this lesson; and others (i.e simulation, benchmarking) are described more deeply in the <span class="co">[</span><span class="ot">paper</span><span class="co">](https://www.pnas.org/doi/10.1073/pnas.2203828120)</span>. </span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/sccomp.jpg"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"630"</span><span class="dt">&gt;</span></span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Fit the model onto the data, and estimate the coefficients**. <span class="in">`sccomp`</span> can model changes in composition and variability. Here we provide the formula <span class="in">`~ condition`</span>, indicating the cell-group variability is dependent on condition.</span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Optionally, <span class="in">`sccomp`</span> can **identify outliers probabilistically** based on the model fit, and exclude them from the estimation.</span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Hypothesis testing** is performed by calculating the posterior probability of the composition and variability effects being larger than a specified fold-change threshold</span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>When only a few groups or samples are present it becomes challenging to estimate the mean–variability association. <span class="in">`sccomp`</span> gains this prior knowledge from other datasets and incoporates it to stabilize estimates.</span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>The code below will perform the step outlined above. The input is the subsetted Seurat object <span class="in">`seurat_sub`</span> used in the previous section of this lesson.</span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a>**How does it work?**</span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Fit the model onto the data, and estimate the coefficients**. <span class="in">`sccomp`</span> can model changes in composition and variability. Here we provide the formula <span class="in">`~ condition`</span>, indicating the cell-group variability is dependent on condition.</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Optionally, <span class="in">`sccomp`</span> can **identify outliers probabilistically** based on the model fit, and exclude them from the estimation.</span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Hypothesis testing** is performed by calculating the posterior probability of the composition and variability effects being larger than a specified fold-change threshold</span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>When only a few groups or samples are present it becomes challenging to estimate the mean–variability association. <span class="in">`sccomp`</span> gains this prior knowledge from other datasets and incoporates it to stabilize estimates.</span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: run_sccomp</span></span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the first three steps of sccomp</span></span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="ot">&lt;-</span> seurat_sub <span class="sc">%&gt;%</span> </span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_estimate</span>( </span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula_composition =</span> <span class="sc">~</span> condition, </span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>    <span class="at">.sample =</span>  sample, </span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cell_group =</span> celltype, </span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>    <span class="at">bimodal_mean_variability_association =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">1</span>,</span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_remove_outliers</span>(<span class="at">cores =</span> <span class="dv">1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># Optional  </span></span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_test</span>()</span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>It is recommended to follow the instructions for installing <span class="in">`sccomp`</span> from the <span class="co">[</span><span class="ot">GitHub page</span><span class="co">](https://github.com/MangiolaLaboratory/sccomp?tab=readme-ov-file#installation)</span> under the **GitHub** section. Some people may run into issues compiling <span class="in">`cmdstanr`</span>/<span class="in">`cmdstan`</span>. We have found that specific versions of operating systems require extra steps for this compilation. </span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>Therefore, the next few lines will be a demo. However, we will provide the results of the <span class="in">`sccomp`</span> method near the end so you can load the output yourself. </span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a>The column of interest to us is the <span class="in">`c_FDR`</span>, as it reports the false-discovery rate of the null hypothesis for a composition (c). At an FDR &lt; 0.05, **all celltypes are significantly changing with the exception of EC and Pericytes.** Additionally, some celltypes are marginally significant (i.e. Lymph). Each of the columns in the output dataframe are described in more detail on the <span class="co">[</span><span class="ot">sccomp documentation page</span><span class="co">](https://github.com/MangiolaLaboratory/sccomp?tab=readme-ov-file#from-counts)</span>.</span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a>The code below will perform the step outlined above. The input is the subsetted Seurat object <span class="in">`seurat_sub`</span> used in the previous section of this lesson.</span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: run_sccomp</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the first three steps of sccomp</span></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="ot">&lt;-</span> seurat_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_estimate</span>( </span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula_composition =</span> <span class="sc">~</span> condition, </span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>    <span class="at">.sample =</span>  sample, </span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">.cell_group =</span> celltype, </span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>    <span class="at">bimodal_mean_variability_association =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">1</span>,</span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_remove_outliers</span>(<span class="at">cores =</span> <span class="dv">1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># Optional  </span></span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_test</span>()</span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>It is recommended to follow the instructions for installing <span class="in">`sccomp`</span> from the <span class="co">[</span><span class="ot">GitHub page</span><span class="co">](https://github.com/MangiolaLaboratory/sccomp?tab=readme-ov-file#installation)</span> under the **GitHub** section. Some people may run into issues compiling <span class="in">`cmdstanr`</span>/<span class="in">`cmdstan`</span>. We have found that specific versions of operating systems require extra steps for this compilation. </span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>Therefore, the next few lines will be a demo. However, we will provide the results of the <span class="in">`sccomp`</span> method near the end so you can load the output yourself. </span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_sig_results</span></span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="co"># Significant results FDR &lt; 0.05</span></span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
-<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(factor <span class="sc">==</span> <span class="st">"condition"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(c_FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(celltype, c_FDR) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>We can view the fold changes and can see that for Lymph, while the fold change appears to be high, the composition levels within each group are on the lower end.</span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a>The column of interest to us is the <span class="in">`c_FDR`</span>, as it reports the false-discovery rate of the null hypothesis for a composition (c). At an FDR &lt; 0.05, **all celltypes are significantly changing with the exception of EC and Pericytes.** Additionally, some celltypes are marginally significant (i.e. Lymph). Each of the columns in the output dataframe are described in more detail on the <span class="co">[</span><span class="ot">sccomp documentation page</span><span class="co">](https://github.com/MangiolaLaboratory/sccomp?tab=readme-ov-file#from-counts)</span>.</span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_sig_results</span></span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Significant results FDR &lt; 0.05</span></span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(factor <span class="sc">==</span> <span class="st">"condition"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(c_FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(celltype, c_FDR) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_fold_change</span></span>
-<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Fold change</span></span>
-<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
-<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_proportional_fold_change</span>(</span>
-<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula_composition =</span> <span class="sc">~</span>  condition,</span>
-<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>    <span class="at">from =</span>  <span class="st">"TN"</span>, </span>
-<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> <span class="st">"cold7"</span></span>
-<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a>Finally, we can visualize the data using boxplots.</span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a>We can view the fold changes and can see that for Lymph, while the fold change appears to be high, the composition levels within each group are on the lower end.</span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_fold_change</span></span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="co"># Fold change</span></span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_proportional_fold_change</span>(</span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula_composition =</span> <span class="sc">~</span>  condition,</span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">from =</span>  <span class="st">"TN"</span>, </span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a>    <span class="at">to =</span> <span class="st">"cold7"</span></span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The blue boxplots represent the posterior predictive check; it is what the model predicts the data should look like. The black boxplots represent the observed data.</span>
-<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If the model is descriptively adequate for the data, the blue boxplots should roughly overlay the black boxplots.</span>
-<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>A box without coloring for both groups, indicates a celltype which was not significant (i.e. EC)</span>
-<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_boxplots</span></span>
-<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sccomp boxplots</span></span>
-<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
-<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_boxplot</span>(<span class="at">factor =</span> <span class="st">"condition"</span>)</span>
-<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing `propeller` and `sccomp` results</span></span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a>Finally, we can visualize the data using boxplots.</span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The blue boxplots represent the posterior predictive check; it is what the model predicts the data should look like. The black boxplots represent the observed data.</span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>If the model is descriptively adequate for the data, the blue boxplots should roughly overlay the black boxplots.</span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>A box without coloring for both groups, indicates a celltype which was not significant (i.e. EC)</span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_boxplots</span></span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sccomp boxplots</span></span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="sc">%&gt;%</span> </span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sccomp_boxplot</span>(<span class="at">factor =</span> <span class="st">"condition"</span>)</span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>If we look at the significant results of each method side-by-side, we find there is concordance in the majority of the celltypes in which proportions of cells were significantly different between conditions. We also see that both methods report the endothelial cells (EC) are not changing in composition between TN and cold7. There is discrepancy in the Endothelial cell-derived progenitor cells (ECAP) and the VSM-derived adipocyte progenitor cells (VSM-AP), as propellor reports that these celltypes do not change in proportion. Looking at the underlying data for results identified by only one of the methods is not entirely convincing. **Best practice may be to run both methods and compare results.** The most conservative approach would be to take the intersection of the two methods.</span>
+<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing `propeller` and `sccomp` results</span></span>
 <span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>If we look at the significant results of each method side-by-side, we find there is concordance in the majority of the celltypes in which proportions of cells were significantly different between conditions. We also see that both methods report the endothelial cells (EC) are not changing in composition between TN and cold7. There is discrepancy in the Endothelial cell-derived progenitor cells (ECAP) and the VSM-derived adipocyte progenitor cells (VSM-AP), as propellor reports that these celltypes do not change in proportion. Looking at the underlying data for results identified by only one of the methods is not entirely convincing. **Best practice may be to run both methods and compare results.** The most conservative approach would be to take the intersection of the two methods.</span>
 <span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>If you were not able to get <span class="in">`sccomp`</span> installed or had issues compiling <span class="in">`cmdstanr`</span>/<span class="in">`cmdstan`</span>, you can download the <span class="in">`sccomp_result`</span> object by right-clicking and selecting "Save Link as..." from <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.dropbox.com/scl/fi/611upe534ic8zh3xmx25y/sccomp_result.RDS?rlkey=p4gvsnheu6ncsnzagyc3gu282&amp;dl=1)</span>. Place this within your <span class="in">`data`</span> folder.</span>
+<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
 <span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a>Use the following command to read the RDS object into R:</span>
-<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load_sccomp</span></span>
-<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/sccomp_result.RDS"</span>)</span>
-<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_propeller_shared_results</span></span>
-<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a><span class="co"># Get significant celltypes from propeller</span></span>
-<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a>p_results <span class="ot">&lt;-</span> propres <span class="sc">%&gt;%</span></span>
-<span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a>     <span class="fu">rownames</span>()</span>
-<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a><span class="co"># Get significant celltypes from sccomp</span></span>
-<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a>s_results <span class="ot">&lt;-</span> sccomp_result <span class="sc">%&gt;%</span> </span>
-<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(factor <span class="sc">==</span> <span class="st">"condition"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(c_FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">select</span>(celltype)</span>
-<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at overlapping celltypes</span></span>
-<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a>s_results <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(celltype <span class="sc">%in%</span> p_results)</span>
-<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cluster-free approaches</span></span>
-<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a>In cases **where the sub-populations most responsive to the biological state do not fall into well-defined separate clusters**, it can be useful to have available methods where the celltype annotation is not a required input. </span>
-<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>Some good examples of this include:</span>
+<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a>If you were not able to get <span class="in">`sccomp`</span> installed or had issues compiling <span class="in">`cmdstanr`</span>/<span class="in">`cmdstan`</span>, you can download the <span class="in">`sccomp_result`</span> object by right-clicking and selecting "Save Link as..." from <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.dropbox.com/scl/fi/611upe534ic8zh3xmx25y/sccomp_result.RDS?rlkey=p4gvsnheu6ncsnzagyc3gu282&amp;dl=1)</span>. Place this within your <span class="in">`data`</span> folder.</span>
+<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a>Use the following command to read the RDS object into R:</span>
+<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load_sccomp</span></span>
+<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>sccomp_result <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/sccomp_result.RDS"</span>)</span>
+<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sccomp_propeller_shared_results</span></span>
+<span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a><span class="co"># Get significant celltypes from propeller</span></span>
+<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a>p_results <span class="ot">&lt;-</span> propres <span class="sc">%&gt;%</span></span>
+<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a>     <span class="fu">rownames</span>()</span>
+<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a><span class="co"># Get significant celltypes from sccomp</span></span>
+<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>s_results <span class="ot">&lt;-</span> sccomp_result <span class="sc">%&gt;%</span> </span>
+<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(factor <span class="sc">==</span> <span class="st">"condition"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">filter</span>(c_FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">select</span>(celltype)</span>
+<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at overlapping celltypes</span></span>
+<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a>s_results <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(celltype <span class="sc">%in%</span> p_results)</span>
+<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cluster-free approaches</span></span>
+<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>In cases **where the sub-populations most responsive to the biological state do not fall into well-defined separate clusters**, it can be useful to have available methods where the celltype annotation is not a required input. </span>
 <span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Having sub-populations of celltypes that are differentially abundant between conditions and therefore may be distributed among several adjacent clusters or, alternatively, encompass only a part of a cluster.</span>
-<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Continuous processes where no clear cluster structure exists, such as cell cycles or certain developmental programs.</span>
-<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a>For the above scenarios, differential abundance at a cluster-based approaches may miss the important molecular mechanisms that differentiate between the states.</span>
+<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a>Some good examples of this include:</span>
+<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Having sub-populations of celltypes that are differentially abundant between conditions and therefore may be distributed among several adjacent clusters or, alternatively, encompass only a part of a cluster.</span>
+<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Continuous processes where no clear cluster structure exists, such as cell cycles or certain developmental programs.</span>
 <span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a><span class="fu">### miloR</span></span>
-<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>A good example of a tool that does not rely on the annotation of cells is <span class="co">[</span><span class="ot">miloR</span><span class="co">](https://github.com/MarioniLab/miloR)</span>. This tool makes use of k-nearest neighbor (KNN) graphs, a common data structure that is embedded in many single-cell analyses (<span class="co">[</span><span class="ot">Dann E. et al, 2021</span><span class="co">](https://www.nature.com/articles/s41587-021-01033-z)</span>.) This can particularly helpful if you have questions on the more subtle shifts within a certain cell population. The tool miloR allows you to **look more deeply into smaller neighborhoods of cells by utilizing differential abundance testing on the k-nearest neighbor graph**.</span>
-<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
-<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/milo_schematic.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"500"</span><span class="dt">&gt;</span></span>
-<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a>_Image source: [Dann E. et al, 2021](https://www.nature.com/articles/s41587-021-01033-z)_</span>
+<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a>For the above scenarios, differential abundance at a cluster-based approaches may miss the important molecular mechanisms that differentiate between the states.</span>
+<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a><span class="fu">### miloR</span></span>
+<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a>A good example of a tool that does not rely on the annotation of cells is <span class="co">[</span><span class="ot">miloR</span><span class="co">](https://github.com/MarioniLab/miloR)</span>. This tool makes use of k-nearest neighbor (KNN) graphs, a common data structure that is embedded in many single-cell analyses (<span class="co">[</span><span class="ot">Dann E. et al, 2021</span><span class="co">](https://www.nature.com/articles/s41587-021-01033-z)</span>.) This can particularly helpful if you have questions on the more subtle shifts within a certain cell population. The tool miloR allows you to **look more deeply into smaller neighborhoods of cells by utilizing differential abundance testing on the k-nearest neighbor graph**.</span>
+<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> align</span><span class="op">=</span><span class="st">"center"</span><span class="dt">&gt;</span></span>
+<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../img/milo_schematic.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"500"</span><span class="dt">&gt;</span></span>
+<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a>The general method of this tool is to assign cells to neighborhoods based upon a latent space (typically PCA) and neighborhood graph. Ultimately, we generate a neighborhood by counts matrix. These counts are modelled with a negative bionomial generalized linear model, which is then put through hypothesis testing to **identify significantally differentially abundant neighborhoods with associated fold change values**.</span>
+<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a>_Image source: [Dann E. et al, 2021](https://www.nature.com/articles/s41587-021-01033-z)_</span>
 <span id="cb22-346"><a href="#cb22-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a>While we won't apply the miloR methods to our dataset in class, we do have a <span class="co">[</span><span class="ot">lesson that walks you through the miloR workflow</span><span class="co">](08a_miloR.md)</span>. Each step is outlined in detail along with the code on how to apply it in this dataset. Note that the result is not directly comparable to results generated from cluster-based approaches (which are at the celltype level) presented in this lesson, because in cluster-free approaches the data is presented at the neighborhood-level. </span>
+<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a>The general method of this tool is to assign cells to neighborhoods based upon a latent space (typically PCA) and neighborhood graph. Ultimately, we generate a neighborhood by counts matrix. These counts are modelled with a negative bionomial generalized linear model, which is then put through hypothesis testing to **identify significantally differentially abundant neighborhoods with associated fold change values**.</span>
+<span id="cb22-348"><a href="#cb22-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-349"><a href="#cb22-349" aria-hidden="true" tabindex="-1"></a>While we won't apply the miloR methods to our dataset in class, we do have a <span class="co">[</span><span class="ot">lesson that walks you through the miloR workflow</span><span class="co">](08a_miloR.md)</span>. Each step is outlined in detail along with the code on how to apply it in this dataset. Note that the result is not directly comparable to results generated from cluster-based approaches (which are at the celltype level) presented in this lesson, because in cluster-free approaches the data is presented at the neighborhood-level. </span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -91,12 +91,8 @@ ggplot(bulk_APC@meta.data, aes(x = sample, y = n_cells, fill = condition)) +
   geom_text(aes(label = n_cells), vjust = -0.5)
 ```
 
-::: callout-note
----
-title: "Click here for code to plot the two bar plots side-by-side"
-collapse: true
-collapse-type: closed
----
+::: {.callout-note collapse="true"}
+# Click here for code to plot the two bar plots side-by-side
 
 Note that this R code below uses the **ggpubr library**. In order to run this you will need to first install the package and then run:
 

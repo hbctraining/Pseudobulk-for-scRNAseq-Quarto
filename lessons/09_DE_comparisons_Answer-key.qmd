@@ -1,0 +1,21 @@
+---
+title: "Set-up DESeq2 analysis - Answer Key"
+authors: "Will Gammerdinger, Noor Sohail"
+date: "Friday, September 5, 2025"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+# Exercise 1
+
+Take a moment and answer the above questions for our VSM cells dataset.
+
+1. Do you have enough cells to aggregate and do a pseudobulk analysis? Do you have enough power to run statistical tests?
+
+2. Are there smaller cell states within a celltype that would be lost after aggregating with a pseudobulk approach?
+
+3. Is there a latent variable that should be included in a design model?
+
+4. Are there biological replicates that can be used to control for variability in the data?
