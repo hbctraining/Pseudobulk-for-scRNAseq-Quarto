@@ -143,6 +143,7 @@ bulk[["RNA"]]$counts[1:5, 1:5]
 ::: {.callout-note collapse="true"}
 # Click here for alternative code for aggregating counts for multiple celltypes
 
+
 Note that this code **uses a for loop**. This will first subset out cells by celltype and then aggregate, creating a list of pseudobulked Seurat objects. First, we create a vector of unique celltypes in our data so that we can iterate over each one of them.
 
 ```{r}
