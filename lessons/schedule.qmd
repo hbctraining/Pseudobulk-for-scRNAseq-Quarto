@@ -119,3 +119,12 @@ II. **Submit your work**:
 ***
 
 ## Resources
+
+### HBC Workshops
+- [Introduction to scRNA](https://hbctraining.github.io/Intro-to-scRNAseq-Quarto/)
+- [Introduction to Differential Gene Expression Analysis](https://hbctraining.github.io/Intro-to-DGE-Quarto/) _for bulkRNA datasets_
+
+### Papers
+
+- ["Confronting false discoveries in single-cell differential expression"](https://www.nature.com/articles/s41467-021-25960-2) _Squair et al. 2021_
+- ["Benchmarking integration of single-cell differential expression"](https://www.nature.com/articles/s41467-023-37126-3) _Nguyen et al. 2023_

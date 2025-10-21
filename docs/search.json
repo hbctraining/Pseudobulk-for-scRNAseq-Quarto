@@ -46,7 +46,7 @@
     "href": "lessons/schedule.html#resources",
     "title": "",
     "section": "Resources",
-    "text": "Resources"
+    "text": "Resources\n\nHBC Workshops\n\nIntroduction to scRNA\nIntroduction to Differential Gene Expression Analysis for bulkRNA datasets\n\n\n\nPapers\n\n“Confronting false discoveries in single-cell differential expression” Squair et al. 2021\n“Benchmarking integration of single-cell differential expression” Nguyen et al. 2023"
   },
   {
     "objectID": "lessons/10_functional_analysis_pseudobulk.html",
