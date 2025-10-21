@@ -111,7 +111,6 @@ Next, we can load the necessary libraries:
 # Load libraries
 library(Seurat)
 library(tidyverse)
-library(ggalluvial)
 ```
 
 ### Load Seurat object
@@ -186,7 +185,7 @@ FeaturePlot(seurat, c("Pdgfra", "Acta2", "Cdh5",
 ```
 
 
-The mapping of cluster to celltypes is being represented here as an **alluvial plot**. This visualization provides a quick way to see which clusters have been annotated as which celltype.
+The mapping of cluster to celltypes is being represented here as a table.
 
 ```{r fig.width=10}
 #| label: mapping_celltypes_to_clusters
@@ -195,19 +194,27 @@ order_cluster <- unique(seurat$seurat_clusters) %>% as.numeric() %>% sort() %>% 
 seurat$seurat_clusters <- factor(seurat$seurat_clusters, levels=order_cluster)
 
 # Map clusters to celltypes
-ggplot(seurat@meta.data,
-        aes(axis1 = seurat_clusters,
-            axis2 = celltype,
-            fill = celltype)) +
-    geom_alluvium() +
-    geom_stratum() +
-    geom_text(stat = "stratum",
-        aes(label=after_stat(stratum))) +
-    theme_void() +
-    NoLegend() +
-    coord_flip()
+cluster_celltype_map <- seurat@meta.data %>%
+  select(seurat_clusters, celltype) %>%
+  unique() %>%
+  remove_rownames() %>%
+  arrange(seurat_clusters)
 ```
 
+This provides a quick way to see which clusters have been annotated as which celltype.
+
+```{r}
+#| label: view_celltype_cluster_map
+#| eval: false
+View(cluster_celltype_map)
+```
+
+```{r}
+#| label: DT_celltype_cluster_map
+#| echo: false
+library(DT)
+datatable(cluster_celltype_map)
+```
 
 With these updated celltype labels, we can see how they distribute on the UMAP. 
 
