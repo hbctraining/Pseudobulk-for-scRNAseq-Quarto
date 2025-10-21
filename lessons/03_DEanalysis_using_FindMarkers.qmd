@@ -107,16 +107,23 @@ Now we can run `FindMarkers()`:
 # Determine differentiating markers for TN and cold7
 dge_vsm <- FindMarkers(seurat_vsm,
                        ident.1="cold7",
-                       ident.2="TN"
-                       )
+                       ident.2="TN")
 ```
 
 Now let's take a quick look at the results:
 
 ```{r}
 #| label: view_FindMarkers
+#| eval: false
 # View results 
-dge_vsm %>% head()
+View(dge_vsm)
+```
+
+```{r}
+#| label: DT_FindMarkers
+#| echo: false
+library(DT)
+datatable(dge_vsm %>% head(30))
 ```
 
 **The output from the `FindMarkers()` function** is a matrix containing a ranked list of differentially expressed genes listed by gene ID and associated statistics. We describe some of these columns below:
