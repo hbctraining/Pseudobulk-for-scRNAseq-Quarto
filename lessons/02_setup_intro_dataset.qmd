@@ -20,6 +20,7 @@ Cells were isolated from stromal vascular fraction of brown adipose tissue. Afte
 </p>
 
 The mice used in this study were housed in 4 different temperature conditions:
+
  - TN: 30 °C for 1 week
  - RT: 22 °C
  - cold2: 5 °C for 2 days
