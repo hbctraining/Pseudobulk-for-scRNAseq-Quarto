@@ -132,7 +132,7 @@ recentered_expression_tibble <- expression_tibble %>%
 recentered_expression_tibble
 ```
 
-*As with any data analysis, it is always a good idea to visualize your data to ensure that it appears to behaving how you intended.* So let's visualize our re-centered data to ensure that the data appears centered around the origin. 
+*As with any data analysis, it is always a good idea to visualize your data to ensure that it appears to be behaving how you intended.* So let's visualize our re-centered data to ensure that the data appears centered around the origin. 
 
 ```{r plot_recentered_data}
 # Plot the raw data after it has been shifted to have the center of the data align with the origin
@@ -152,7 +152,7 @@ ggplot(recentered_expression_tibble, aes(x = Gene_A, y = Gene_B, label = cells))
 
 ## Create a covariance matrix
 
-The next step that we will do after we have re-centered our data around the origin is to calculate a covariance matrix. As a reminder, the covariance is the joint variability of two random variables. In this case our random variables are the genes. The illustration below we provide examples for positive and negative covariance values along with a covariance that is near zero.
+The next step that we will do after we have re-centered our data around the origin is to calculate a covariance matrix. As a reminder, the covariance is the joint variability of two random variables. In this case, our random variables are the genes. The illustration below we provide examples for positive and negative covariance values along with a covariance that is near zero.
 
 <img src="../img/Covariance.png" width="800">
 
@@ -273,7 +273,8 @@ We can confirm this by plugging our covariance matrix, eigenvalues and eigenvect
 
 ```{r check_eigen}
 # Check the eigenvalues and eigenvectors
-(cov_matrix - eig$values[1]*diag(2)) %*% eig$vectors[,1]
+(cov_matrix - eig$values[1]*diag(2)) %*% eig$vectors[,1] %>% 
+  round(digits = 3)
 ```
 
 We then repeat this process for *$\lambda$~2~* in order to to find its associated eigenvector, *v~2~*, which results in `r eig$vectors[,2]`. Thus, our resulting matrix of eigenvectors appears as:
@@ -367,7 +368,7 @@ Let's inspect the output from `prcomp()` to ensure that we are getting the same 
 
 ## Center of the Data
 
-First we can ensure that we have the same center of the data. `prcomp()` says that the center of the data is:
+First, we can ensure that we have the same center of the data. `prcomp()` says that the center of the data is:
 
 ```{r center_prcomp}
 # Print the center of the data found by prcomp()
@@ -424,9 +425,9 @@ While we calculated the eigenvectors as:
 eig$vectors
 ```
 
-We can see that the values are the same, but the sign is flipped between the two methods. This is because eigenvectors are only defined "up to sign". This means for a given eigenvalue, the eigenvector *v~1~* and *-v~1~* are the same line, but point in different directions. This does not impact our principal components calculations. However, it could mean that a plot derived *v~1~* will look reflected over the x-axis when compared to a plot derived from *-v~1~*. Regardless, it looks like we have the same eigenvectors in both approaches.
+We can see that the values are the same, but the sign is flipped between the two methods. This is because eigenvectors are only defined "up to sign". This means for a given eigenvalue, the eigenvector *v~1~* and *-v~1~* are the same line, but point in different directions. This does not impact our principal components calculations. However, it could mean that a plot derived *v~1~* will look reflected over an axis when compared to a plot derived from *-v~1~*. Regardless, it looks like we have the same eigenvectors in both approaches.
 
-## PC Scores
+## Principal Components Scores
 
 Finally, we can check our PC scores to ensure that they are also equivalent. We should note that since the eigenvector from `prcomp()` and the eigenvector we calculated differed by sign and eigenvectors are multiplied by the re-centered expression, then we should expect our principal components to also differ by sign. The principal components from `prcomp()` are:
 

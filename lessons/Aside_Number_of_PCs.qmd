@@ -91,7 +91,7 @@ cov_matrix <- cov(recentered_expression_matrix)
 cov_matrix
 ```
 
-From this we can see that it is a **2x2 gene-wise** covariance matrix. However, we could have alternatively created a **4x4 cell-wise** covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data on based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:
+From this we can see that it is a **2x2 gene-wise** covariance matrix. However, we could have alternatively created a **4x4 cell-wise** covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:
 
 ```{r}
 #| label: confirm_recented_means
@@ -174,7 +174,7 @@ In practice, we usually use gene-wise covariance in scRNA-seq PCA, but the cell-
 
 # Sources of Reducing the Number of PCs for a PCA
 
-Now that we have demonstrated how number of PCs = minimum(number_of_genes, number_of_cells), let's understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:
+Now that we have demonstrated how the number of PCs = minimum(number_of_genes, number_of_cells), let's understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:
 
 - [Duplicated Data](#duplicated-data)
 - [Scaled Data](#scaled-data)

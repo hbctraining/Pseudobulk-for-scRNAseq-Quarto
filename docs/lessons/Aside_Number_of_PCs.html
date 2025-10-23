@@ -322,7 +322,7 @@ Gene_A 799.3333 584.6667
 Gene_B 584.6667 506.2500</code></pre>
 </div>
 </div>
-<p>From this we can see that it is a <strong>2x2 gene-wise</strong> covariance matrix. However, we could have alternatively created a <strong>4x4 cell-wise</strong> covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data on based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:</p>
+<p>From this we can see that it is a <strong>2x2 gene-wise</strong> covariance matrix. However, we could have alternatively created a <strong>4x4 cell-wise</strong> covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the mean for Gene_A once it has been re-centered</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(recentered_expression_matrix[,<span class="st">"Gene_A"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,7 +413,7 @@ Note
 </section>
 <section id="sources-of-reducing-the-number-of-pcs-for-a-pca" class="level1">
 <h1>Sources of Reducing the Number of PCs for a PCA</h1>
-<p>Now that we have demonstrated how number of PCs = minimum(number_of_genes, number_of_cells), let’s understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:</p>
+<p>Now that we have demonstrated how the number of PCs = minimum(number_of_genes, number_of_cells), let’s understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:</p>
 <ul>
 <li><a href="#duplicated-data">Duplicated Data</a></li>
 <li><a href="#scaled-data">Scaled Data</a></li>
@@ -1088,7 +1088,7 @@ Cell_4     -2  -9.25      0</code></pre>
 <span id="cb30-101"><a href="#cb30-101" aria-hidden="true" tabindex="-1"></a>cov_matrix</span>
 <span id="cb30-102"><a href="#cb30-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb30-103"><a href="#cb30-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-104"><a href="#cb30-104" aria-hidden="true" tabindex="-1"></a>From this we can see that it is a **2x2 gene-wise** covariance matrix. However, we could have alternatively created a **4x4 cell-wise** covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data on based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:</span>
+<span id="cb30-104"><a href="#cb30-104" aria-hidden="true" tabindex="-1"></a>From this we can see that it is a **2x2 gene-wise** covariance matrix. However, we could have alternatively created a **4x4 cell-wise** covariance matrix using. Unfortunately, we will need to do this using some for loops. One small note before we start, since we re-centered the data based on gene, the mean of Gene_A and Gene_B are both 0, so those gene mean terms can drop out of the covariance equation. We can confirm that with:</span>
 <span id="cb30-105"><a href="#cb30-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-108"><a href="#cb30-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb30-109"><a href="#cb30-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: confirm_recented_means</span></span>
@@ -1171,7 +1171,7 @@ Cell_4     -2  -9.25      0</code></pre>
 <span id="cb30-194"><a href="#cb30-194" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-195"><a href="#cb30-195" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sources of Reducing the Number of PCs for a PCA</span></span>
 <span id="cb30-196"><a href="#cb30-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-197"><a href="#cb30-197" aria-hidden="true" tabindex="-1"></a>Now that we have demonstrated how number of PCs = minimum(number_of_genes, number_of_cells), let's understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:</span>
+<span id="cb30-197"><a href="#cb30-197" aria-hidden="true" tabindex="-1"></a>Now that we have demonstrated how the number of PCs = minimum(number_of_genes, number_of_cells), let's understand sources of data that reduce the number of PCs so that the number of PCs ≤ minimum(number_of_genes, number_of_cells). Four major sources of this come from:</span>
 <span id="cb30-198"><a href="#cb30-198" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-199"><a href="#cb30-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Duplicated Data</span><span class="co">](#duplicated-data)</span></span>
 <span id="cb30-200"><a href="#cb30-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Scaled Data</span><span class="co">](#scaled-data)</span></span>
