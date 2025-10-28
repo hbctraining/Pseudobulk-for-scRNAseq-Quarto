@@ -86,6 +86,7 @@ There is no self-learning for Day 2.
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
+   
    1. [Functional Analysis](10_functional_analysis_pseudobulk.qmd)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
