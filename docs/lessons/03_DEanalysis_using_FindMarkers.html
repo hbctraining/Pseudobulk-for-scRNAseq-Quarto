@@ -106,13 +106,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="../site_libs/datatables-binding-0.33/datatables.js"></script>
+<script src="../site_libs/datatables-binding-0.34.0/datatables.js"></script>
 <script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
-<script src="../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 
 
 <link rel="stylesheet" href="../css/styles.css">
@@ -479,7 +479,10 @@ Why don’t we use SCT normalized data?
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine differentiating markers for TN and cold7</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dge_vsm <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(seurat_vsm,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ident.1=</span><span class="st">"cold7"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ident.2=</span><span class="st">"TN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ident.2=</span><span class="st">"TN"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the rownames (genes) as a column</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>dge_vsm<span class="sc">$</span>gene <span class="ot">&lt;-</span> <span class="fu">rownames</span>(dge_vsm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s take a quick look at the results:</p>
 <div class="cell">
@@ -489,7 +492,7 @@ Why don’t we use SCT normalized data?
 <div class="cell">
 <div class="cell-output-display">
 <div class="datatables html-widget html-fill-item" id="htmlwidget-f843a680a1fcd62a0dd1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f843a680a1fcd62a0dd1">{"x":{"filter":"none","vertical":false,"data":[["Gm42418","Ubb","H3f3b","Nr4a2","Rpl21","Rpl9","Cebpb","Rps3a1","Fau","Cdkn1a","Rpl35a","Gadd45b","Rpl30","Rps2","Chchd2","Ifrd1","Mfge8","Rpl19","mt-Nd2","mt-Nd1","Rpl13","Col4a1","Tiparp","Rpl23","Rasl10b","Pcp4l1","Mt1","Rps4x","Gadd45g","Rps15a"],[4.492261252980303e-223,1.801612312986214e-207,6.044423177505034e-198,9.607597722268504e-193,2.319987278815151e-190,1.249444003696779e-187,4.237727688427349e-181,6.142089771601489e-172,3.332174767720062e-167,9.868783241747336e-165,1.777300097675792e-160,3.768661759962724e-159,5.100045669350649e-157,1.371795376596299e-156,1.581013340354848e-152,1.806867961993586e-151,1.947995185573819e-151,1.659327534124362e-150,1.137406084337149e-149,5.158598863565287e-148,7.982576220423467e-147,9.070661368760915e-146,1.087653477212386e-145,4.495955000275357e-143,2.81082970961769e-142,2.789245414225826e-139,7.175805831319961e-139,1.323991375109515e-136,7.570271029764279e-132,2.205254305683411e-130],[1.801360252745417,-0.8274973432848105,-0.9395566178323982,-2.184167305868713,-0.6377143845090476,-0.6824496492828214,-1.543106485736004,-0.6410746786288568,-0.5753982419633896,-1.762483467899873,-0.5863575764770981,-1.50560289547007,-0.6010929122011719,-0.6739734545919633,-0.5673300925844602,-1.554005812545826,0.9313166064688585,-0.5558713323151103,0.6559757434458211,0.6334328329186487,-0.5228440559135255,1.417457639364185,-2.414067614674781,-0.5537318567834082,2.789365069089494,-0.7862855856710431,-1.977799808961867,-0.6303922401810507,-1.2500295714405,-0.5803657273575689],[0.999,0.982,0.975,0.503,0.967,0.954,0.8070000000000001,0.953,0.966,0.553,0.971,0.723,0.96,0.953,0.974,0.68,0.973,0.96,0.957,0.965,0.976,0.954,0.393,0.96,0.306,0.868,0.636,0.949,0.738,0.951],[0.986,0.999,0.998,0.855,0.998,0.999,0.964,0.997,0.999,0.864,0.998,0.9389999999999999,0.998,0.998,0.998,0.885,0.971,0.998,0.998,0.998,0.999,0.84,0.742,0.998,0.045,0.988,0.877,0.997,0.9360000000000001,0.996],[8.881649723267357e-219,3.561967704005044e-203,1.19504290642452e-193,1.899518145669706e-188,4.586846848945436e-186,2.470275739708901e-183,8.378411412789712e-177,1.21435256874333e-167,6.588042733259334e-163,1.951157134725866e-160,3.513900023114808e-156,7.451021165622302e-155,1.008330029287317e-152,2.712176639068542e-152,3.12582147521557e-148,3.572358647657519e-147,3.851381281397999e-147,3.280656467717276e-146,2.248765569342976e-145,1.019906581315493e-143,1.578235144539924e-142,1.793360459217721e-141,2.150399689796609e-141,8.888952631044409e-139,5.557291418885135e-138,5.514617108465882e-135,1.418728570910269e-134,2.617663347729022e-132,1.496718285294696e-127,4.360008287766671e-126]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>p_val<\/th>\n      <th>avg_log2FC<\/th>\n      <th>pct.1<\/th>\n      <th>pct.2<\/th>\n      <th>p_val_adj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"p_val","targets":1},{"name":"avg_log2FC","targets":2},{"name":"pct.1","targets":3},{"name":"pct.2","targets":4},{"name":"p_val_adj","targets":5}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-f843a680a1fcd62a0dd1">{"x":{"filter":"none","vertical":false,"data":[["Gm42418","Ubb","H3f3b","Nr4a2","Rpl21","Rpl9","Cebpb","Rps3a1","Fau","Cdkn1a","Rpl35a","Gadd45b","Rpl30","Rps2","Chchd2","Ifrd1","Mfge8","Rpl19","mt-Nd2","mt-Nd1","Rpl13","Col4a1","Tiparp","Rpl23","Rasl10b","Pcp4l1","Mt1","Rps4x","Gadd45g","Rps15a"],[4.492261252980303e-223,1.801612312986214e-207,6.044423177505034e-198,9.607597722268504e-193,2.319987278815151e-190,1.249444003696779e-187,4.237727688427349e-181,6.142089771601489e-172,3.332174767720062e-167,9.868783241747336e-165,1.777300097675792e-160,3.768661759962724e-159,5.100045669350649e-157,1.371795376596299e-156,1.581013340354848e-152,1.806867961993586e-151,1.947995185573819e-151,1.659327534124362e-150,1.137406084337149e-149,5.158598863565287e-148,7.982576220423467e-147,9.070661368760915e-146,1.087653477212386e-145,4.495955000275357e-143,2.81082970961769e-142,2.789245414225826e-139,7.175805831319961e-139,1.323991375109515e-136,7.570271029764279e-132,2.205254305683411e-130],[1.801360252745417,-0.8274973432848105,-0.9395566178323982,-2.184167305868713,-0.6377143845090476,-0.6824496492828214,-1.543106485736004,-0.6410746786288568,-0.5753982419633896,-1.762483467899873,-0.5863575764770981,-1.50560289547007,-0.6010929122011719,-0.6739734545919633,-0.5673300925844602,-1.554005812545826,0.9313166064688585,-0.5558713323151103,0.6559757434458211,0.6334328329186487,-0.5228440559135255,1.417457639364185,-2.414067614674781,-0.5537318567834082,2.789365069089494,-0.7862855856710431,-1.977799808961867,-0.6303922401810507,-1.2500295714405,-0.5803657273575689],[0.999,0.982,0.975,0.503,0.967,0.954,0.8070000000000001,0.953,0.966,0.553,0.971,0.723,0.96,0.953,0.974,0.68,0.973,0.96,0.957,0.965,0.976,0.954,0.393,0.96,0.306,0.868,0.636,0.949,0.738,0.951],[0.986,0.999,0.998,0.855,0.998,0.999,0.964,0.997,0.999,0.864,0.998,0.9389999999999999,0.998,0.998,0.998,0.885,0.971,0.998,0.998,0.998,0.999,0.84,0.742,0.998,0.045,0.988,0.877,0.997,0.9360000000000001,0.996],[8.881649723267357e-219,3.561967704005044e-203,1.19504290642452e-193,1.899518145669706e-188,4.586846848945436e-186,2.470275739708901e-183,8.378411412789712e-177,1.21435256874333e-167,6.588042733259334e-163,1.951157134725866e-160,3.513900023114808e-156,7.451021165622302e-155,1.008330029287317e-152,2.712176639068542e-152,3.12582147521557e-148,3.572358647657519e-147,3.851381281397999e-147,3.280656467717276e-146,2.248765569342976e-145,1.019906581315493e-143,1.578235144539924e-142,1.793360459217721e-141,2.150399689796609e-141,8.888952631044409e-139,5.557291418885135e-138,5.514617108465882e-135,1.418728570910269e-134,2.617663347729022e-132,1.496718285294696e-127,4.360008287766671e-126],["Gm42418","Ubb","H3f3b","Nr4a2","Rpl21","Rpl9","Cebpb","Rps3a1","Fau","Cdkn1a","Rpl35a","Gadd45b","Rpl30","Rps2","Chchd2","Ifrd1","Mfge8","Rpl19","mt-Nd2","mt-Nd1","Rpl13","Col4a1","Tiparp","Rpl23","Rasl10b","Pcp4l1","Mt1","Rps4x","Gadd45g","Rps15a"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>p_val<\/th>\n      <th>avg_log2FC<\/th>\n      <th>pct.1<\/th>\n      <th>pct.2<\/th>\n      <th>p_val_adj<\/th>\n      <th>gene<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"p_val","targets":1},{"name":"avg_log2FC","targets":2},{"name":"pct.1","targets":3},{"name":"pct.2","targets":4},{"name":"p_val_adj","targets":5},{"name":"gene","targets":6}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p><strong>The output from the <code>FindMarkers()</code> function</strong> is a matrix containing a ranked list of differentially expressed genes listed by gene ID and associated statistics. We describe some of these columns below:</p>
@@ -1088,45 +1091,48 @@ Note
 <span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>dge_vsm <span class="ot">&lt;-</span> <span class="fu">FindMarkers</span>(seurat_vsm,</span>
 <span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ident.1=</span><span class="st">"cold7"</span>,</span>
 <span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ident.2=</span><span class="st">"TN"</span>)</span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>Now let's take a quick look at the results:</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: view_FindMarkers</span></span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="co"># View results </span></span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(dge_vsm)</span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: DT_FindMarkers</span></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(dge_vsm <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">30</span>))</span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>**The output from the `FindMarkers()` function** is a matrix containing a ranked list of differentially expressed genes listed by gene ID and associated statistics. We describe some of these columns below:</span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**gene:** The gene symbol</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**p_val:** The p-value not adjusted for multiple test corrections</span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**avg_logFC:** The average log-fold change between sample groups. Positive values indicate that the gene is more highly expressed <span class="in">`ident.1`</span>.  </span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**pct.1:** The percentage of cells where the gene is detected in <span class="in">`ident.1`</span> (cold7)    </span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**pct.2:** The percentage of cells where the gene is detected on average in <span class="in">`ident.2`</span> (TN)</span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**p_val_adj:** The adjusted p-value, based on Bonferroni correction using all genes in the dataset, used to determine significance</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>These tests treat each cell as an independent replicate and ignore inherent correlations between cells originating from the same sample. This results in highly **inflated p-values** for each gene. Studies have been shown to find a large number of false positive associations with these results.</span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>When looking at the output, **we suggest looking for markers with large differences in expression between `pct.1` and `pct.2` and larger fold changes**. For instance if <span class="in">`pct.1`</span> = 0.90 and <span class="in">`pct.2`</span> = 0.80, it may not be as exciting of a marker. However, if <span class="in">`pct.2`</span> = 0.1 instead, the bigger difference would be more convincing. Also of interest is whether the majority of cells expressing the gene are in the group of interest. If <span class="in">`pct.1`</span> is low, such as 0.3, it may not be as interesting. Both of these are also possible parameters to include when running the function, as described above.</span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>This is a great spot to pause and save your results!</span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: write_output</span></span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(dge_vsm, <span class="st">"results/findmarkers_vsm_cold7_vs_TN.csv"</span>)</span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the rownames (genes) as a column</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>dge_vsm<span class="sc">$</span>gene <span class="ot">&lt;-</span> <span class="fu">rownames</span>(dge_vsm)</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>Now let's take a quick look at the results:</span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: view_FindMarkers</span></span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a><span class="co"># View results </span></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(dge_vsm)</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: DT_FindMarkers</span></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(dge_vsm <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">30</span>))</span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>**The output from the `FindMarkers()` function** is a matrix containing a ranked list of differentially expressed genes listed by gene ID and associated statistics. We describe some of these columns below:</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**gene:** The gene symbol</span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**p_val:** The p-value not adjusted for multiple test corrections</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**avg_logFC:** The average log-fold change between sample groups. Positive values indicate that the gene is more highly expressed <span class="in">`ident.1`</span>.  </span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**pct.1:** The percentage of cells where the gene is detected in <span class="in">`ident.1`</span> (cold7)    </span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**pct.2:** The percentage of cells where the gene is detected on average in <span class="in">`ident.2`</span> (TN)</span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**p_val_adj:** The adjusted p-value, based on Bonferroni correction using all genes in the dataset, used to determine significance</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>These tests treat each cell as an independent replicate and ignore inherent correlations between cells originating from the same sample. This results in highly **inflated p-values** for each gene. Studies have been shown to find a large number of false positive associations with these results.</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>When looking at the output, **we suggest looking for markers with large differences in expression between `pct.1` and `pct.2` and larger fold changes**. For instance if <span class="in">`pct.1`</span> = 0.90 and <span class="in">`pct.2`</span> = 0.80, it may not be as exciting of a marker. However, if <span class="in">`pct.2`</span> = 0.1 instead, the bigger difference would be more convincing. Also of interest is whether the majority of cells expressing the gene are in the group of interest. If <span class="in">`pct.1`</span> is low, such as 0.3, it may not be as interesting. Both of these are also possible parameters to include when running the function, as described above.</span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>This is a great spot to pause and save your results!</span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: write_output</span></span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(dge_vsm, <span class="st">"results/findmarkers_vsm_cold7_vs_TN.csv"</span>)</span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
