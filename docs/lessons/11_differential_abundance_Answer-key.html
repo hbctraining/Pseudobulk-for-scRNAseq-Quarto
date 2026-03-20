@@ -103,6 +103,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-68JBPLLNLG"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-68JBPLLNLG', { 'anonymize_ip': true});
+</script>
 
 
 <link rel="stylesheet" href="../css/styles.css">
@@ -203,6 +212,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Take a look at the results table <code>propres</code>. Which celltypes show a significant change in composition between TN and cold7?</p></li>
 <li><p>Does this line up with what we observed in the counts table?</p></li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>propres</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         BaselineProp.clusters BaselineProp.Freq PropMean.cold7  PropMean.TN
+Adipo                    Adipo        0.00493362     0.01949652 0.0008024788
+Schwann                Schwann        0.05130965     0.12260296 0.0200370767
+Lymph                    Lymph        0.01515967     0.03495853 0.0077580868
+VSM                        VSM        0.52448870     0.30515883 0.5846495516
+AP                          AP        0.10557948     0.16108816 0.0677816217
+Pericyte              Pericyte        0.04628633     0.10069937 0.0177623250
+ECAP                      ECAP        0.09230355     0.06488468 0.1489222855
+EC                          EC        0.11275565     0.14946847 0.0994215271
+VSM-AP                  VSM-AP        0.04718335     0.04164249 0.0528650469
+          PropRatio Tstatistic      P.Value          FDR
+Adipo    24.2953653  5.6849661 8.662976e-05 0.0004741774
+Schwann   6.1188046  5.5652037 1.053728e-04 0.0004741774
+Lymph     4.5060764  4.2004393 1.126704e-03 0.0033801113
+VSM       0.5219517 -3.2329566 6.837304e-03 0.0153839336
+AP        2.3765758  2.7615048 1.667088e-02 0.0272605389
+Pericyte  5.6692673  2.7156461 1.817369e-02 0.0272605389
+ECAP      0.4356949 -2.2305782 4.471048e-02 0.0574848968
+EC        1.5033813  1.4513578 1.712938e-01 0.1927054889
+VSM-AP    0.7877131 -0.6325885 5.383942e-01 0.5383941662</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Check count numbers of cells</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>condition_sample <span class="ot">&lt;-</span> <span class="fu">paste0</span>(meta_sub<span class="sc">$</span>condition, <span class="st">"_"</span>, meta_sub<span class="sc">$</span>sample)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(meta_sub<span class="sc">$</span>condition_sample, meta_sub<span class="sc">$</span>celltype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 
+                  Adipo   AP   EC ECAP Lymph Pericyte Schwann  VSM VSM-AP
+  cold7_Sample_15    15   78   90   17    32       19      83  249     28
+  cold7_Sample_16    15   88   55   78     8        9      56  132     29
+  cold7_Sample_7     11   99  158   31    31      145      84  200     25
+  cold7_Sample_8      8  217  141   28    33      179     137  296     29
+  TN_Sample_1         5  548  472  258    28      128     161 2006    133
+  TN_Sample_10        0   59  174  276    20        9      27 1789    202
+  TN_Sample_2         1   33   72  150     3       12       8  221     34
+  TN_Sample_9         0   55   95  191    14       15      16  954     46</code></pre>
+</div>
+</div>
 
 
 <!-- -->
@@ -660,57 +711,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Set-up DESeq2 analysis - Answer Key"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">authors:</span><span class="co"> "Will Gammerdinger, Noor Sohail"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Friday, September 5, 2025"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  markdown: </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    wrap: 72</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load_data_libraries</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(speckle)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sccomp)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>seurat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/BAT_GSE160585_final.rds"</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>seurat_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat, <span class="at">subset =</span> (condition <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"cold7"</span>)))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create metadata df and factor celltype</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>meta_sub <span class="ot">&lt;-</span> seurat_sub<span class="sc">@</span>meta.data</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>celltype <span class="ot">&lt;-</span> <span class="fu">factor</span>(meta_sub<span class="sc">$</span>celltype)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>condition_sample <span class="ot">&lt;-</span> <span class="fu">paste0</span>(meta_sub<span class="sc">$</span>condition, <span class="st">"_"</span>, meta_sub<span class="sc">$</span>sample)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Run differential proportion analysis</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>propres <span class="ot">&lt;-</span> <span class="fu">propeller</span>(seurat_sub, </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sample=</span>seurat_sub<span class="sc">$</span>sample,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">clusters =</span> seurat_sub<span class="sc">$</span>celltype,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">group =</span> seurat_sub<span class="sc">$</span>condition)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>props <span class="ot">&lt;-</span> <span class="fu">getTransformedProps</span>(meta_sub<span class="sc">$</span>celltype, </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                                 meta_sub<span class="sc">$</span>condition_sample, </span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">transform=</span><span class="st">"logit"</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>props_df <span class="ot">&lt;-</span> props<span class="sc">$</span>Proportions <span class="sc">%&gt;%</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_split_i</span>(sample, <span class="st">"_"</span>, <span class="dv">1</span>))</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>props_df_summary <span class="ot">&lt;-</span> props_df <span class="sc">%&gt;%</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(clusters, condition) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Freq), <span class="at">sd =</span> <span class="fu">sd</span>(Freq))</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercise 1</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a look at the results table <span class="in">`propres`</span>. Which celltypes show a significant change in composition between TN and cold7?</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Does this line up with what we observed in the counts table?</span>
+<div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Set-up DESeq2 analysis - Answer Key"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">authors:</span><span class="co"> "Will Gammerdinger, Noor Sohail"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "Friday, September 5, 2025"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">  markdown: </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    wrap: 72</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: load_data_libraries</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(speckle)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sccomp)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>seurat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/BAT_GSE160585_final.rds"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>seurat_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(seurat, <span class="at">subset =</span> (condition <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TN"</span>, <span class="st">"cold7"</span>)))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create metadata df and factor celltype</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>meta_sub <span class="ot">&lt;-</span> seurat_sub<span class="sc">@</span>meta.data</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>celltype <span class="ot">&lt;-</span> <span class="fu">factor</span>(meta_sub<span class="sc">$</span>celltype)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>condition_sample <span class="ot">&lt;-</span> <span class="fu">paste0</span>(meta_sub<span class="sc">$</span>condition, <span class="st">"_"</span>, meta_sub<span class="sc">$</span>sample)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Run differential proportion analysis</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>propres <span class="ot">&lt;-</span> <span class="fu">propeller</span>(seurat_sub, </span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sample=</span>seurat_sub<span class="sc">$</span>sample,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">clusters =</span> seurat_sub<span class="sc">$</span>celltype,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">group =</span> seurat_sub<span class="sc">$</span>condition)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>props <span class="ot">&lt;-</span> <span class="fu">getTransformedProps</span>(meta_sub<span class="sc">$</span>celltype, </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                                 meta_sub<span class="sc">$</span>condition_sample, </span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">transform=</span><span class="st">"logit"</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>props_df <span class="ot">&lt;-</span> props<span class="sc">$</span>Proportions <span class="sc">%&gt;%</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_split_i</span>(sample, <span class="st">"_"</span>, <span class="dv">1</span>))</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>props_df_summary <span class="ot">&lt;-</span> props_df <span class="sc">%&gt;%</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(clusters, condition) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Freq), <span class="at">sd =</span> <span class="fu">sd</span>(Freq))</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exercise 1</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Take a look at the results table <span class="in">`propres`</span>. Which celltypes show a significant change in composition between TN and cold7?</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Does this line up with what we observed in the counts table?</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>propres</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="do">## Check count numbers of cells</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>meta_sub<span class="sc">$</span>condition_sample <span class="ot">&lt;-</span> <span class="fu">paste0</span>(meta_sub<span class="sc">$</span>condition, <span class="st">"_"</span>, meta_sub<span class="sc">$</span>sample)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(meta_sub<span class="sc">$</span>condition_sample, meta_sub<span class="sc">$</span>celltype)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

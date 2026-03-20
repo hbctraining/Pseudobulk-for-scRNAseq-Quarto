@@ -20,7 +20,6 @@ sig_res <- dge_deseq2 %>% subset(padj <= 0.05)
 
 dge_fm <- read.csv("results/findmarkers_vsm_cold7_vs_TN.csv")
 dge_vsm_sig <- dge_fm %>% subset(p_val_adj <= 0.05)
-dge_vsm_sig <- dplyr::rename(dge_vsm_sig, c("gene"=X))
 
 # Volcano plot for findmarkers results
 p_fm <- EnhancedVolcano(dge_vsm_sig,
@@ -191,8 +190,6 @@ If you are having trouble locating these objects, you can also read the files in
 ```{r}
 #| label: read_DE_results
 dge_vsm <- read.csv("results/findmarkers_vsm_cold7_vs_TN.csv")
-# Make sure there is a column called gene
-dge_vsm <- dplyr::rename(dge_vsm, c("gene"="X"))
 
 dge_deseq2 <- read.csv("results/deseq2_VSM_cold7_vs_TN.csv")
 ```

@@ -193,7 +193,6 @@ While propellor and other approaches based on linear regression (i.e., scDC, dif
 3. **Hypothesis testing** is performed by calculating the posterior probability of the composition and variability effects being larger than a specified fold-change threshold
     * When only a few groups or samples are present it becomes challenging to estimate the mean–variability association. `sccomp` gains this prior knowledge from other datasets and incoporates it to stabilize estimates.
 
-
 The code below will perform the step outlined above. The input is the subsetted Seurat object `seurat_sub` used in the previous section of this lesson.
 
 ```{r}

@@ -25,9 +25,6 @@ dge_deseq2_noNAs <- filter(dge_deseq2, padj != "NA" )
 all_genes <- as.character(dge_deseq2_noNAs$gene)
 
 dge_vsm <- read.csv("results/findmarkers_vsm_cold7_vs_TN.csv")
-
-# Make sure there is a column called gene
-dge_vsm <- dplyr::rename(dge_vsm, c("gene"="X"))
 ```
 
 # Exercise 1
