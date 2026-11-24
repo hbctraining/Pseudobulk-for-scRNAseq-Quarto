@@ -168,3 +168,14 @@ sessionInfo()
 ```
 
 ---
+
+### Citation
+
+To cite material from this course in your publications, please use:
+
+::: callout-important
+Noor Sohail, William J. Gammerdinger, Meeta Mistry & Elizabeth Partan. (2026, November 24). hbctraining/Pseudobulk and related approaches for scRNA-seq analysis. Zenodo. https://doi.org/10.5281/zenodo.24514888
+:::
+
+A lot of time and effort went into the preparation of these materials. Citations help us understand the needs of the community, gain recognition for our work, and attract further funding to support our teaching activities. Thank you for citing this material if it helped you in your data analysis.
+
